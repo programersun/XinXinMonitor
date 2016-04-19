@@ -12,10 +12,14 @@
 #import "MainTabBarViewController.h"
 #import "LoginViewController.h"
 
+#define UMKey @"a7d3b0bd528f3157e64b0623"
+#define BaiDuKey @"1T7hGSEgTOHo3agDWzQ524gREm9Y0xqL"
+
 @interface AppDelegate ()
 
 @end
 
+BMKMapManager *_mapManager;
 @implementation AppDelegate
 
 
@@ -29,10 +33,14 @@
     [SDImageCache sharedImageCache].maxCacheSize = 1024 * 1024 * 10;
     [[AFNetworkingTools sharedManager] networkStateChange];
     
-    //  //极光推送
+    //极光推送
     [self jpush:launchOptions];
     
+    //获取用户位置
     [[LocationManager sharedManager] currentLocation];
+    
+    //启动百度地图
+    [self loadBaiDuMap];
     
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserInfo"];
     if (dict) {
@@ -90,6 +98,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - 百度地图
+- (void)loadBaiDuMap {
+    _mapManager = [[BMKMapManager alloc] init];
+    BOOL ret = [_mapManager start:BaiDuKey
+                  generalDelegate:self];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
+}
+
 #pragma mark - 极光推送
 - (void)jpush:(NSDictionary *)launchOptions {
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -108,7 +126,7 @@
          categories:nil];
     }
     [JPUSHService setupWithOption:launchOptions
-                           appKey:@"a7d3b0bd528f3157e64b0623"
+                           appKey:UMKey
                           channel:@"Publish channel"
                  apsForProduction:NO
             advertisingIdentifier:nil];
