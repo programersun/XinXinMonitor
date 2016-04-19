@@ -17,7 +17,7 @@
 /**
  *  右侧地图按钮点击事件
  */
-- (void)mapBtnClick;
+- (void)mapBtnClick:(UIButton *)button;
 /**
  *  搜索按钮点击事件
  */

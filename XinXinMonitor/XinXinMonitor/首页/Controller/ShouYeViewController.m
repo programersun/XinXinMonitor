@@ -15,6 +15,9 @@
 
 @property (nonatomic, strong) HomeTopView *topView;
 @property (nonatomic, strong) CityChangeView *cityChangeView;
+@property (nonatomic, strong) UIView *tranbackView;
+@property (nonatomic, strong) UIView *firstView;
+@property (nonatomic, strong) UIView *secondView;
 
 @end
 
@@ -23,21 +26,40 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addTopView];
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    btn.backgroundColor = [UIColor redColor];
-    [btn addTarget:self action:@selector(toImageDetailView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    [self.topView setAddressBtnTextWithString:@"北京"];
+    NSString *city;
+    if ([[LocationManager sharedManager] getCity] != nil && [[LocationManager sharedManager] getCity]) {
+        city = [[LocationManager sharedManager] getCity];
+        
+        //获取城市
+        NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"山头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区"];
+        NSDictionary *cityDict = @{@"City":city,@"DistrictArray":array};
+        [self saveCityWithDict:cityDict];
+        
+        
+    }else {
+        city = @"济南市";
+    }
+    
+    [self.topView setAddressBtnTextWithString:city];
+    
+    self.tranbackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
+    self.firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
+    self.firstView.backgroundColor = [UIColor redColor];
+    self.secondView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
+    self.secondView.backgroundColor = [UIColor greenColor];
+    [self.tranbackView addSubview:self.firstView];
+    [self.tranbackView addSubview:self.secondView];
+    [self.view addSubview:self.tranbackView];
+    
     
     // Do any additional setup after loading the view.
 }
 
-- (void)saveCityWithDict:(NSDictionary *)dict {
-    NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"山头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区"];
-    NSDictionary *cityDict = @{@"City":@"北京",@"District":array};
+- (void)saveCityWithDict:(NSDictionary *)cityDict {
+
     NSMutableArray *cityArray;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"CityArray"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"CityArray"] != nil) {
-        
+    if ([[LocationManager sharedManager] getCityArray] && [[LocationManager sharedManager] getCityArray] != nil) {
+        cityArray = [[LocationManager sharedManager] getCityArray];
         BOOL exist = NO;
         for (NSDictionary *dict in cityArray) {
             if ([dict[@"City"] isEqualToString:[NSString stringWithFormat:@"%@",cityDict[@"City"]]]) {
@@ -50,11 +72,8 @@
     } else {
         cityArray = [[NSMutableArray alloc] initWithObjects:cityDict, nil];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:cityArray forKey:@"CityArray"];
-    [[NSUserDefaults standardUserDefaults] setObject:@"北京" forKey:@"City"];
-    [[NSUserDefaults standardUserDefaults] setObject:@"全城" forKey:@"District"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[LocationManager sharedManager] saveCityWithDict:cityArray];
+    [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,8 +116,25 @@
     }
 }
 
-- (void)mapBtnClick {
+- (void)mapBtnClick:(UIButton *)button {
 
+    if (!self.cityChangeView.hidden) {
+        self.cityChangeView.hidden = YES;
+        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+    }
+    if (!button.selected) {
+        button.selected = YES;
+        [UIView transitionFromView:self.firstView toView:self.secondView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL finished) {
+
+        }];
+
+    }else {
+        button.selected = NO;
+        [UIView transitionFromView:self.secondView toView:self.firstView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL finished) {
+
+        }];
+
+    }
 }
 
 - (void)searchBtnClick {
@@ -117,18 +153,17 @@
     NSInteger index = button.tag - 1000;
     if (0 == index) {
         
-        NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:@"City"];
+        NSString *city = [[LocationManager sharedManager] getCity];
         [self.topView setAddressBtnTextWithString:city];
-        [[NSUserDefaults standardUserDefaults] setObject:@"全城" forKey:@"District"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
     } else {
         [self.topView setAddressBtnTextWithString:[NSString stringWithFormat:@"%@",button.titleLabel.text]];
-        [[NSUserDefaults standardUserDefaults] setObject:button.titleLabel.text forKey:@"District"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[LocationManager sharedManager] saveDistrictWithString:[NSString stringWithFormat:@"%@",button.titleLabel.text]];
     }
     
     [self.cityChangeView reloadView];
     self.cityChangeView.hidden = YES;
+    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
 }
 
 - (void)changeCityClick {

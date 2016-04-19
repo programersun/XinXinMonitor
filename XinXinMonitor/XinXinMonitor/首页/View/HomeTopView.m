@@ -35,7 +35,7 @@ static HomeTopView *instance;
 }
 
 - (IBAction)mapBtnClick:(id)sender {
-    [self.delegate mapBtnClick];
+    [self.delegate mapBtnClick:sender];
 }
 - (IBAction)searchBtnClick:(id)sender {
     [self.searchText resignFirstResponder];

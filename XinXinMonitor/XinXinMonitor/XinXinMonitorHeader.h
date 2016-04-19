@@ -17,6 +17,8 @@
 #import "UIImageView+WebCache.h"
 #import <Availability.h>
 #import "ColorRequest.h"
+#import "LocationManager.h"
+#import "UserInfoManager.h"
 
 #define NSLog(...) NSLog(__VA_ARGS__)
 #define debugMethod() NSLog(@"%s", __func__)

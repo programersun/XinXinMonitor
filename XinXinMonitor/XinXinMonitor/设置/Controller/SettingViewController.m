@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "LoginViewController.h"
 
 @interface SettingViewController ()
 
@@ -17,7 +18,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle:@"设置" TextColor:[UIColor whiteColor] Font:nil];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    [btn addTarget:self action:@selector(logOutBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    btn.backgroundColor = [UIColor redColor];
+    [self.view addSubview:btn];
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)logOutBtnClick {
+    
+    [[UserInfoManager sharedManager] clearUserInfo];
+    LoginViewController *vc = [[UIStoryboard storyboardWithName:@"LoginViewStoryboard" bundle:nil] instantiateInitialViewController];
+    if (vc == nil) {
+        vc = [[LoginViewController alloc] init];
+    }
+    [[UIApplication sharedApplication].delegate window].rootViewController = vc;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -28,6 +28,7 @@ static CityChangeView *instance;
     return instance;
 }
 
+#pragma mark - 背景的view
 - (void)greatBackgroundView {
     UIView *backgroundView = [[UIView alloc] initWithFrame:instance.bounds];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:instance action:@selector(hideCityChangeView)];
@@ -38,6 +39,7 @@ static CityChangeView *instance;
     [instance addSubview:backgroundView];
 }
 
+#pragma mark - 创建区域选择的view
 - (void)greatDistrictView {
     self.districtView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, 40)];
     self.districtView.backgroundColor = [ColorRequest BackGroundColor];
@@ -51,7 +53,7 @@ static CityChangeView *instance;
     changeView.backgroundColor = [UIColor whiteColor];
     UILabel *citylabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
     citylabel.font = [UIFont systemFontOfSize:15];
-    citylabel.text = [NSString stringWithFormat:@"当前城市：%@",@"北京"];
+    citylabel.text = [NSString stringWithFormat:@"当前城市：%@",[[LocationManager sharedManager] getCity]];
     UILabel *cityChangelabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cityView.frame.size.width - 110, 5, 80, 20)];
     cityChangelabel.font = [UIFont systemFontOfSize:15];
     cityChangelabel.textColor = [ColorRequest MainBlueColor];
@@ -95,17 +97,24 @@ static CityChangeView *instance;
     [self.delegate chooseDistrict:button];
 }
 
+#pragma mark - 创建区域的view
 - (void)reloadView {
     
-    NSArray *array = [NSArray mutableCopy];
+    //移除所有区域按钮
+    for(UIView *view in [self.districtView subviews])
+    {
+        [view removeFromSuperview];
+    }
     
-    NSArray *cityArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"CityArray"];
-    NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:@"City"];
-    NSString *district = [[NSUserDefaults standardUserDefaults] objectForKey:@"District"];
+    NSArray *array = [NSArray array];
+    
+    NSArray *cityArray = [[LocationManager sharedManager] getCityArray];
+    NSString *city = [[LocationManager sharedManager] getCity];
+    NSString *district = [[LocationManager sharedManager] getDistrict];
     
     for (NSDictionary *dict in cityArray) {
         if ([dict[@"City"] isEqualToString:[NSString stringWithFormat:@"%@",city]]) {
-            array = dict[@"District"];
+            array = dict[@"DistrictArray"];
         }
     }
     
