@@ -10,8 +10,17 @@
 
 @protocol HomeTopViewDelegate <NSObject>
 
+/**
+ *  左侧切换地址按钮点击事件
+ */
 - (void)addressBtnClick;
+/**
+ *  右侧地图按钮点击事件
+ */
 - (void)mapBtnClick;
+/**
+ *  搜索按钮点击事件
+ */
 - (void)searchBtnClick;
 
 @end
@@ -25,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *mapBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addressBtnWidth;
 @property (weak, nonatomic) id<HomeTopViewDelegate>delegate;
+
 + (id)instance;
 - (void)setAddressBtnTextWithString:(NSString *) addressText;
 @end

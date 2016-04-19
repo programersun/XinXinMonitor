@@ -32,7 +32,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)saveCity:(NSDictionary *)dict {
+- (void)saveCityWithDict:(NSDictionary *)dict {
     NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"山头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区"];
     NSDictionary *cityDict = @{@"City":@"北京",@"District":array};
     NSMutableArray *cityArray;

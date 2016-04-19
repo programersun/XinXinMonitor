@@ -18,9 +18,7 @@ static CityChangeView *instance;
 + (id)instance {
     @synchronized (self) {
         if (instance == nil) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CityChangeView" owner:self options:nil];
-            instance = [nib objectAtIndex:0];
-            instance.frame = CGRectMake(0, 64, kkViewWidth, kkViewHeight - 64);
+            instance = [[CityChangeView alloc] initWithFrame:CGRectMake(0, 64, kkViewWidth, kkViewHeight - 64)];
             instance.backgroundColor = [UIColor clearColor];
             instance.hidden = YES;
             [instance greatBackgroundView];

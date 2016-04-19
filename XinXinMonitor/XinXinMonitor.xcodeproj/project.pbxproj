@@ -70,7 +70,6 @@
 		A4D336401CBFE51C00023D5C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D3363F1CBFE51C00023D5C /* CFNetwork.framework */; };
 		A4D336431CBFF2A100023D5C /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */; };
 		A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */; };
-		A4D9EB3B1CC5012E00BBD7EA /* CityChangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D9EB3A1CC5012E00BBD7EA /* CityChangeView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,7 +185,6 @@
 		A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
 		A4D9EB371CC5010F00BBD7EA /* CityChangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChangeView.h; sourceTree = "<group>"; };
 		A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChangeView.m; sourceTree = "<group>"; };
-		A4D9EB3A1CC5012E00BBD7EA /* CityChangeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityChangeView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +207,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A49A27501CC5C1C200ED5A61 /* 百度地图 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "百度地图";
+			sourceTree = "<group>";
+		};
 		A4D3356D1CBFDFEE00023D5C = {
 			isa = PBXGroup;
 			children = (
@@ -397,7 +402,6 @@
 				A4360E841CC0D4DF0047C632 /* HomeTopView.xib */,
 				A4D9EB371CC5010F00BBD7EA /* CityChangeView.h */,
 				A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */,
-				A4D9EB3A1CC5012E00BBD7EA /* CityChangeView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -461,6 +465,7 @@
 		A4D335D51CBFE2A300023D5C /* ThirdClass */ = {
 			isa = PBXGroup;
 			children = (
+				A49A27501CC5C1C200ED5A61 /* 百度地图 */,
 				A4D335D61CBFE2A300023D5C /* AFNetworking */,
 				A4D335E41CBFE2A300023D5C /* JPush */,
 				A4D335E81CBFE2A400023D5C /* MBProgressHUD */,
@@ -643,7 +648,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4D335B51CBFE15D00023D5C /* SettingStoryboard.storyboard in Resources */,
-				A4D9EB3B1CC5012E00BBD7EA /* CityChangeView.xib in Resources */,
 				A4D335B91CBFE15D00023D5C /* MessageStoryboard.storyboard in Resources */,
 				A4D335891CBFDFEE00023D5C /* LaunchScreen.storyboard in Resources */,
 				A4D335B31CBFE15D00023D5C /* ManageStoryboard.storyboard in Resources */,
