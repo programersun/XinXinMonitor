@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vBC-9c-R7M">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Setting View Controller-->
+        <scene sceneID="v5q-ww-ZlY">
+            <objects>
+                <viewController storyboardIdentifier="SettingViewController" id="Pax-Ei-at5" customClass="SettingViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zPR-3P-cFA"/>
+                        <viewControllerLayoutGuide type="bottom" id="doJ-cF-PJB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dmY-25-RCH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UpP-dh-tMw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W09-1v-hge" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="920" y="470"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9JN-Qo-Yu0">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zqz-mr-jBh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vBC-9c-R7M" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lSD-3J-uSn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Pax-Ei-at5" kind="relationship" relationship="rootViewController" id="lNv-Vd-7MX"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="388" y="470"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="e74-3D-ELj">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Shou Ye View Controller-->
+        <scene sceneID="vDB-sY-6NF">
+            <objects>
+                <viewController storyboardIdentifier="ShouYeViewController" id="HON-zA-gIi" customClass="ShouYeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Y2-7i-mMr"/>
+                        <viewControllerLayoutGuide type="bottom" id="TYF-wK-jRi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="G9w-zC-lM6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="AIK-1T-rxt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u6h-EP-twi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1267" y="431"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="R6o-Wq-ixc">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3iT-KJ-0u0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e74-3D-ELj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="y9J-RC-f3j">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HON-zA-gIi" kind="relationship" relationship="rootViewController" id="U9p-vy-Ave"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="735" y="431"/>
+        </scene>
+        <!--Image Detail View Controller-->
+        <scene sceneID="igd-tD-Dg1">
+            <objects>
+                <viewController storyboardIdentifier="ImageDetailViewController" id="Suy-mY-o0w" customClass="ImageDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="up5-4Q-Tfr"/>
+                        <viewControllerLayoutGuide type="bottom" id="qNX-H6-BXX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fAX-hl-HsP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OKa-aC-EGS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="735" y="1066"/>
+        </scene>
+    </scenes>
+</document>
