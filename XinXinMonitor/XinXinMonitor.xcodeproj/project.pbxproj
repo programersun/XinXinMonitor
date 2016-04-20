@@ -24,6 +24,7 @@
 		A49A27711CC6176C00ED5A61 /* LoginViewStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A49A27701CC6176C00ED5A61 /* LoginViewStoryboard.storyboard */; };
 		A49A27741CC61B8B00ED5A61 /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A49A27731CC61B8B00ED5A61 /* LoginTableViewCell.m */; };
 		A49A27761CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */; };
+		A49A27781CC7740E00ED5A61 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27771CC7740E00ED5A61 /* BaiduMapAPI_Search.framework */; };
 		A4D3357B1CBFDFEE00023D5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357A1CBFDFEE00023D5C /* main.m */; };
 		A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357D1CBFDFEE00023D5C /* AppDelegate.mm */; };
 		A4D335811CBFDFEE00023D5C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D335801CBFDFEE00023D5C /* ViewController.m */; };
@@ -109,6 +110,7 @@
 		A49A27721CC61B8B00ED5A61 /* LoginTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewCell.h; sourceTree = "<group>"; };
 		A49A27731CC61B8B00ED5A61 /* LoginTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewCell.m; sourceTree = "<group>"; };
 		A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
+		A49A27771CC7740E00ED5A61 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
 		A4D335761CBFDFEE00023D5C /* XinXinMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XinXinMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D3357A1CBFDFEE00023D5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4D3357C1CBFDFEE00023D5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				A49A27521CC5C7A400ED5A61 /* CoreLocation.framework in Frameworks */,
 				A4D336401CBFE51C00023D5C /* CFNetwork.framework in Frameworks */,
 				A4D3363E1CBFE51500023D5C /* CoreTelephony.framework in Frameworks */,
+				A49A27781CC7740E00ED5A61 /* BaiduMapAPI_Search.framework in Frameworks */,
 				A4D3363C1CBFE50900023D5C /* SystemConfiguration.framework in Frameworks */,
 				A4D336391CBFE4FE00023D5C /* CoreFoundation.framework in Frameworks */,
 				A4D3363A1CBFE4FE00023D5C /* Foundation.framework in Frameworks */,
@@ -255,6 +258,7 @@
 				A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */,
 				A49A27611CC5C96800ED5A61 /* BaiduMapAPI_Map.framework */,
 				A49A275F1CC5C95200ED5A61 /* BaiduMapAPI_Location.framework */,
+				A49A27771CC7740E00ED5A61 /* BaiduMapAPI_Search.framework */,
 				A49A275D1CC5C93F00ED5A61 /* BaiduMapAPI_Base.framework */,
 			);
 			path = "百度地图";

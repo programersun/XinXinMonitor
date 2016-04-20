@@ -9,7 +9,7 @@
 #import "CityChangeView.h"
 static CityChangeView *instance;
 
-@interface CityChangeView ()
+@interface CityChangeView () <UIScrollViewDelegate>
 
 @end
 
@@ -127,6 +127,11 @@ static CityChangeView *instance;
         [self.districtView addSubview:noDistrictLabel];
     } else {
         
+        self.districtView.frame = CGRectMake(0, 0, kkViewWidth, 40);
+        self.scrollView = [[UIScrollView alloc] init];
+        self.scrollView.delegate = self;
+        [self.districtView addSubview:self.scrollView];
+        
         CGFloat btnWidth = (kkViewWidth - 40 * KASAdapterSizeWidth)/3;
         CGFloat btnHeight = 25 * KASAdapterSizeHeight;
         CGFloat btnY = 25;
@@ -153,9 +158,16 @@ static CityChangeView *instance;
             }
             
             [btn addTarget:self action:@selector(changeDistrict:) forControlEvents:UIControlEventTouchUpInside];
-            [self.districtView addSubview:btn];
+            [self.scrollView addSubview:btn];
             if (i == array.count - 1) {
-                self.districtView.frame = CGRectMake(0, 0, kkViewWidth, btn.frame.origin.y + btnHeight + 4);
+                if (btn.frame.origin.y + btn.frame.size.height < 190 * KASAdapterSizeHeight) {
+                    self.districtView.frame = CGRectMake(0, 0, kkViewWidth, btn.frame.origin.y + btn.frame.size.height + 3);
+                    self.scrollView.frame = CGRectMake(0, 0, kkViewWidth, btn.frame.origin.y + btn.frame.size.height + 3);
+                } else {
+                    self.districtView.frame = CGRectMake(0, 0, kkViewWidth, 190 * KASAdapterSizeHeight);
+                    self.scrollView.frame = CGRectMake(0, 0, kkViewWidth, 190 * KASAdapterSizeHeight);
+                }
+                [self.scrollView setContentSize:CGSizeMake(kkViewWidth, btn.frame.origin.y + btn.frame.size.height + 3)];
             }
         }
     }

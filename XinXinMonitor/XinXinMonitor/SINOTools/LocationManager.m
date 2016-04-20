@@ -46,7 +46,6 @@ static LocationManager *shareManager = nil;
     if (IOS_VERSION >= 8.0) {
         [self.locationManager requestAlwaysAuthorization];
     }
-    self.currentLocationGeocoder = [[CLGeocoder alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = 1000.0f;//用来控制定位服务更新频率。单位是“米”
@@ -70,10 +69,14 @@ static LocationManager *shareManager = nil;
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
              NSString *placeName = [NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"State"]];
              self.currentAddress = placeName;
+             NSString *districtName = [NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"SubLocality"]];
+             self.currentDistrict = districtName;
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
              [userDefault setObject:self.latitude forKey:@"Latitude"];
              [userDefault setObject:self.longitude forKey:@"Longitude"];
-             [userDefault setObject:self.currentAddress forKey:@"Location"];
+//             [userDefault setObject:self.currentAddress forKey:@"Location"];
+             [self saveMyCityWithString:self.currentAddress];
+             [self saveMyDistrictWithString:self.currentAddress];
              if ([userDefault objectForKey:@"City"] == nil || [userDefault objectForKey:@"City"]) {
                  [userDefault setObject:self.currentAddress forKey:@"City"];
              }
@@ -123,6 +126,16 @@ static LocationManager *shareManager = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)saveMyCityWithString:(NSString *) city {
+    [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"MyCity"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)saveMyDistrictWithString:(NSString *) district {
+    [[NSUserDefaults standardUserDefaults] setObject:district forKey:@"MyDistrict"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (NSMutableArray *)getCityArray {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"CityArray"];
 }
@@ -133,6 +146,14 @@ static LocationManager *shareManager = nil;
 
 - (NSString *)getDistrict {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"District"];
+}
+
+- (NSString *)getMyCity {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"MyCity"];
+}
+
+- (NSString *)getMyDistrict {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"MyDistrict"];
 }
 
 @end

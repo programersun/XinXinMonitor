@@ -26,6 +26,7 @@
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - 退出
 - (void)logOutBtnClick {
     
     [[UserInfoManager sharedManager] clearUserInfo];

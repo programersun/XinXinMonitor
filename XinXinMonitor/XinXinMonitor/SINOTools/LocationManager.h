@@ -17,6 +17,8 @@
 @property (nonatomic, strong) CLGeocoder *currentLocationGeocoder;
 /** 当前位置 */
 @property (nonatomic, strong) NSString *currentAddress;
+/** 当前位置 */
+@property (nonatomic, strong) NSString *currentDistrict;
 /** 经度 */
 @property (nonatomic, strong) NSString *longitude;
 /** 纬度 */
@@ -51,6 +53,20 @@
  */
 - (void)saveDistrictWithString:(NSString *) district;
 
+
+/**
+ *  存储定位的当前城市信息
+ *
+ *  @param city 定位城市名字
+ */
+- (void)saveMyCityWithString:(NSString *) city;
+/**
+ *  存储定位的当前区域信息
+ *
+ *  @param city 定位区域名字
+ */
+- (void)saveMyDistrictWithString:(NSString *) district;
+
 /**
  *  获取用户选择的城市区域信息
  *
@@ -60,14 +76,28 @@
 /**
  *  获取用户选择的当前城市
  *
- *  @return 当前城市名称
+ *  @return 用户选择的当前城市名称
  */
 - (NSString *)getCity;
 /**
  *  获取用户选择的当前区域信息
  *
- *  @param city 当前区域名字
+ *  @param city 用户选择的当前区域名字
  */
 - (NSString *)getDistrict;
+
+/**
+ *   获取定位当前城市信息
+ *
+ *  @return 定位当前城市信息
+ */
+- (NSString *)getMyCity;
+
+/**
+ *   获取定位当前区域信息
+ *
+ *  @return 定位当前区域信息
+ */
+- (NSString *)getMyDistrict;
 
 @end

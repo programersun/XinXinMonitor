@@ -31,6 +31,7 @@
 @property (weak, nonatomic) id<CityChangeViewDelegate>delegate;
 @property (nonatomic, strong) UIView *districtView;
 @property (nonatomic, strong) UIView *cityView;
+@property (nonatomic, strong) UIScrollView *scrollView;
 + (id)instance;
 - (void)reloadView;
 @end

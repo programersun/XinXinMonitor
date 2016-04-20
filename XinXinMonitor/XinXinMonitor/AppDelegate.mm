@@ -12,7 +12,7 @@
 #import "MainTabBarViewController.h"
 #import "LoginViewController.h"
 
-#define UMKey @"a7d3b0bd528f3157e64b0623"
+#define JPushKey @"a7d3b0bd528f3157e64b0623"
 #define BaiDuKey @"1T7hGSEgTOHo3agDWzQ524gREm9Y0xqL"
 
 @interface AppDelegate ()
@@ -126,7 +126,7 @@ BMKMapManager *_mapManager;
          categories:nil];
     }
     [JPUSHService setupWithOption:launchOptions
-                           appKey:UMKey
+                           appKey:JPushKey
                           channel:@"Publish channel"
                  apsForProduction:NO
             advertisingIdentifier:nil];
