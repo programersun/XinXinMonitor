@@ -11,11 +11,12 @@
 #import "CityChangeView.h"
 #import "ChooseCityViewController.h"
 #import "ImageDetailViewController.h"
+#import "ImageCollectionViewCell.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 
-@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate> {
+@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
     BMKLocationService* _locService;
     CLLocationCoordinate2D _center;
 }
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UIView *tranbackView;             /**< 旋转的view*/
 @property (nonatomic, strong) UIView *firstView;                /**< 列表view*/
 @property (nonatomic, strong) BMKMapView *mapView;              /**< 地图view*/
+@property (nonatomic, strong) UICollectionView *collectionView; /**< 列表collectionview*/
 
 @end
 
@@ -34,11 +36,10 @@
     [super viewDidLoad];
     [self addTopView];
     
-    //获取并存储城市信息
+    //显示当前位置信息
     NSString *city;
     if ([[LocationManager sharedManager] getCity] != nil && [[LocationManager sharedManager] getCity]) {
         city = [[LocationManager sharedManager] getCity];
-//        [self loadDistrict:city];
     }else {
         city = @"济南市";
     }
@@ -50,11 +51,31 @@
         [self.topView setAddressBtnTextWithString:city];
     }
     
-    
     //旋转的view 正面为列表view 反面为地图view
-    self.tranbackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
-    self.firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
-    self.firstView.backgroundColor = [UIColor redColor];
+    self.tranbackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64)];
+    self.firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64)];
+    self.firstView.backgroundColor = [ColorRequest BackGroundColor];
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    //设置对齐方式
+    [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    //cell间距
+    layout.minimumInteritemSpacing = 5.0f;
+    //cell行距
+    layout.minimumLineSpacing = 5.0f;
+    
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64) collectionViewLayout:layout];
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.pagingEnabled = YES;
+    self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    self.collectionView.backgroundColor = [ColorRequest BackGroundColor];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ImageCollectionViewCell"];
+    UINib *nib = [UINib nibWithNibName:@"ImageCollectionViewCell"
+                                bundle: nil];
+    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"ImageCollectionViewCell"];
+    
+    [self.firstView addSubview:self.collectionView];
     
     //实例化地图BMKMapView
     [self addMapView];
@@ -368,6 +389,32 @@
     self.cityChangeView.hidden = YES;
     self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
 }
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCollectionViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    [cell loadCellWithModel:@""];
+    return cell;
+}
+
+#pragma mark --UICollectionViewDelegateFlowLayout
+//定义每个UICollectionView 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(150 * KASAdapterSizeWidth, 185 * KASAdapterSizeHeight);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(10, 10, 10, 10);// top left bottom right  Cell边界范围
+}
+
+#pragma mark - UICollectionViewDelegate
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

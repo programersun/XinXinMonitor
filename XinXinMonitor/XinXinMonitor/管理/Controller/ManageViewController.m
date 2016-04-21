@@ -28,6 +28,10 @@
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
+    
+}
+
+- (void)toImageDetailView {
     ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];

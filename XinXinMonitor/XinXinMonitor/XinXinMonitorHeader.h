@@ -8,6 +8,7 @@
 
 #ifndef XinXinMonitorHeader_h
 
+#ifdef __OBJC__
 #import "AFNetworkingTools.h"
 #import "JPUSHService.h"
 #import "MBProgressHUD.h"
@@ -19,6 +20,7 @@
 #import "ColorRequest.h"
 #import "LocationManager.h"
 #import "UserInfoManager.h"
+#endif
 
 #define NSLog(...) NSLog(__VA_ARGS__)
 #define debugMethod() NSLog(@"%s", __func__)

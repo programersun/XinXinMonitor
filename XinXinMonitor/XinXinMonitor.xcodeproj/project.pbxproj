@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		A4360E851CC0D4DF0047C632 /* HomeTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4360E841CC0D4DF0047C632 /* HomeTopView.xib */; };
 		A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4360E8A1CC0D5480047C632 /* HomeTopView.m */; };
+		A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDA1CC8D9DF006BD80D /* ChineseString.m */; };
+		A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDB1CC8D9DF006BD80D /* pinyin.c */; };
+		A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */; };
+		A4505DE61CC91C45006BD80D /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */; };
 		A49A27521CC5C7A400ED5A61 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */; };
 		A49A27541CC5C7AB00ED5A61 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */; };
 		A49A27561CC5C7B400ED5A61 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */; };
@@ -91,6 +95,13 @@
 		A4360E841CC0D4DF0047C632 /* HomeTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTopView.xib; sourceTree = "<group>"; };
 		A4360E891CC0D5480047C632 /* HomeTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTopView.h; sourceTree = "<group>"; };
 		A4360E8A1CC0D5480047C632 /* HomeTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTopView.m; sourceTree = "<group>"; };
+		A4505DD91CC8D9DF006BD80D /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
+		A4505DDA1CC8D9DF006BD80D /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
+		A4505DDB1CC8D9DF006BD80D /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
+		A4505DDC1CC8D9DF006BD80D /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
+		A4505DDF1CC9167B006BD80D /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
+		A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -251,6 +262,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4505DD81CC8D9DF006BD80D /* ChineseString */ = {
+			isa = PBXGroup;
+			children = (
+				A4505DD91CC8D9DF006BD80D /* ChineseString.h */,
+				A4505DDA1CC8D9DF006BD80D /* ChineseString.m */,
+				A4505DDB1CC8D9DF006BD80D /* pinyin.c */,
+				A4505DDC1CC8D9DF006BD80D /* pinyin.h */,
+			);
+			path = ChineseString;
+			sourceTree = "<group>";
+		};
 		A49A27501CC5C1C200ED5A61 /* 百度地图 */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,11 +474,14 @@
 		A4D335A91CBFE15D00023D5C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A4360E891CC0D5480047C632 /* HomeTopView.h */,
 				A4360E8A1CC0D5480047C632 /* HomeTopView.m */,
+				A4360E891CC0D5480047C632 /* HomeTopView.h */,
 				A4360E841CC0D4DF0047C632 /* HomeTopView.xib */,
 				A4D9EB371CC5010F00BBD7EA /* CityChangeView.h */,
 				A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */,
+				A4505DDF1CC9167B006BD80D /* ImageCollectionViewCell.h */,
+				A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */,
+				A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -524,6 +549,7 @@
 		A4D335D51CBFE2A300023D5C /* ThirdClass */ = {
 			isa = PBXGroup;
 			children = (
+				A4505DD81CC8D9DF006BD80D /* ChineseString */,
 				A49A27501CC5C1C200ED5A61 /* 百度地图 */,
 				A4D335D61CBFE2A300023D5C /* AFNetworking */,
 				A4D335E41CBFE2A300023D5C /* JPush */,
@@ -715,6 +741,7 @@
 				A4D335891CBFDFEE00023D5C /* LaunchScreen.storyboard in Resources */,
 				A4D335B31CBFE15D00023D5C /* ManageStoryboard.storyboard in Resources */,
 				A4D335861CBFDFEE00023D5C /* Assets.xcassets in Resources */,
+				A4505DE61CC91C45006BD80D /* ImageCollectionViewCell.xib in Resources */,
 				A4D3362E1CBFE2A400023D5C /* SVProgressHUD.bundle in Resources */,
 				A4D3361C1CBFE2A400023D5C /* MBProgressHUD.bundle in Resources */,
 				A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */,
@@ -745,6 +772,7 @@
 				A49A276C1CC60AED00ED5A61 /* UserInfoManager.m in Sources */,
 				A4D336241CBFE2A400023D5C /* SDWebImageDownloaderOperation.m in Sources */,
 				A4D336191CBFE2A400023D5C /* AFURLSessionManager.m in Sources */,
+				A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */,
 				A4D335D11CBFE1D200023D5C /* GCPath.m in Sources */,
 				A4D3362C1CBFE2A400023D5C /* UIImageView+WebCache.m in Sources */,
 				A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */,
@@ -752,6 +780,8 @@
 				A4D335B61CBFE15D00023D5C /* ShouYeViewController.m in Sources */,
 				A4D335D01CBFE1D200023D5C /* DateEditor.m in Sources */,
 				A4D3362B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m in Sources */,
+				A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */,
+				A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */,
 				A4D336141CBFE2A400023D5C /* AFHTTPSessionManager.m in Sources */,
 				A4D3362F1CBFE2A400023D5C /* SVProgressHUD.m in Sources */,
 				A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */,

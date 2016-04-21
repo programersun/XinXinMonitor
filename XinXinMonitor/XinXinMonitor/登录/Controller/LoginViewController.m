@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [self setNavigationTitle:@"登录" TextColor:[UIColor whiteColor] Font:nil];
     // Do any additional setup after loading the view.
 }
 

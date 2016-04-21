@@ -7,6 +7,7 @@
 //
 
 #import "ChooseCityViewController.h"
+#import "ChineseString.h"
 
 @interface ChooseCityViewController ()
 
