@@ -9,15 +9,14 @@
 #import "ShouYeViewController.h"
 #import "HomeTopView.h"
 #import "CityChangeView.h"
+#import "ChooseCityViewController.h"
 #import "ImageDetailViewController.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
-@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,UITextFieldDelegate> {
+@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate> {
     BMKLocationService* _locService;
-    BMKGeoCodeSearch * _geocodesearch;
     CLLocationCoordinate2D _center;
 }
 
@@ -39,14 +38,11 @@
     NSString *city;
     if ([[LocationManager sharedManager] getCity] != nil && [[LocationManager sharedManager] getCity]) {
         city = [[LocationManager sharedManager] getCity];
-        
-        //获取城市
-        NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"门头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区",@"通州区",@"大兴区"];
-        NSDictionary *cityDict = @{@"City":city,@"DistrictArray":array};
-        [self saveCityWithDict:cityDict];
+//        [self loadDistrict:city];
     }else {
         city = @"济南市";
     }
+    
     NSString *district = [[LocationManager sharedManager] getDistrict];
     if (![district isEqualToString:@"全城"] && district != nil) {
         [self.topView setAddressBtnTextWithString:district];
@@ -70,6 +66,18 @@
     self.topView.searchText.delegate = self;
 }
 
+#pragma mark - 获取城市区域
+- (void)loadDistrict:(NSString *) cityString{
+    
+    
+    //获取城市
+    NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"门头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区",@"通州区",@"大兴区"];
+    NSDictionary *cityDict = @{@"City":cityString,@"DistrictArray":array};
+    [self saveCityWithDict:cityDict];
+    [self.cityChangeView reloadView];
+    
+}
+
 #pragma mark - 实例化地图BMKMapView
 - (void)addMapView {
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
@@ -77,9 +85,6 @@
     
     //定位
     _locService = [[BMKLocationService alloc]init];
-    
-    //地理编码
-    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
 
 }
 
@@ -94,7 +99,6 @@
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    _geocodesearch.delegate = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -102,7 +106,6 @@
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
-    _geocodesearch.delegate = nil;
 }
 
 /**
@@ -113,11 +116,11 @@
 - (void)saveCityWithDict:(NSDictionary *)cityDict {
 
     //便利存储的城市区域信心，如没有添加后重新存储
-    NSMutableArray *cityArray;
+    NSMutableArray *cityArray = [[NSMutableArray alloc] init];
     if ([[LocationManager sharedManager] getCityArray] && [[LocationManager sharedManager] getCityArray] != nil) {
-        cityArray = [[LocationManager sharedManager] getCityArray];
         BOOL exist = NO;
-        for (NSDictionary *dict in cityArray) {
+        for (NSDictionary *dict in [[LocationManager sharedManager] getCityArray]) {
+            [cityArray addObject:dict];
             if ([dict[@"City"] isEqualToString:[NSString stringWithFormat:@"%@",cityDict[@"City"]]]) {
                 exist = YES;
             }
@@ -130,7 +133,7 @@
     }
     [[LocationManager sharedManager] saveCityWithDict:cityArray];
     if ([[LocationManager sharedManager] getDistrict] == nil) {
-        [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
+        [[LocationManager sharedManager] saveDistrictWithString:[LocationManager sharedManager].currentDistrict];
     }
 }
 
@@ -155,11 +158,16 @@
     [self.topView.searchText resignFirstResponder];
     self.cityChangeView = [CityChangeView instance];
     self.cityChangeView.delegate = self;
+    
     //添加到window上  最顶层覆盖tabbar
     [[[UIApplication sharedApplication].delegate window] addSubview:self.cityChangeView];
     if (self.cityChangeView.hidden) {
         self.cityChangeView.hidden = NO;
         self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_up"];
+        
+        //获取当前城市区域
+        [self loadDistrict:[[LocationManager sharedManager] getCity]];
+        
     } else {
         self.cityChangeView.hidden = YES;
         self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
@@ -221,7 +229,21 @@
 }
 
 - (void)changeCityClick {
+    ChooseCityViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ChooseCityViewController"];
+    if (vc == nil) {
+        vc = [[ChooseCityViewController alloc] init];
+    }
+    self.cityChangeView.hidden = YES;
+    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
     
+    vc.cityChangeBlock = ^(NSString *chooseCityString){
+        [self.topView setAddressBtnTextWithString:chooseCityString];
+        [[LocationManager sharedManager] saveCityWithString:chooseCityString];
+        [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
+    };
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - 进入普通定位态
@@ -286,23 +308,39 @@
     
     NSString *myChooseCity = [NSString stringWithFormat:@"%@",[[LocationManager sharedManager] getMyCity]];
     NSString *myChooseDistrict = [NSString stringWithFormat:@"%@",[[LocationManager sharedManager] getDistrict]];
-    
+    NSString *addressString = [NSString stringWithFormat:@"%@%@",myChooseCity,myChooseDistrict];
     if ([myChooseDistrict isEqualToString:@"全城"]) {
         myChooseDistrict = myChooseCity;
     }
     
-    BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
-    geocodeSearchOption.city= myChooseCity;
-    geocodeSearchOption.address = myChooseDistrict;
-    BOOL flag = [_geocodesearch geoCode:geocodeSearchOption];
-    if(flag)
-    {
-        NSLog(@"geo检索发送成功");
-    }
-    else
-    {
-        NSLog(@"geo检索发送失败");
-    }
+    [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (error == nil && [placemarks count] > 0) {
+            //取出获取的地理信息数组中的第一个显示在界面上
+            CLPlacemark *firstPlacemark=[placemarks firstObject];
+            //纬度
+            CLLocationDegrees latitude=firstPlacemark.location.coordinate.latitude;
+            //经度
+            CLLocationDegrees longitude=firstPlacemark.location.coordinate.longitude;
+
+            _center.latitude = latitude;
+            _center.longitude = longitude;
+            BMKCoordinateSpan span;
+            if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
+                span = BMKCoordinateSpanMake(0.6, 0.4);
+            } else {
+                span = BMKCoordinateSpanMake(0.2, 0.15);
+            }
+            
+            BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
+            [_mapView setRegion:region animated:YES];
+            
+            
+        }else if (error == nil && [placemarks count] == 0){
+            NSLog(@"No results were returned.");
+        }else if (error != nil){
+            NSLog(@"an error occurred = %@",error);
+        }
+    }];
 }
 
 /**
@@ -322,25 +360,6 @@
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
     NSLog(@"location error");
-}
-
-
-#pragma mark - BMKGeoCodeSearchDelegate
-- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
-{
-    if (error == 0) {
-        //将获得的坐标给 _center
-        _center = result.location;
-        BMKCoordinateSpan span;
-        if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
-            span = BMKCoordinateSpanMake(0.6, 0.4);
-        } else {
-            span = BMKCoordinateSpanMake(0.3, 0.2);
-        }
-        
-        BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
-        [_mapView setRegion:region animated:YES];
-    }
 }
 
 #pragma mark - UITextFiledDelegate

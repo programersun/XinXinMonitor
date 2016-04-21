@@ -51,16 +51,15 @@ static CityChangeView *instance;
     
     UIView *changeView = [[UIView alloc] initWithFrame:CGRectMake(10, (self.cityView.frame.size.height/2 - 15), kkViewWidth - 20, 30)];
     changeView.backgroundColor = [UIColor whiteColor];
-    UILabel *citylabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
-    citylabel.font = [UIFont systemFontOfSize:15];
-    citylabel.text = [NSString stringWithFormat:@"当前城市：%@",[[LocationManager sharedManager] getCity]];
+    self.citylabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
+    self.citylabel.font = [UIFont systemFontOfSize:15];
     UILabel *cityChangelabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cityView.frame.size.width - 110, 5, 80, 20)];
     cityChangelabel.font = [UIFont systemFontOfSize:15];
     cityChangelabel.textColor = [ColorRequest MainBlueColor];
     cityChangelabel.textAlignment = NSTextAlignmentRight;
     cityChangelabel.text = @"更换";
     [changeView addSubview:cityChangelabel];
-    [changeView addSubview:citylabel];
+    [changeView addSubview:self.citylabel];
     [self.cityView addSubview:changeView];
     [self addSubview:self.cityView];
     
@@ -100,6 +99,9 @@ static CityChangeView *instance;
 #pragma mark - 创建区域的view
 - (void)reloadView {
     
+    //设置显示的当前城市
+    self.citylabel.text = [NSString stringWithFormat:@"当前城市：%@",[[LocationManager sharedManager] getCity]];
+    
     //移除所有区域按钮
     for(UIView *view in [self.districtView subviews])
     {
@@ -119,6 +121,7 @@ static CityChangeView *instance;
     }
     
     if (array.count == 0) {
+        self.districtView.frame = CGRectMake(0, 0, kkViewWidth, 40);
         UILabel *noDistrictLabel = [[UILabel alloc] initWithFrame:CGRectMake(kkViewWidth /2 - 50, 10, 100, 20)];
         noDistrictLabel.font = [UIFont systemFontOfSize:15];
         noDistrictLabel.textColor = [UIColor grayColor];
@@ -151,7 +154,7 @@ static CityChangeView *instance;
             [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn setTitle:[NSString stringWithFormat:@"%@",array[i]] forState:UIControlStateNormal];
             
-            if ([array[i] isEqualToString:district] ) {
+            if ([array[i] isEqualToString:district] || ([district isEqualToString:@"全城"] && i == 0)) {
                 btn.backgroundColor = [UIColor redColor];
             } else {
                 btn.backgroundColor = [UIColor whiteColor];

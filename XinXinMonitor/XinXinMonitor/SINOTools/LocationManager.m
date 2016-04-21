@@ -8,6 +8,13 @@
 
 #import "LocationManager.h"
 
+@interface LocationManager ()<CLLocationManagerDelegate,UIAlertViewDelegate>
+{
+    UIAlertView *_alert;
+}
+
+@end
+
 @implementation LocationManager
 
 static LocationManager *shareManager = nil;
@@ -50,8 +57,10 @@ static LocationManager *shareManager = nil;
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = 1000.0f;//用来控制定位服务更新频率。单位是“米”
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;//这个属性用来控制定位精度，精度越高耗电量越大。
+//    [self setLocationAuthority];
     
-    [self.locationManager startUpdatingLocation];}
+    [self.locationManager startUpdatingLocation];
+}
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
@@ -74,14 +83,15 @@ static LocationManager *shareManager = nil;
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
              [userDefault setObject:self.latitude forKey:@"Latitude"];
              [userDefault setObject:self.longitude forKey:@"Longitude"];
-//             [userDefault setObject:self.currentAddress forKey:@"Location"];
-             [self saveMyCityWithString:self.currentAddress];
-             [self saveMyDistrictWithString:self.currentAddress];
-             if ([userDefault objectForKey:@"City"] == nil || [userDefault objectForKey:@"City"]) {
-                 [userDefault setObject:self.currentAddress forKey:@"City"];
-             }
              [userDefault synchronize];
-             
+             [self saveMyCityWithString:self.currentAddress];
+             [self saveMyDistrictWithString:self.currentDistrict];
+             if ([[LocationManager sharedManager] getCity] == nil) {
+                 [self saveCityWithString:self.currentAddress];
+             }
+             if ([[LocationManager sharedManager] getDistrict] == nil) {
+                 [self saveDistrictWithString:self.currentDistrict];
+             }
          }else if (error == nil && [placemarks count] == 0){
              NSLog(@"No results were returned.");
          }else if (error != nil){
@@ -109,6 +119,25 @@ static LocationManager *shareManager = nil;
     [userDefault setObject:@"0" forKey:@"Longitude"];
     [userDefault setObject:@"" forKey:@"Location"];
     [userDefault synchronize];
+    
+//    NSString *errorString;
+//    [manager stopUpdatingLocation];
+//    NSLog(@"Error: %@",[error localizedDescription]);
+//    switch([error code]) {
+//        case kCLErrorDenied:
+//            //Access denied by user
+//            errorString = @"Access to Location Services denied by user";
+//            //Do something...
+//            break;
+//        case kCLErrorLocationUnknown:
+//            //Probably temporary...
+//            errorString = @"Location data unavailable";
+//            //Do something else...
+//            break;
+//        default:
+//            errorString = @"An unknown error has occurred";
+//            break;
+//    }
 }
 
 - (void)saveCityWithDict:(NSArray *) cityArray {
@@ -154,6 +183,30 @@ static LocationManager *shareManager = nil;
 
 - (NSString *)getMyDistrict {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"MyDistrict"];
+}
+
+- (void)setLocationAuthority {
+    if ([CLLocationManager locationServicesEnabled] &&
+        ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized
+         || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
+            //定位功能可用，开始定位
+            [_locationManager startUpdatingLocation];
+        }
+    else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
+        _alert = [[UIAlertView alloc] initWithTitle:@"定位服务未开启" message:@"请在系统设置中开启定位服务" delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"去设置",nil, nil];
+        [_alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSURL*url=[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([[UIApplication sharedApplication] canOpenURL:url])
+        {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+    [_alert dismissWithClickedButtonIndex:1 animated:YES];
 }
 
 @end

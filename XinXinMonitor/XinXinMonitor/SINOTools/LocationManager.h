@@ -11,7 +11,7 @@
 #import <CoreLocation/CLLocation.h>
 #import <MapKit/MapKit.h>
 
-@interface LocationManager : NSObject <CLLocationManagerDelegate>
+@interface LocationManager : NSObject 
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLGeocoder *currentLocationGeocoder;
@@ -99,5 +99,9 @@
  *  @return 定位当前区域信息
  */
 - (NSString *)getMyDistrict;
+/**
+ *  判断用户是否开启定位，如未开启提示用户去设置中开启
+ */
+- (void)setLocationAuthority;
 
 @end

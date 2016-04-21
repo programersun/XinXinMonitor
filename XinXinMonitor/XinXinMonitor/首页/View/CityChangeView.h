@@ -32,6 +32,7 @@
 @property (nonatomic, strong) UIView *districtView;
 @property (nonatomic, strong) UIView *cityView;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UILabel *citylabel;
 + (id)instance;
 - (void)reloadView;
 @end
