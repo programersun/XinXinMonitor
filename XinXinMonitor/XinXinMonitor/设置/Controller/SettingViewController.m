@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 
 @interface SettingViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 
 @end
 

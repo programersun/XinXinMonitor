@@ -32,7 +32,6 @@
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="NPx-Ca-6MW" secondAttribute="bottom" constant="10" id="3Vc-M9-6br"/>
-                <constraint firstItem="NPx-Ca-6MW" firstAttribute="top" secondItem="mKX-91-skn" secondAttribute="bottom" constant="10" id="80a-3T-BsE"/>
                 <constraint firstItem="mKX-91-skn" firstAttribute="top" secondItem="GL1-5X-Zgt" secondAttribute="top" id="VUL-6H-slW"/>
                 <constraint firstAttribute="trailing" secondItem="NPx-Ca-6MW" secondAttribute="trailing" id="cJj-JD-vjb"/>
                 <constraint firstItem="NPx-Ca-6MW" firstAttribute="leading" secondItem="GL1-5X-Zgt" secondAttribute="leading" constant="10" id="lSA-is-7RB"/>

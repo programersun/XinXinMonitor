@@ -47,7 +47,7 @@ static CityChangeView *instance;
     [self addSubview:self.districtView];
     
     self.cityView = [[UIView alloc] initWithFrame:CGRectMake(0, self.districtView.frame.size.height, kkViewWidth, 60 * KASAdapterSizeWidth)];
-    self.cityView.backgroundColor = [UIColor greenColor];
+    self.cityView.backgroundColor = [ColorRequest BackGroundColor];
     
     UIView *changeView = [[UIView alloc] initWithFrame:CGRectMake(10, (self.cityView.frame.size.height/2 - 15), kkViewWidth - 20, 30)];
     changeView.backgroundColor = [UIColor whiteColor];

@@ -29,6 +29,9 @@
 		A49A27741CC61B8B00ED5A61 /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A49A27731CC61B8B00ED5A61 /* LoginTableViewCell.m */; };
 		A49A27761CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */; };
 		A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49A279D1CC8B98E00ED5A61 /* ChooseCityViewController.m */; };
+		A4C81BA31CC9D23B00C6F992 /* CityChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */; };
+		A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */; };
+		A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */; };
 		A4D3357B1CBFDFEE00023D5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357A1CBFDFEE00023D5C /* main.m */; };
 		A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357D1CBFDFEE00023D5C /* AppDelegate.mm */; };
 		A4D335811CBFDFEE00023D5C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D335801CBFDFEE00023D5C /* ViewController.m */; };
@@ -123,6 +126,12 @@
 		A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
 		A49A279C1CC8B98E00ED5A61 /* ChooseCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCityViewController.h; sourceTree = "<group>"; };
 		A49A279D1CC8B98E00ED5A61 /* ChooseCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCityViewController.m; sourceTree = "<group>"; };
+		A4C81BA11CC9D23B00C6F992 /* CityChooseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseTableViewCell.h; sourceTree = "<group>"; };
+		A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseTableViewCell.m; sourceTree = "<group>"; };
+		A4C81BA41CCA042300C6F992 /* ManageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageTableViewCell.h; sourceTree = "<group>"; };
+		A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageTableViewCell.m; sourceTree = "<group>"; };
+		A4C81BA71CCA1D9B00C6F992 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		A4D335761CBFDFEE00023D5C /* XinXinMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XinXinMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D3357A1CBFDFEE00023D5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4D3357C1CBFDFEE00023D5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -402,6 +411,8 @@
 		A4D3359B1CBFE15D00023D5C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4C81BA41CCA042300C6F992 /* ManageTableViewCell.h */,
+				A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -482,6 +493,8 @@
 				A4505DDF1CC9167B006BD80D /* ImageCollectionViewCell.h */,
 				A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */,
 				A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */,
+				A4C81BA11CC9D23B00C6F992 /* CityChooseTableViewCell.h */,
+				A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -516,6 +529,8 @@
 		A4D335B01CBFE15D00023D5C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4C81BA71CCA1D9B00C6F992 /* MessageTableViewCell.h */,
+				A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -770,6 +785,7 @@
 				A4D335B21CBFE15D00023D5C /* ManageViewController.m in Sources */,
 				A4D336211CBFE2A400023D5C /* SDWebImageCompat.m in Sources */,
 				A49A276C1CC60AED00ED5A61 /* UserInfoManager.m in Sources */,
+				A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */,
 				A4D336241CBFE2A400023D5C /* SDWebImageDownloaderOperation.m in Sources */,
 				A4D336191CBFE2A400023D5C /* AFURLSessionManager.m in Sources */,
 				A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */,
@@ -780,6 +796,7 @@
 				A4D335B61CBFE15D00023D5C /* ShouYeViewController.m in Sources */,
 				A4D335D01CBFE1D200023D5C /* DateEditor.m in Sources */,
 				A4D3362B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m in Sources */,
+				A4C81BA31CC9D23B00C6F992 /* CityChooseTableViewCell.m in Sources */,
 				A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */,
 				A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */,
 				A4D336141CBFE2A400023D5C /* AFHTTPSessionManager.m in Sources */,
@@ -810,6 +827,7 @@
 				A4D336201CBFE2A400023D5C /* SDImageCache.m in Sources */,
 				A4D335D21CBFE1D200023D5C /* GCTextField.m in Sources */,
 				A4D335CE1CBFE1D200023D5C /* AFNetworkingTools.m in Sources */,
+				A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

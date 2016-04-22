@@ -8,12 +8,25 @@
 //
 
 #import "MessageViewController.h"
+#import "ImageDetailViewController.h"
+#import "MessageTableViewCell.h"
 
-@interface MessageViewController ()
+@interface MessageViewController () <UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger _pageNum;
+}
+@property (nonatomic, strong) NSMutableArray *messageArray;
 
 @end
 
 @implementation MessageViewController
+
+- (NSMutableArray *)manageArray {
+    if (_messageArray == nil) {
+        _messageArray = [NSMutableArray array];
+    }
+    return  _messageArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,6 +38,41 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 20;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 67;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageTableViewCell"];
+    if (cell == nil) {
+        cell = [[MessageTableViewCell alloc] init];
+    }
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (void)toImageDetailView {
+    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+    if (vc == nil) {
+        vc = [[ImageDetailViewController alloc] init];
+    }
+    [vc setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

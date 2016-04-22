@@ -8,17 +8,31 @@
 
 #import "ManageViewController.h"
 #import "ImageDetailViewController.h"
+#import "ManageTableViewCell.h"
 
-@interface ManageViewController ()
+@interface ManageViewController () <UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger _pageNum;
+}
+@property (weak, nonatomic) IBOutlet UITableView *manageTableView;
+@property (nonatomic, strong) NSMutableArray *manageArray;
 
 @end
 
 @implementation ManageViewController
 
+- (NSMutableArray *)manageArray {
+    if (_manageArray == nil) {
+        _manageArray = [NSMutableArray array];
+    }
+    return  _manageArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
     [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"arrows_up"] highlightedImg:[UIImage imageNamed:@"arrows_up"]];
+    _pageNum = 0;
     // Do any additional setup after loading the view.
 }
 
@@ -28,6 +42,34 @@
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
+    
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 67;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ManageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ManageTableViewCell"];
+    if (cell == nil) {
+        cell = [[ManageTableViewCell alloc] init];
+    }
+    cell.nameLabel.text = [NSString stringWithFormat:@"设备%ld",(long)indexPath.row];
+    cell.addressLabel.text = [NSString stringWithFormat:@"地址%ld",(long)indexPath.row];
+    [cell.cellRightBtn setTitle:@"设置隐患" forState:UIControlStateNormal];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 

@@ -191,7 +191,7 @@ static LocationManager *shareManager = nil;
          || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
             //定位功能可用，开始定位
             [_locationManager startUpdatingLocation];
-        }
+    }
     else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
         _alert = [[UIAlertView alloc] initWithTitle:@"定位服务未开启" message:@"请在系统设置中开启定位服务" delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"去设置",nil, nil];
         [_alert show];

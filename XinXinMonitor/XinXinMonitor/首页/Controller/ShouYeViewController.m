@@ -67,7 +67,7 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64) collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.pagingEnabled = YES;
+//    self.collectionView.pagingEnabled = YES;
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.collectionView.backgroundColor = [ColorRequest BackGroundColor];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ImageCollectionViewCell"];
@@ -327,11 +327,11 @@
 #pragma mark - 地理编码 根据城市和地址获取当前用户选择的经纬度
 - (void)animationToMyChooseLocation {
     
-    NSString *myChooseCity = [NSString stringWithFormat:@"%@",[[LocationManager sharedManager] getMyCity]];
+    NSString *myChooseCity = [NSString stringWithFormat:@"%@",[[LocationManager sharedManager] getCity]];
     NSString *myChooseDistrict = [NSString stringWithFormat:@"%@",[[LocationManager sharedManager] getDistrict]];
     NSString *addressString = [NSString stringWithFormat:@"%@%@",myChooseCity,myChooseDistrict];
     if ([myChooseDistrict isEqualToString:@"全城"]) {
-        myChooseDistrict = myChooseCity;
+        addressString = myChooseCity;
     }
     
     [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
@@ -407,7 +407,7 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(150 * KASAdapterSizeWidth, 185 * KASAdapterSizeHeight);
+    return CGSizeMake((kkViewWidth - 30)/2, 185 * KASAdapterSizeHeight);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{

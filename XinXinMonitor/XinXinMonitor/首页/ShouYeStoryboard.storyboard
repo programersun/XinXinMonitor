@@ -110,23 +110,34 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Fva-sA-BQ8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CityChooseTableViewCell" id="Fva-sA-BQ8" customClass="CityChooseTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fva-sA-BQ8" id="GMs-B8-sxR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="北京" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZtJ-kP-7Sg">
-                                                    <rect key="frame" x="10" y="8" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZtJ-kP-7Sg">
+                                                    <rect key="frame" x="20" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZtJ-kP-7Sg" firstAttribute="centerY" secondItem="GMs-B8-sxR" secondAttribute="centerY" id="Q32-wu-yW4"/>
+                                                <constraint firstItem="ZtJ-kP-7Sg" firstAttribute="leading" secondItem="GMs-B8-sxR" secondAttribute="leading" constant="20" id="jE6-Fa-TLw"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cityLabel" destination="ZtJ-kP-7Sg" id="AdJ-NP-Ml0"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="gnS-45-PD3" id="xDS-xi-EWw"/>
+                                    <outlet property="delegate" destination="gnS-45-PD3" id="ogq-FB-En9"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -142,6 +153,7 @@
                     </view>
                     <connections>
                         <outlet property="chooseCityTitleLabel" destination="fhV-EB-k65" id="91g-iV-HSO"/>
+                        <outlet property="cityTableView" destination="Jni-dJ-60t" id="p9c-90-XFe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8z-YH-MTQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
