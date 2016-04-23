@@ -46,7 +46,7 @@
             return 50;
             break;
         case 3:
-            return 60 * KASAdapterSizeWidth;
+            return 70 * KASAdapterSizeWidth;
             break;
             
         default:
@@ -76,7 +76,7 @@
         case 3:
             
             cell.loginBtn.layer.masksToBounds = YES;
-            cell.loginBtn.layer.cornerRadius = 3;
+            cell.loginBtn.layer.cornerRadius = 5;
             cell.loginBtnClickBlock = ^(){
                 
                 NSDictionary *dict = @{@"userid":@"1234"};

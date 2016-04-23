@@ -37,6 +37,10 @@
     return [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
 }
 
++ (UIColor *) grayColor {
+    return [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
+}
+
 + (UIColor *) DividingLineColor {
     return [UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1];
 }

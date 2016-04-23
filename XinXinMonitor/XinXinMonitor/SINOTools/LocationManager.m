@@ -9,9 +9,6 @@
 #import "LocationManager.h"
 
 @interface LocationManager ()<CLLocationManagerDelegate,UIAlertViewDelegate>
-{
-    UIAlertView *_alert;
-}
 
 @end
 
@@ -193,8 +190,8 @@ static LocationManager *shareManager = nil;
             [_locationManager startUpdatingLocation];
     }
     else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
-        _alert = [[UIAlertView alloc] initWithTitle:@"定位服务未开启" message:@"请在系统设置中开启定位服务" delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"去设置",nil, nil];
-        [_alert show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"定位服务未开启" message:@"请在系统设置中开启定位服务" delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"去设置",nil, nil];
+        [alertView show];
     }
 }
 
@@ -206,7 +203,7 @@ static LocationManager *shareManager = nil;
             [[UIApplication sharedApplication] openURL:url];
         }
     }
-    [_alert dismissWithClickedButtonIndex:1 animated:YES];
+    [alertView dismissWithClickedButtonIndex:1 animated:YES];
 }
 
 @end

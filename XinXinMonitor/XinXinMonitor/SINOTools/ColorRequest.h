@@ -32,6 +32,8 @@
 //背景颜色
 + (UIColor *) BackGroundColor;
 
++ (UIColor *) grayColor;
+
 //分割线颜色
 + (UIColor *) DividingLineColor;
 

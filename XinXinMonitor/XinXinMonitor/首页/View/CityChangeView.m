@@ -155,7 +155,7 @@ static CityChangeView *instance;
             [btn setTitle:[NSString stringWithFormat:@"%@",array[i]] forState:UIControlStateNormal];
             
             if ([array[i] isEqualToString:district] || ([district isEqualToString:@"全城"] && i == 0)) {
-                btn.backgroundColor = [UIColor redColor];
+                btn.backgroundColor = [ColorRequest grayColor];
             } else {
                 btn.backgroundColor = [UIColor whiteColor];
             }

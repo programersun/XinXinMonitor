@@ -8,8 +8,9 @@
 
 #import "SettingViewController.h"
 #import "LoginViewController.h"
+#import "SettingTableViewCell.h"
 
-@interface SettingViewController ()
+@interface SettingViewController () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 
 @end
@@ -19,12 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle:@"设置" TextColor:[UIColor whiteColor] Font:nil];
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    [btn addTarget:self action:@selector(logOutBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    btn.backgroundColor = [UIColor redColor];
-    [self.view addSubview:btn];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - 退出
@@ -38,10 +40,99 @@
     [[UIApplication sharedApplication].delegate window].rootViewController = vc;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 3;
+            break;
+        case 2:
+            return 1;
+            break;
+        default:
+            return 0;
+            break;
+    }
+}
+
+-  (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return 71 * KASAdapterSizeHeight;
+            break;
+            
+        default:
+            return 44 * KASAdapterSizeHeight;
+            break;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return 10;
+            break;
+        case 1:
+            return 10;
+            break;
+            
+        default:
+            return 1;
+            break;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *cellId;
+    
+    switch (indexPath.section) {
+        case 0:
+        {
+            cellId = [SettingTableViewCell cellWithID:0];
+        }
+            break;
+        case 1:
+        {
+            cellId = [SettingTableViewCell cellWithID:indexPath.row + 1];
+        }
+            break;
+        case 2:
+        {
+            cellId = [SettingTableViewCell cellWithID:4];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    SettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[SettingTableViewCell alloc] init];
+    }
+    
+    if (indexPath.section == 0) {
+        cell.accountLabel.text = [NSString stringWithFormat:@"账号:%@",@"XXXX"];
+    }
+    
+    if (indexPath.section == 2) {
+        __weak SettingViewController *weakself = self;
+        cell.logoutBtnClickBlock = ^{
+            [weakself logOutBtnClick];
+        };
+    }
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

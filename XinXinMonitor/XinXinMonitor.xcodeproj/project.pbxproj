@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A4360E851CC0D4DF0047C632 /* HomeTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4360E841CC0D4DF0047C632 /* HomeTopView.xib */; };
 		A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4360E8A1CC0D5480047C632 /* HomeTopView.m */; };
+		A43A01E11CCB148100940950 /* SettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A01E01CCB148100940950 /* SettingTableViewCell.m */; };
+		A43A01EA1CCB58EE00940950 /* ImageDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A01E81CCB58EE00940950 /* ImageDetailCollectionViewCell.m */; };
 		A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDA1CC8D9DF006BD80D /* ChineseString.m */; };
 		A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDB1CC8D9DF006BD80D /* pinyin.c */; };
 		A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */; };
@@ -98,6 +100,10 @@
 		A4360E841CC0D4DF0047C632 /* HomeTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTopView.xib; sourceTree = "<group>"; };
 		A4360E891CC0D5480047C632 /* HomeTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTopView.h; sourceTree = "<group>"; };
 		A4360E8A1CC0D5480047C632 /* HomeTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTopView.m; sourceTree = "<group>"; };
+		A43A01DF1CCB148100940950 /* SettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewCell.h; sourceTree = "<group>"; };
+		A43A01E01CCB148100940950 /* SettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewCell.m; sourceTree = "<group>"; };
+		A43A01E71CCB58EE00940950 /* ImageDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		A43A01E81CCB58EE00940950 /* ImageDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailCollectionViewCell.m; sourceTree = "<group>"; };
 		A4505DD91CC8D9DF006BD80D /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
 		A4505DDA1CC8D9DF006BD80D /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
 		A4505DDB1CC8D9DF006BD80D /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
@@ -447,6 +453,8 @@
 		A4D335A21CBFE15D00023D5C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A43A01DF1CCB148100940950 /* SettingTableViewCell.h */,
+				A43A01E01CCB148100940950 /* SettingTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -495,6 +503,8 @@
 				A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */,
 				A4C81BA11CC9D23B00C6F992 /* CityChooseTableViewCell.h */,
 				A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */,
+				A43A01E71CCB58EE00940950 /* ImageDetailCollectionViewCell.h */,
+				A43A01E81CCB58EE00940950 /* ImageDetailCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -725,6 +735,7 @@
 				TargetAttributes = {
 					A4D335751CBFDFEE00023D5C = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = B73C85397R;
 					};
 				};
 			};
@@ -794,6 +805,7 @@
 				A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */,
 				A49A27741CC61B8B00ED5A61 /* LoginTableViewCell.m in Sources */,
 				A4D335B61CBFE15D00023D5C /* ShouYeViewController.m in Sources */,
+				A43A01E11CCB148100940950 /* SettingTableViewCell.m in Sources */,
 				A4D335D01CBFE1D200023D5C /* DateEditor.m in Sources */,
 				A4D3362B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m in Sources */,
 				A4C81BA31CC9D23B00C6F992 /* CityChooseTableViewCell.m in Sources */,
@@ -828,6 +840,7 @@
 				A4D335D21CBFE1D200023D5C /* GCTextField.m in Sources */,
 				A4D335CE1CBFE1D200023D5C /* AFNetworkingTools.m in Sources */,
 				A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */,
+				A43A01EA1CCB58EE00940950 /* ImageDetailCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

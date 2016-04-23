@@ -37,7 +37,7 @@
     //默认图片
     NSArray *imageName = @[@"tabbar_first",@"tabbar_second",@"tabbar_third",@"tabbar_fourth"];
     //选中图片
-    NSArray *imageSelectName = @[@"tabbar_first_select",@"tabbar_second_select",@"tabbar_third_select",@"tabbar_fourth_select"];
+//    NSArray *imageSelectName = @[@"tabbar_first_select",@"tabbar_second_select",@"tabbar_third_select",@"tabbar_fourth_select"];
     NSArray *tabBarTitle = @[@"首页",@"管理",@"消息",@"设置"];
     
     //设置tabBar背景颜色和选中颜色
@@ -58,7 +58,7 @@
         UITabBarItem *item = [self.tabBar.items objectAtIndex:i];
         item.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName[i]]];
         item.image = [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        item.selectedImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageSelectName[i]]];
+//        item.selectedImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageSelectName[i]]];
         [item setTitle:[NSString stringWithFormat:@"%@",tabBarTitle[i]]];
         
         [item setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[ColorRequest MainBlueColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:10],NSFontAttributeName,nil] forState:UIControlStateSelected];
