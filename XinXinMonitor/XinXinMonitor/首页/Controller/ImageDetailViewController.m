@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrow_left"] highlightedImg:[UIImage imageNamed:@"arrow_left"]];
+    [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrows_left"] highlightedImg:[UIImage imageNamed:@"arrows_left"]];
     [self setNavigationRightItemWithString:@"筛选"];
     
     _telephoneNumber = @"18513600046";

@@ -20,6 +20,9 @@
 #import "ColorRequest.h"
 #import "LocationManager.h"
 #import "UserInfoManager.h"
+
+#import "UIView+SRLayout.h"
+
 #endif
 
 #define NSLog(...) NSLog(__VA_ARGS__)

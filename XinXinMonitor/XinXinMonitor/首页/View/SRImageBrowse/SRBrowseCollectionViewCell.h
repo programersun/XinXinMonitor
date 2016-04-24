@@ -1,0 +1,26 @@
+//
+//  SRBrowseCollectionViewCell.h
+//  XinXinMonitor
+//
+//  Created by 孙瑞 on 16/4/24.
+//  Copyright © 2016年 瑞孙. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "SRBrowseLoadingView.h"
+#import "SRImageBrowseZoomScrollView.h"
+
+@class SRBrowseCollectionViewCell;
+
+typedef void(^SRBrowseCollectionViewCellTapBlock)(SRBrowseCollectionViewCell *browseCell);
+typedef void(^SRBrowseCollectionViewCellLongPressBlock)(SRBrowseCollectionViewCell *browseCell);
+
+@interface SRBrowseCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic,strong)SRImageBrowseZoomScrollView *zoomScrollView; // 滚动视图
+@property (nonatomic,strong)SRBrowseLoadingView *loadingView; // 加载视图
+
+- (void)tapClick:(SRBrowseCollectionViewCellTapBlock)tapBlock;
+- (void)longPress:(SRBrowseCollectionViewCellLongPressBlock)longPressBlock;
+
+@end

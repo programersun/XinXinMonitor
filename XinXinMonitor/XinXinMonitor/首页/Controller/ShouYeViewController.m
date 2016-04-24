@@ -64,7 +64,7 @@
     //cell行距
     layout.minimumLineSpacing = 5.0f;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, self.firstView.frame.size.height) collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
 //    self.collectionView.pagingEnabled = YES;
@@ -204,12 +204,14 @@
     }
     if (!button.selected) {
         button.selected = YES;
+        [self.topView.mapBtn setImage:[UIImage imageNamed:@"arrows_down"] forState:UIControlStateNormal];
         [UIView transitionFromView:self.firstView toView:_mapView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL finished) {
             [self startLocation];
         }];
 
     }else {
         button.selected = NO;
+        [self.topView.mapBtn setImage:[UIImage imageNamed:@"mapImg"] forState:UIControlStateNormal];
         [UIView transitionFromView:_mapView toView:self.firstView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL finished) {
             [self stopLocation];
         }];
