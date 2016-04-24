@@ -34,6 +34,8 @@
     _isSingleTap = NO;
     self.minimumZoomScale = 1.0f;
     self.maximumZoomScale = 3.0f;
+    self.showsHorizontalScrollIndicator = NO;
+    self.showsVerticalScrollIndicator = NO;
     
     _zoomImageView = [[UIImageView alloc]init];
     _zoomImageView.userInteractionEnabled = YES;

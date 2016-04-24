@@ -137,11 +137,6 @@ static LocationManager *shareManager = nil;
 //    }
 }
 
-- (void)saveCityWithDict:(NSArray *) cityArray {
-    [[NSUserDefaults standardUserDefaults] setObject:cityArray forKey:@"CityArray"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (void)saveCityWithString:(NSString *) city {
     [[NSUserDefaults standardUserDefaults] setObject:city forKey:@"City"];
     [[NSUserDefaults standardUserDefaults] synchronize];

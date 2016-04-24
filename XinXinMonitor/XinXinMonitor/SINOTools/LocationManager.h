@@ -32,15 +32,6 @@
 - (void)currentLocation;
 
 /**
- *  存储城市区域信息
- *
- *  @param dict 城市区域信息数组
- *  如：
- *  NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"山头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区"];
- *  NSDictionary *cityDict = @{@"City":@"北京",@"DistrictArray":array};
- */
-- (void)saveCityWithDict:(NSArray *) cityArrayict;
-/**
  *  存储用户选择的当前城市信息
  *
  *  @param city 当前城市名字

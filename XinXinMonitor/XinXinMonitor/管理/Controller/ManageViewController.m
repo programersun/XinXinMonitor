@@ -48,7 +48,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,6 +65,10 @@
     cell.addressLabel.text = [NSString stringWithFormat:@"地址%ld",(long)indexPath.row];
     [cell.cellRightBtn setTitle:@"设置隐患" forState:UIControlStateNormal];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 1 * KASAdapterSizeWidth;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

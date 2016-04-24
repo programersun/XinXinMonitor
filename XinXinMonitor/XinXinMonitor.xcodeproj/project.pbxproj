@@ -18,6 +18,10 @@
 		A43A01FD1CCC742300940950 /* SRBrowseLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A01FC1CCC742300940950 /* SRBrowseLoadingView.m */; };
 		A43A02001CCC75DF00940950 /* UIImage+SRScale.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A01FF1CCC75DF00940950 /* UIImage+SRScale.m */; };
 		A43A02031CCC7A7A00940950 /* SRBrowseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A02021CCC7A7A00940950 /* SRBrowseCollectionViewCell.m */; };
+		A43A02071CCC8A6E00940950 /* SRBrowseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A02061CCC8A6E00940950 /* SRBrowseModel.m */; };
+		A43A020A1CCC8D5500940950 /* SRBrowseRemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A02091CCC8D5500940950 /* SRBrowseRemindView.m */; };
+		A43A02111CCCEA7B00940950 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = A43A02101CCCEA7B00940950 /* city.plist */; };
+		A43A02131CCCF1DA00940950 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = A43A02121CCCF1DA00940950 /* area.plist */; };
 		A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDA1CC8D9DF006BD80D /* ChineseString.m */; };
 		A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDB1CC8D9DF006BD80D /* pinyin.c */; };
 		A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */; };
@@ -123,6 +127,13 @@
 		A43A01FF1CCC75DF00940950 /* UIImage+SRScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SRScale.m"; sourceTree = "<group>"; };
 		A43A02011CCC7A7A00940950 /* SRBrowseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRBrowseCollectionViewCell.h; sourceTree = "<group>"; };
 		A43A02021CCC7A7A00940950 /* SRBrowseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRBrowseCollectionViewCell.m; sourceTree = "<group>"; };
+		A43A02041CCC878800940950 /* SRBrowseDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRBrowseDefine.h; sourceTree = "<group>"; };
+		A43A02051CCC8A6E00940950 /* SRBrowseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRBrowseModel.h; sourceTree = "<group>"; };
+		A43A02061CCC8A6E00940950 /* SRBrowseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRBrowseModel.m; sourceTree = "<group>"; };
+		A43A02081CCC8D5500940950 /* SRBrowseRemindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRBrowseRemindView.h; sourceTree = "<group>"; };
+		A43A02091CCC8D5500940950 /* SRBrowseRemindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRBrowseRemindView.m; sourceTree = "<group>"; };
+		A43A02101CCCEA7B00940950 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		A43A02121CCCF1DA00940950 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		A4505DD91CC8D9DF006BD80D /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseString.h; sourceTree = "<group>"; };
 		A4505DDA1CC8D9DF006BD80D /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseString.m; sourceTree = "<group>"; };
 		A4505DDB1CC8D9DF006BD80D /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
@@ -301,6 +312,9 @@
 			children = (
 				A43A01F71CCC73F700940950 /* mss_browseLoading@2x.png */,
 				A43A01F81CCC73F700940950 /* mss_browseLoading@3x.png */,
+				A43A02041CCC878800940950 /* SRBrowseDefine.h */,
+				A43A02051CCC8A6E00940950 /* SRBrowseModel.h */,
+				A43A02061CCC8A6E00940950 /* SRBrowseModel.m */,
 				A43A01F01CCC708B00940950 /* SRImageBrowseZoomScrollView.h */,
 				A43A01F11CCC708B00940950 /* SRImageBrowseZoomScrollView.m */,
 				A43A01FB1CCC742300940950 /* SRBrowseLoadingView.h */,
@@ -311,6 +325,8 @@
 				A43A01FF1CCC75DF00940950 /* UIImage+SRScale.m */,
 				A43A02011CCC7A7A00940950 /* SRBrowseCollectionViewCell.h */,
 				A43A02021CCC7A7A00940950 /* SRBrowseCollectionViewCell.m */,
+				A43A02081CCC8D5500940950 /* SRBrowseRemindView.h */,
+				A43A02091CCC8D5500940950 /* SRBrowseRemindView.m */,
 			);
 			path = SRImageBrowse;
 			sourceTree = "<group>";
@@ -375,6 +391,8 @@
 				A4D335851CBFDFEE00023D5C /* Assets.xcassets */,
 				A4D335871CBFDFEE00023D5C /* LaunchScreen.storyboard */,
 				A4D3358A1CBFDFEE00023D5C /* Info.plist */,
+				A43A02101CCCEA7B00940950 /* city.plist */,
+				A43A02121CCCF1DA00940950 /* area.plist */,
 				A4D335791CBFDFEE00023D5C /* Supporting Files */,
 			);
 			path = XinXinMonitor;
@@ -801,7 +819,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A43A02111CCCEA7B00940950 /* city.plist in Resources */,
 				A4D335B51CBFE15D00023D5C /* SettingStoryboard.storyboard in Resources */,
+				A43A02131CCCF1DA00940950 /* area.plist in Resources */,
 				A4D335B91CBFE15D00023D5C /* MessageStoryboard.storyboard in Resources */,
 				A4D335891CBFDFEE00023D5C /* LaunchScreen.storyboard in Resources */,
 				A4D335B31CBFE15D00023D5C /* ManageStoryboard.storyboard in Resources */,
@@ -828,6 +848,7 @@
 			files = (
 				A4D336221CBFE2A400023D5C /* SDWebImageDecoder.m in Sources */,
 				A4D336431CBFF2A100023D5C /* ImageDetailViewController.m in Sources */,
+				A43A020A1CCC8D5500940950 /* SRBrowseRemindView.m in Sources */,
 				A4D3362D1CBFE2A400023D5C /* UIView+WebCacheOperation.m in Sources */,
 				A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */,
 				A4D335D31CBFE1D200023D5C /* PublicUtil.m in Sources */,
@@ -864,6 +885,7 @@
 				A49A276F1CC6110400ED5A61 /* LoginViewController.m in Sources */,
 				A4D336281CBFE2A400023D5C /* UIImage+GIF.m in Sources */,
 				A4D336291CBFE2A400023D5C /* UIImage+MultiFormat.m in Sources */,
+				A43A02071CCC8A6E00940950 /* SRBrowseModel.m in Sources */,
 				A4D336161CBFE2A400023D5C /* AFSecurityPolicy.m in Sources */,
 				A4D3362A1CBFE2A400023D5C /* UIImage+WebP.m in Sources */,
 				A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */,

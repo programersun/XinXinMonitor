@@ -67,7 +67,6 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, self.firstView.frame.size.height) collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-//    self.collectionView.pagingEnabled = YES;
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.collectionView.backgroundColor = [ColorRequest BackGroundColor];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ImageCollectionViewCell"];
@@ -89,12 +88,6 @@
 
 #pragma mark - 获取城市区域
 - (void)loadDistrict:(NSString *) cityString{
-    
-    
-    //获取城市
-    NSArray *array = @[@"全城",@"朝阳区",@"东城区",@"海淀区",@"西城区",@"丰台区",@"平谷区",@"延庆县",@"密云县",@"石景山区",@"门头沟",@"顺义区",@"怀柔区",@"房山区",@"昌平区",@"通州区",@"大兴区"];
-    NSDictionary *cityDict = @{@"City":cityString,@"DistrictArray":array};
-    [self saveCityWithDict:cityDict];
     [self.cityChangeView reloadView];
     
 }
@@ -127,35 +120,6 @@
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
-}
-
-/**
- *  存储城市区域信息
- *
- *  @param cityDict 城市区域信息
- */
-- (void)saveCityWithDict:(NSDictionary *)cityDict {
-
-    //便利存储的城市区域信心，如没有添加后重新存储
-    NSMutableArray *cityArray = [[NSMutableArray alloc] init];
-    if ([[LocationManager sharedManager] getCityArray] && [[LocationManager sharedManager] getCityArray] != nil) {
-        BOOL exist = NO;
-        for (NSDictionary *dict in [[LocationManager sharedManager] getCityArray]) {
-            [cityArray addObject:dict];
-            if ([dict[@"City"] isEqualToString:[NSString stringWithFormat:@"%@",cityDict[@"City"]]]) {
-                exist = YES;
-            }
-        }
-        if (!exist) {
-            [cityArray addObject:cityDict];
-        }
-    } else {
-        cityArray = [[NSMutableArray alloc] initWithObjects:cityDict, nil];
-    }
-    [[LocationManager sharedManager] saveCityWithDict:cityArray];
-    if ([[LocationManager sharedManager] getDistrict] == nil) {
-        [[LocationManager sharedManager] saveDistrictWithString:[LocationManager sharedManager].currentDistrict];
-    }
 }
 
 - (void)toImageDetailView {
@@ -263,6 +227,7 @@
         [self.topView setAddressBtnTextWithString:chooseCityString];
         [[LocationManager sharedManager] saveCityWithString:chooseCityString];
         [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
+        [self animationToMyChooseLocation];
     };
     [self presentViewController:vc animated:YES completion:^{
         
@@ -315,8 +280,6 @@
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
-    
     //存储当前位置
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%f",userLocation.location.coordinate.latitude] forKey:@"Latitude"];
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%f",userLocation.location.coordinate.longitude] forKey:@"Longitude"];

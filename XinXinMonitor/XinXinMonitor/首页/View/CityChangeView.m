@@ -108,15 +108,30 @@ static CityChangeView *instance;
         [view removeFromSuperview];
     }
     
-    NSArray *array = [NSArray array];
-    
-    NSArray *cityArray = [[LocationManager sharedManager] getCityArray];
+    NSMutableArray *array = [NSMutableArray array];
+    [array setArray:@[@"全城"]];
     NSString *city = [[LocationManager sharedManager] getCity];
     NSString *district = [[LocationManager sharedManager] getDistrict];
     
-    for (NSDictionary *dict in cityArray) {
-        if ([dict[@"City"] isEqualToString:[NSString stringWithFormat:@"%@",city]]) {
-            array = dict[@"DistrictArray"];
+    NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
+    
+    for (int i = 0; i < provinces.count; i++) {
+        NSString *province = [[provinces objectAtIndex:i] objectForKey:@"state"];
+        NSArray *arraylist = [[provinces objectAtIndex:i] objectForKey:@"cities"];
+        if ([city isEqualToString:[NSString stringWithFormat:@"%@市",province]]) {
+            for (int j = 0 ; j < arraylist.count; j++) {
+                [array addObject:[arraylist[j] objectForKey:@"city"]];
+            }
+        } else {
+            for (int j = 0 ; j < arraylist.count; j++) {
+                NSArray *areas = [arraylist[j] objectForKey:@"areas"];
+                if ([city isEqualToString:[NSString stringWithFormat:@"%@市",[arraylist[j] objectForKey:@"city"]]])
+                {
+                    for (int m = 0 ; m < areas.count; m++) {
+                        [array addObject:areas[m]];
+                    }
+                }
+            }
         }
     }
     

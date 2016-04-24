@@ -21,7 +21,7 @@
 #import "LocationManager.h"
 #import "UserInfoManager.h"
 
-#import "UIView+SRLayout.h"
+#import "SRBrowseDefine.h"
 
 #endif
 

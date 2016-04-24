@@ -21,21 +21,21 @@
 
 @implementation ChooseCityViewController
 
-- (NSArray *)cityArray {
+- (NSMutableArray *)cityArray {
     if (_cityArray == nil) {
         _cityArray = [NSMutableArray array];
     }
     return _cityArray;
 }
 
-- (NSArray *)indexArray {
+- (NSMutableArray *)indexArray {
     if (_indexArray == nil) {
         _indexArray = [NSMutableArray array];
     }
     return _indexArray;
 }
 
-- (NSArray *)letterResultArray {
+- (NSMutableArray *)letterResultArray {
     if (_letterResultArray == nil) {
         _letterResultArray = [NSMutableArray array];
     }
@@ -45,8 +45,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.chooseCityTitleLabel.text = [NSString stringWithFormat:@"当前城市-%@",[[LocationManager sharedManager] getCity]];
-    NSArray *array = @[@"北京",@"济南",@"淄博",@"青岛",@"烟台",@"潍坊",@"滨州",@"菏泽",@"枣庄",@"临沂",@"泰安",@"德州",@"东营",@"日照",@"聊城",@"莱芜",@"威海",@"济宁"];
-    [self.cityArray setArray:array];
+    NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil]];
+    NSMutableArray *citys = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < provinces.count; i++) {
+        NSString *province = [[provinces objectAtIndex:i] objectForKey:@"state"];
+        if ([province isEqualToString:@"北京"] || [province isEqualToString:@"天津"] || [province isEqualToString:@"上海"] || [province isEqualToString:@"重庆"]) {
+            continue;
+        }
+        
+        [citys addObject:[[provinces objectAtIndex:i] objectForKey:@"cities"]];
+    }
+    
+    for (int i = 0; i < citys.count; i++) {
+        NSMutableArray *areas = [[NSMutableArray alloc] initWithArray:citys[i]];
+        for (int j = 0; j < areas.count; j++) {
+            [self.cityArray addObject:areas[j]];
+        }
+    }
+    
+    NSArray *bigcity = @[@"北京",@"上海",@"天津",@"重庆"];
+    [self.cityArray addObjectsFromArray:bigcity];
     self.indexArray = [ChineseString IndexArray:self.cityArray];
     self.letterResultArray = [ChineseString LetterSortArray:self.cityArray];
     
@@ -56,12 +75,7 @@
 //关闭按钮
 - (IBAction)backBtnClick:(id)sender {
     
-//    if (self.cityChangeBlock) {
-//        self.cityChangeBlock(@"淄博市");
-//    }
-    
     [self dismissViewControllerAnimated:YES completion:^{
-        
     }];
 }
 
@@ -111,6 +125,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 1 * KASAdapterSizeHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
