@@ -11,7 +11,7 @@
 #import "ImageDetailViewController.h"
 #import "MessageTableViewCell.h"
 
-@interface MessageViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
 }
@@ -89,7 +89,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除后不能恢复，是否确认删除" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
     }
 }
 
@@ -100,6 +101,13 @@
     }
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSLog(@"删除");
+    }
+    [alertView dismissWithClickedButtonIndex:1 animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

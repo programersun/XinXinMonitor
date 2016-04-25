@@ -33,7 +33,7 @@
     return A_Result;
 }
 
-#pragma mark - 返回联系人
+#pragma mark - 返回
 +(NSMutableArray*)LetterSortArray:(NSArray*)stringArr
 {
     NSMutableArray *tempArray = [self ReturnSortChineseArrar:stringArr];

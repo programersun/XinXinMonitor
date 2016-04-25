@@ -73,8 +73,10 @@ static LocationManager *shareManager = nil;
              self.latitude = [NSString stringWithFormat:@"%f",latitude];
              self.longitude = [NSString stringWithFormat:@"%f",longitude];
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
-             NSString *placeName = [NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"State"]];
+             //城市名称
+             NSString *placeName = [NSString stringWithFormat:@"%@",placemark.locality];
              self.currentAddress = placeName;
+             //区级名称
              NSString *districtName = [NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"SubLocality"]];
              self.currentDistrict = districtName;
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
@@ -179,12 +181,14 @@ static LocationManager *shareManager = nil;
 
 - (void)setLocationAuthority {
     if ([CLLocationManager locationServicesEnabled] &&
-        ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized
-         || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
+        ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse
+         || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways)) {
             //定位功能可用，开始定位
             [_locationManager startUpdatingLocation];
     }
     else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"City"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"District"];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"定位服务未开启" message:@"请在系统设置中开启定位服务" delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"去设置",nil, nil];
         [alertView show];
     }

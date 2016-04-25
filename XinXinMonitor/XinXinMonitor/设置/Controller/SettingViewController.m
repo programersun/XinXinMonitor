@@ -9,8 +9,12 @@
 #import "SettingViewController.h"
 #import "LoginViewController.h"
 #import "SettingTableViewCell.h"
+#import "SDImageCache.h"
 
-@interface SettingViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface SettingViewController () <UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
+{
+    NSString *_clearCacheName;
+}
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 
 @end
@@ -27,6 +31,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    [self.settingTableView reloadData];
+}
+
+#pragma mark - 清理图片缓存
+- (void)clearTmpPics {
+    _clearCacheName = 0;
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    [self.settingTableView reloadData];
 }
 
 #pragma mark - 退出
@@ -123,16 +136,76 @@
         cell.accountLabel.text = [NSString stringWithFormat:@"账号:%@",@"XXXX"];
     }
     
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        float tmpSize = [[SDImageCache sharedImageCache] getSize];
+        _clearCacheName = tmpSize >= 1 ? [NSString stringWithFormat:@"%.2fM",tmpSize/1024/1024] : [NSString stringWithFormat:@"%.2fK",tmpSize];
+        cell.clearLabel.text = _clearCacheName;
+    }
+    
     if (indexPath.section == 2) {
-        __weak SettingViewController *weakself = self;
         cell.logoutBtnClickBlock = ^{
-            [weakself logOutBtnClick];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否确认退出" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alert.tag = 1002;
+            [alert show];
         };
     }
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 1:
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    //修改密码
+                }
+                    break;
+                case 1:
+                {
+                    //关于我们
+                }
+                    break;
+                case 2:
+                {
+                    //清理缓存
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否要清除缓存" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                    alert.tag = 1001;
+                    [alert show];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        if (alertView.tag == 1001) {
+            [self clearTmpPics];
+        }
+        if (alertView.tag == 1002) {
+            [self logOutBtnClick];
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

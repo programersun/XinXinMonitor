@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *indexArray;           /**< 索引数组*/
 @property (nonatomic, strong) NSMutableArray *letterResultArray;    /**< 返回数组*/
 @property (weak, nonatomic) IBOutlet UITableView *cityTableView;
+@property (nonatomic, strong) UIButton *locationBtn;
 
 @end
 
@@ -79,32 +80,91 @@
     }];
 }
 
+- (void)locationBtnClick:(UIButton *)sender {
+    [[LocationManager sharedManager] setLocationAuthority];
+    if (![sender.titleLabel.text isEqualToString:@"定位失败"]) {
+        if (self.cityChangeBlock) {
+            self.cityChangeBlock(sender.titleLabel.text);
+        }
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return self.indexArray;
+    NSMutableArray *returnArray;
+    [returnArray addObject:@"#"];
+    [returnArray addObjectsFromArray:self.indexArray];
+    return returnArray;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *key = [self.indexArray objectAtIndex:section];
-    return key;
+    
+    if (section == 0) {
+        return @"#";
+    } else {
+        NSString *key = [self.indexArray objectAtIndex:section - 1];
+        return key;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.indexArray count];
+    return [self.indexArray count] + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.letterResultArray objectAtIndex:section] count];
+    if (section == 0) {
+        return 1;
+    }else {
+        return [[self.letterResultArray objectAtIndex:section - 1] count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CityChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CityChooseTableViewCell"];
-    if (cell == nil) {
-        cell = [[CityChooseTableViewCell alloc] init];
+    
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationCell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LocationCell"];
+        }
+        
+        NSString *btnString;
+        
+        if ([CLLocationManager locationServicesEnabled] &&
+            ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse
+             || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways)) {
+            btnString = [[LocationManager sharedManager] getMyCity];
+        } else {
+            btnString = @"定位失败";
+        }
+        CGFloat btnWidth = [PublicUtil widthOfString:btnString withFont:15];
+        
+        self.locationBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 10, btnWidth + 20, 30)];
+        self.locationBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        self.locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        [self.locationBtn setTitle:btnString forState:UIControlStateNormal];
+        [self.locationBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        self.locationBtn.layer.masksToBounds = YES;
+        self.locationBtn.layer.borderColor = [UIColor grayColor].CGColor;
+        self.locationBtn.layer.borderWidth = 1;
+        self.locationBtn.layer.cornerRadius = 4;
+        [self.locationBtn addTarget:self action:@selector(locationBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [cell.contentView addSubview:self.locationBtn];
+        
+        return cell;
+    } else {
+    
+        CityChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CityChooseTableViewCell"];
+        if (cell == nil) {
+            cell = [[CityChooseTableViewCell alloc] init];
+        }
+        cell.cityLabel.text = [[self.letterResultArray objectAtIndex:indexPath.section - 1] objectAtIndex:indexPath.row];
+        return cell;
     }
-    cell.cityLabel.text = [[self.letterResultArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
@@ -117,13 +177,22 @@
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 3, kkViewWidth - 40, 20)];
     
     headerView.backgroundColor = [ColorRequest BackGroundColor];
-    lab.text = [self.indexArray objectAtIndex:section];
+    
+    if (section == 0) {
+        lab.text = @"定位城市";
+    } else {
+        lab.text = [self.indexArray objectAtIndex:section - 1];
+    }
     lab.textColor = [UIColor blackColor];
     [headerView addSubview:lab];
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 50;
+    }
+    
     return 44.0;
 }
 
@@ -132,13 +201,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cityString = [NSString stringWithFormat:@"%@市",[[self.letterResultArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
-    if (self.cityChangeBlock) {
-        self.cityChangeBlock(cityString);
+    
+    if (indexPath.section > 0) {
+        NSString *cityString = [NSString stringWithFormat:@"%@市",[[self.letterResultArray objectAtIndex:indexPath.section - 1] objectAtIndex:indexPath.row]];
+        if (self.cityChangeBlock) {
+            self.cityChangeBlock(cityString);
+        }
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     }
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
 }
 
 - (void)didReceiveMemoryWarning {

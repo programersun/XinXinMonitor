@@ -46,7 +46,7 @@
             return 50;
             break;
         case 3:
-            return 70 * KASAdapterSizeWidth;
+            return 70;
             break;
             
         default:

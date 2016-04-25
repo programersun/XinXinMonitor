@@ -42,6 +42,13 @@
         city = [[LocationManager sharedManager] getCity];
     }else {
         city = @"济南市";
+        [[LocationManager sharedManager] saveCityWithString:@"济南市"];
+        [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
+    }
+    
+    if ([[LocationManager sharedManager] getMyCity] == nil && ![[LocationManager sharedManager] getMyCity]) {
+        [[LocationManager sharedManager] saveMyCityWithString:@"济南市"];
+        [[LocationManager sharedManager] saveMyDistrictWithString:@"全城"];
     }
     
     NSString *district = [[LocationManager sharedManager] getDistrict];
@@ -64,7 +71,7 @@
     //cell行距
     layout.minimumLineSpacing = 5.0f;
     
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, self.firstView.frame.size.height) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64 - 49) collectionViewLayout:layout];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -94,7 +101,7 @@
 
 #pragma mark - 实例化地图BMKMapView
 - (void)addMapView {
-    _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 -64)];
+    _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64)];
     _mapView.backgroundColor = [UIColor greenColor];
     
     //定位
@@ -173,13 +180,13 @@
             [self startLocation];
         }];
 
-    }else {
+    } else {
         button.selected = NO;
         [self.topView.mapBtn setImage:[UIImage imageNamed:@"mapImg"] forState:UIControlStateNormal];
         [UIView transitionFromView:_mapView toView:self.firstView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL finished) {
             [self stopLocation];
         }];
-
+        self.collectionView.frame = CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64);
     }
 }
 
