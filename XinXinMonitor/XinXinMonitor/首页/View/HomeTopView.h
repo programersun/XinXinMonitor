@@ -27,7 +27,7 @@
 
 @interface HomeTopView : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton *addressArrowsBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *addressArrowsImg;
 @property (weak, nonatomic) IBOutlet UIButton *addressBtn;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet UITextField *searchText;

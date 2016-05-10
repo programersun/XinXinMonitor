@@ -9,8 +9,8 @@
 #import "ImageDetailViewController.h"
 #import "SRBrowseCollectionViewCell.h"
 #import "UIImage+SRScale.h"
-
 #import "ImageDetailCollectionViewCell.h"
+#import "TimeView.h"
 
 @interface ImageDetailViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UIScrollViewDelegate>
 {
@@ -24,6 +24,7 @@
 @property (nonatomic,strong)NSMutableArray *horizontalBigRectArray;
 @property (nonatomic,strong)UIView *bgView;
 @property (nonatomic,strong)SRBrowseRemindView *browseRemindView;
+@property (nonatomic,strong) TimeView *timeView;        /**< 时间选择*/
 
 @end
 
@@ -54,7 +55,7 @@
     [super viewDidLoad];
     [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrows_left"] highlightedImg:[UIImage imageNamed:@"arrows_left"]];
     [self setNavigationRightItemWithString:@"筛选"];
-    _telephoneNumber = @"18513600046";
+    
 //    self.telephoneBtn.layer.masksToBounds = YES;
 //    self.telephoneBtn.layer.cornerRadius = 44 * KASAdapterSizeWidth / 2;
 //    self.telephoneBtnWidth.constant = 44 * KASAdapterSizeWidth;
@@ -91,10 +92,16 @@
     }
     
 //    [self initData];
+    
     [self createBrowseView];
     
+    _telephoneNumber = @"18513600046";
     [self addTelephoneBtn];
     
+    
+    self.timeView = [[TimeView alloc] init];
+    self.timeView.hidden = YES;
+    [self.view addSubview:self.timeView];
     // Do any additional setup after loading the view.
 }
 
@@ -178,6 +185,15 @@
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
+    
+    if (self.timeView.hidden) {
+        self.timeView.hidden = NO;
+        self.timeView.pickerView.hidden = YES;
+    }else {
+        self.timeView.hidden = YES;
+        //加载数据
+        
+    }
     
 }
 

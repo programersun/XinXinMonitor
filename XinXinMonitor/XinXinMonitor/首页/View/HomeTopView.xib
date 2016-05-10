@@ -24,17 +24,13 @@
                         <action selector="addressBtnClick:" destination="hV9-8s-qO0" eventType="touchUpInside" id="WY4-5Z-TNe"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zC-Qv-sLX">
-                    <rect key="frame" x="30" y="12" width="20" height="22"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows_down" translatesAutoresizingMaskIntoConstraints="NO" id="aMc-ZM-MPY">
+                    <rect key="frame" x="30" y="19" width="15" height="7"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="20" id="9tm-LJ-uz8"/>
+                        <constraint firstAttribute="width" constant="15" id="8zZ-oP-eeA"/>
+                        <constraint firstAttribute="height" constant="7" id="m2K-gU-vnm"/>
                     </constraints>
-                    <state key="normal" image="arrows_down"/>
-                    <state key="selected" image="arrows_up"/>
-                    <connections>
-                        <action selector="addressBtnClick:" destination="hV9-8s-qO0" eventType="touchUpInside" id="C8j-EB-y8a"/>
-                    </connections>
-                </button>
+                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHA-kp-qmx">
                     <rect key="frame" x="280" y="2" width="40" height="40"/>
                     <constraints>
@@ -46,15 +42,15 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmR-TV-k3b">
-                    <rect key="frame" x="62" y="7" width="213" height="30"/>
+                    <rect key="frame" x="57" y="7" width="218" height="30"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入关键字" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KkD-gk-Naa">
-                            <rect key="frame" x="15" y="0.0" width="168" height="30"/>
+                            <rect key="frame" x="15" y="0.0" width="173" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tkt-KE-tiE">
-                            <rect key="frame" x="188" y="8" width="15" height="15"/>
+                            <rect key="frame" x="193" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="ZAx-9h-udC"/>
                                 <constraint firstAttribute="height" constant="15" id="rRa-6p-gzC"/>
@@ -80,20 +76,20 @@
             <color key="backgroundColor" red="0.1176470588" green="0.63529411759999999" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="UHA-kp-qmx" secondAttribute="trailing" id="0SH-IK-ZgZ"/>
-                <constraint firstItem="4zC-Qv-sLX" firstAttribute="centerY" secondItem="hV9-8s-qO0" secondAttribute="centerY" constant="1" id="AEG-fx-yfM"/>
+                <constraint firstItem="vmR-TV-k3b" firstAttribute="leading" secondItem="aMc-ZM-MPY" secondAttribute="trailing" constant="12" id="GPY-Vc-nzj"/>
                 <constraint firstItem="hMy-H7-bpN" firstAttribute="top" secondItem="hV9-8s-qO0" secondAttribute="top" id="GdL-zz-C3O"/>
-                <constraint firstItem="4zC-Qv-sLX" firstAttribute="leading" secondItem="hMy-H7-bpN" secondAttribute="trailing" id="NzJ-rb-yVN"/>
+                <constraint firstItem="aMc-ZM-MPY" firstAttribute="leading" secondItem="hMy-H7-bpN" secondAttribute="trailing" id="QAn-f1-tsT"/>
                 <constraint firstAttribute="bottom" secondItem="UHA-kp-qmx" secondAttribute="bottom" constant="2" id="TAZ-2c-6j3"/>
-                <constraint firstItem="vmR-TV-k3b" firstAttribute="leading" secondItem="4zC-Qv-sLX" secondAttribute="trailing" constant="12" id="UG3-a8-MwG"/>
                 <constraint firstAttribute="bottom" secondItem="hMy-H7-bpN" secondAttribute="bottom" id="am9-BU-5HQ"/>
                 <constraint firstItem="UHA-kp-qmx" firstAttribute="top" secondItem="hV9-8s-qO0" secondAttribute="top" constant="2" id="kaS-9E-hJc"/>
                 <constraint firstItem="UHA-kp-qmx" firstAttribute="leading" secondItem="vmR-TV-k3b" secondAttribute="trailing" constant="5" id="tGo-M9-djl"/>
                 <constraint firstItem="vmR-TV-k3b" firstAttribute="centerY" secondItem="UHA-kp-qmx" secondAttribute="centerY" id="u98-VC-Ok6"/>
                 <constraint firstItem="hMy-H7-bpN" firstAttribute="leading" secondItem="hV9-8s-qO0" secondAttribute="leading" id="vO5-Y6-qZF"/>
+                <constraint firstItem="aMc-ZM-MPY" firstAttribute="centerY" secondItem="hV9-8s-qO0" secondAttribute="centerY" id="ziu-Y5-ZiK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="addressArrowsBtn" destination="4zC-Qv-sLX" id="taa-8h-eXQ"/>
+                <outlet property="addressArrowsImg" destination="aMc-ZM-MPY" id="bbF-eo-vfa"/>
                 <outlet property="addressBtn" destination="hMy-H7-bpN" id="GWt-R0-C2V"/>
                 <outlet property="addressBtnWidth" destination="h1s-ag-gUS" id="nxK-om-n15"/>
                 <outlet property="mapBtn" destination="UHA-kp-qmx" id="Ctd-VQ-pRg"/>
@@ -105,7 +101,6 @@
     </objects>
     <resources>
         <image name="arrows_down" width="15" height="7"/>
-        <image name="arrows_up" width="15" height="7"/>
         <image name="mapImg" width="30" height="30"/>
         <image name="searchImg" width="24" height="23"/>
     </resources>

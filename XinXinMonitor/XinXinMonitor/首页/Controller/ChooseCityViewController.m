@@ -95,7 +95,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    NSMutableArray *returnArray;
+    NSMutableArray *returnArray = [NSMutableArray array];
     [returnArray addObject:@"#"];
     [returnArray addObjectsFromArray:self.indexArray];
     return returnArray;

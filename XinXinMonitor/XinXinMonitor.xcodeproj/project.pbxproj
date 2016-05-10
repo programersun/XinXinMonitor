@@ -26,6 +26,9 @@
 		A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A4505DDB1CC8D9DF006BD80D /* pinyin.c */; };
 		A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */; };
 		A4505DE61CC91C45006BD80D /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */; };
+		A456B2341CDF73BE00F7FC1A /* AddMonitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */; };
+		A456B2421CDF916C00F7FC1A /* TimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2401CDF916C00F7FC1A /* TimeView.m */; };
+		A456B2431CDF916C00F7FC1A /* TimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A456B2411CDF916C00F7FC1A /* TimeView.xib */; };
 		A49A27521CC5C7A400ED5A61 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */; };
 		A49A27541CC5C7AB00ED5A61 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */; };
 		A49A27561CC5C7B400ED5A61 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */; };
@@ -141,6 +144,11 @@
 		A4505DDF1CC9167B006BD80D /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
 		A4505DE01CC9167B006BD80D /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
 		A4505DE41CC91C45006BD80D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		A456B2321CDF73BE00F7FC1A /* AddMonitorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMonitorViewController.h; sourceTree = "<group>"; };
+		A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMonitorViewController.m; sourceTree = "<group>"; };
+		A456B23F1CDF916C00F7FC1A /* TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeView.h; sourceTree = "<group>"; };
+		A456B2401CDF916C00F7FC1A /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
+		A456B2411CDF916C00F7FC1A /* TimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeView.xib; sourceTree = "<group>"; };
 		A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -459,6 +467,8 @@
 			children = (
 				A4D335971CBFE15D00023D5C /* ManageViewController.h */,
 				A4D335981CBFE15D00023D5C /* ManageViewController.m */,
+				A456B2321CDF73BE00F7FC1A /* AddMonitorViewController.h */,
+				A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -562,6 +572,9 @@
 				A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */,
 				A43A01E71CCB58EE00940950 /* ImageDetailCollectionViewCell.h */,
 				A43A01E81CCB58EE00940950 /* ImageDetailCollectionViewCell.m */,
+				A456B23F1CDF916C00F7FC1A /* TimeView.h */,
+				A456B2401CDF916C00F7FC1A /* TimeView.m */,
+				A456B2411CDF916C00F7FC1A /* TimeView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -820,6 +833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A43A02111CCCEA7B00940950 /* city.plist in Resources */,
+				A456B2431CDF916C00F7FC1A /* TimeView.xib in Resources */,
 				A4D335B51CBFE15D00023D5C /* SettingStoryboard.storyboard in Resources */,
 				A43A02131CCCF1DA00940950 /* area.plist in Resources */,
 				A4D335B91CBFE15D00023D5C /* MessageStoryboard.storyboard in Resources */,
@@ -853,6 +867,7 @@
 				A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */,
 				A4D335D31CBFE1D200023D5C /* PublicUtil.m in Sources */,
 				A4D336251CBFE2A400023D5C /* SDWebImageManager.m in Sources */,
+				A456B2421CDF916C00F7FC1A /* TimeView.m in Sources */,
 				A4D335811CBFDFEE00023D5C /* ViewController.m in Sources */,
 				A43A01F61CCC732A00940950 /* UIView+SRLayout.m in Sources */,
 				A4D3361D1CBFE2A400023D5C /* MBProgressHUD.m in Sources */,
@@ -883,6 +898,7 @@
 				A4D3357B1CBFDFEE00023D5C /* main.m in Sources */,
 				A4D335CF1CBFE1D200023D5C /* ColorRequest.m in Sources */,
 				A49A276F1CC6110400ED5A61 /* LoginViewController.m in Sources */,
+				A456B2341CDF73BE00F7FC1A /* AddMonitorViewController.m in Sources */,
 				A4D336281CBFE2A400023D5C /* UIImage+GIF.m in Sources */,
 				A4D336291CBFE2A400023D5C /* UIImage+MultiFormat.m in Sources */,
 				A43A02071CCC8A6E00940950 /* SRBrowseModel.m in Sources */,
@@ -1038,7 +1054,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz.HaiZhaoTong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1064,7 +1080,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz.HaiZhaoTong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -9,5 +9,5 @@
 #import "SR_SINOBaseViewController.h"
 
 @interface ImageDetailViewController : SR_SINOBaseViewController
-
+@property (nonatomic, weak) NSString *monitorId;
 @end

@@ -9,6 +9,7 @@
 #import "ManageViewController.h"
 #import "ImageDetailViewController.h"
 #import "ManageTableViewCell.h"
+#import "AddMonitorViewController.h"
 
 @interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -31,7 +32,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
-    [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"arrows_up"] highlightedImg:[UIImage imageNamed:@"arrows_up"]];
+    
+    if (1) {
+        [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"arrows_up"] highlightedImg:[UIImage imageNamed:@"arrows_up"]];
+    }
     _pageNum = 0;
     // Do any additional setup after loading the view.
 }
@@ -43,6 +47,13 @@
 
 - (void)rightBtnClick:(UIButton *)sender {
     
+    AddMonitorViewController *vc = [[UIStoryboard storyboardWithName:@"ManageStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"AddMonitorViewController"];
+    if (vc == nil) {
+        vc = [[AddMonitorViewController alloc] init];
+    }
+    [vc setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 #pragma mark - UITableViewDataSource

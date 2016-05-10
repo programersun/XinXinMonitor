@@ -19,6 +19,7 @@
 @interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
     BMKLocationService* _locService;
     CLLocationCoordinate2D _center;
+    NSInteger _index;
 }
 
 @property (nonatomic, strong) HomeTopView *topView;             /**< 首页导航*/
@@ -27,14 +28,25 @@
 @property (nonatomic, strong) UIView *firstView;                /**< 列表view*/
 @property (nonatomic, strong) BMKMapView *mapView;              /**< 地图view*/
 @property (nonatomic, strong) UICollectionView *collectionView; /**< 列表collectionview*/
+@property (nonatomic, strong) NSMutableArray *monitorArray;     /**< 摄像头信息数组*/
 
 @end
 
 @implementation ShouYeViewController
 
+- (NSMutableArray *)monitorArray {
+    if (!_monitorArray) {
+        _monitorArray = [NSMutableArray array];
+    }
+    return _monitorArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addTopView];
+    
+    [self.monitorArray addObject:@"1000"];
+    [self.monitorArray addObject:@"2000"];
     
     //显示当前位置信息
     NSString *city;
@@ -129,10 +141,6 @@
     _locService.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
-- (void)toImageDetailView {
-    
-}
-
 /**
  *  设置顶部自定义导航
  */
@@ -155,14 +163,14 @@
     [[[UIApplication sharedApplication].delegate window] addSubview:self.cityChangeView];
     if (self.cityChangeView.hidden) {
         self.cityChangeView.hidden = NO;
-        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_up"];
-        
+//        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_up"];
+        self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_up"];
         //获取当前城市区域
         [self loadDistrict:[[LocationManager sharedManager] getCity]];
         
     } else {
         self.cityChangeView.hidden = YES;
-        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+        self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
     }
 }
 
@@ -171,7 +179,7 @@
     [self.topView.searchText resignFirstResponder];
     if (!self.cityChangeView.hidden) {
         self.cityChangeView.hidden = YES;
-        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+        self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
     }
     if (!button.selected) {
         button.selected = YES;
@@ -198,7 +206,7 @@
 
 - (void)backgroundViewClick {
     self.cityChangeView.hidden = YES;
-    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+    self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
 }
 
 - (void)chooseDistrict:(UIButton *)button {
@@ -216,7 +224,7 @@
     
     [self.cityChangeView reloadView];
     self.cityChangeView.hidden = YES;
-    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+    self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
     if (self.topView.mapBtn.selected) {
         [self animationToMyChooseLocation];
     }
@@ -228,7 +236,7 @@
         vc = [[ChooseCityViewController alloc] init];
     }
     self.cityChangeView.hidden = YES;
-    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+    self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
     
     vc.cityChangeBlock = ^(NSString *chooseCityString){
         [self.topView setAddressBtnTextWithString:chooseCityString];
@@ -239,6 +247,54 @@
     [self presentViewController:vc animated:YES completion:^{
         
     }];
+}
+
+#pragma mark - 添加大头针
+-(void)addMonitor:(CLLocationCoordinate2D)coordinate {
+    
+    NSArray *array = [NSArray arrayWithArray:_mapView.annotations];
+    [_mapView removeAnnotations:array];
+    
+    if (coordinate.latitude != 0 && coordinate.longitude != 0) {
+        BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
+        annotation.coordinate = coordinate;
+        annotation.title = @"ceshi";
+        _index = 0;
+        [_mapView addAnnotation:annotation];
+        
+        CLLocationCoordinate2D test = CLLocationCoordinate2DMake(coordinate.latitude - 0.01, coordinate.longitude - 0.01);
+        BMKPointAnnotation *annotation1 = [[BMKPointAnnotation alloc] init];
+        annotation1.coordinate = test;
+        annotation1.title = @"2222";
+        _index = 1;
+        [_mapView addAnnotation:annotation1];
+    }
+}
+
+- (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation {
+    NSString *AnnotationViewID = @"annotationViewID";
+    //根据指定标识查找一个可被复用的标注View，一般在delegate中使用，用此函数来代替新申请一个View
+    BMKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
+    if (annotationView == nil) {
+        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
+        ((BMKPinAnnotationView*)annotationView).pinColor = BMKPinAnnotationColorRed;
+        ((BMKPinAnnotationView*)annotationView).animatesDrop = NO;
+    }
+    
+    annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
+    annotationView.annotation = annotation;
+    annotationView.canShowCallout = YES;
+    annotationView.tag = [self.monitorArray[_index] integerValue];
+    return annotationView;
+}
+
+
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view {
+    
+}
+
+- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view {
+    [self toImageDetailView:[NSString stringWithFormat:@"%ld",(long)view.tag]];
 }
 
 #pragma mark - 进入普通定位态
@@ -296,6 +352,19 @@
     
 }
 
+
+#pragma mark - BMKMapViewDelegate
+
+/**
+ *地图区域改变完成后会调用此接口
+ *@param mapview 地图View
+ *@param animated 是否动画
+ */
+- (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    NSLog(@"%f",mapView.centerCoordinate.latitude);
+    NSLog(@"%f",mapView.centerCoordinate.longitude);
+}
+
 #pragma mark - 地理编码 根据城市和地址获取当前用户选择的经纬度
 - (void)animationToMyChooseLocation {
     
@@ -317,6 +386,9 @@
 
             _center.latitude = latitude;
             _center.longitude = longitude;
+            
+            [self addMonitor:_center];
+            
             BMKCoordinateSpan span;
             if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
                 span = BMKCoordinateSpanMake(0.6, 0.4);
@@ -359,7 +431,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.cityChangeView.hidden = YES;
-    self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_down"];
+    self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -389,10 +461,15 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self toImageDetailView:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+}
+
+- (void)toImageDetailView:(NSString *)monitorId {
     ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
+    vc.monitorId = monitorId;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
