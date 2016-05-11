@@ -815,7 +815,7 @@
 				TargetAttributes = {
 					A4D335751CBFDFEE00023D5C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = B73C85397R;
+						DevelopmentTeam = NA242YB4F2;
 					};
 				};
 			};
@@ -1064,7 +1064,7 @@
 					"$(PROJECT_DIR)/XinXinMonitor/ThirdClass/JPush/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxinMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1090,7 +1090,7 @@
 					"$(PROJECT_DIR)/XinXinMonitor/ThirdClass/JPush/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxinMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

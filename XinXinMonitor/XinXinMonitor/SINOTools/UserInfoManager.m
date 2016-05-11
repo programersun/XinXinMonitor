@@ -53,6 +53,7 @@ static UserInfoManager *shareManager = nil;
 - (void)clearUserInfo {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
 }
 
 @end

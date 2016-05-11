@@ -74,13 +74,17 @@
             
             break;
         case 3:
-            
+        {
             cell.loginBtn.layer.masksToBounds = YES;
             cell.loginBtn.layer.cornerRadius = 5;
+            
+            __weak LoginViewController *weakself = self;
             cell.loginBtnClickBlock = ^(){
                 
                 NSDictionary *dict = @{@"userid":@"1234"};
                 [[UserInfoManager sharedManager] saveUserInfo:dict];
+                
+                [weakself setAliasWithSring:[UserInfoManager sharedManager].userID];
                 
                 MainTabBarViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
                 if (vc == nil) {
@@ -89,12 +93,16 @@
                 [[UIApplication sharedApplication].delegate window].rootViewController = vc;
             };
             break;
-            
+        }
         default:
             break;
     }
     
     return cell;
+}
+
+- (void)setAliasWithSring:(NSString *)userString {
+  [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
 }
 
 /*

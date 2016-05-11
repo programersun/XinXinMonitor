@@ -11,17 +11,25 @@
 #import "SDWebImageManager.h"
 #import "MainTabBarViewController.h"
 #import "LoginViewController.h"
+#import "ImageDetailViewController.h"
 
-#define JPushKey @"b4d6225846279da13d593a07"
+#define JPushKey @"88ab9b2429bf675c76b3769e"
 #define BaiDuKey @"rZzjh5uvuHku5GcmoQrriEjOeYRr4Qu7"
 
-@interface AppDelegate ()
-
+@interface AppDelegate () <UIAlertViewDelegate>
+@property (nonatomic, strong) NSDictionary *jpushInfo;
 @end
 
 BMKMapManager *_mapManager;
 @implementation AppDelegate
 
+- (NSDictionary *)jpushInfo {
+    
+    if (!_jpushInfo) {
+        _jpushInfo = [[NSDictionary alloc] init];
+    }
+    return _jpushInfo;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -82,7 +90,8 @@ BMKMapManager *_mapManager;
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [JPUSHService setBadge:0];
+    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -127,6 +136,9 @@ BMKMapManager *_mapManager;
                                              UIRemoteNotificationTypeAlert)
          categories:nil];
     }
+    
+    [self setAlias];
+    
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushKey
                           channel:@"Publish channel"
@@ -134,45 +146,82 @@ BMKMapManager *_mapManager;
             advertisingIdentifier:nil];
 }
 
-- (void)application:(UIApplication *)application
-didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
     [JPUSHService registerDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    [self parsePushDictionary:userInfo application:application];
     [JPUSHService handleRemoteNotification:userInfo];
 }
 
-- (void)application:(UIApplication *)application
-didReceiveRemoteNotification:(NSDictionary *)userInfo
-fetchCompletionHandler:
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
-    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-    if (application.applicationState == UIApplicationStateActive) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"推送消息"
-                                                            message:alert
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-    [application setApplicationIconBadgeNumber:0];
+    
+    [self parsePushDictionary:userInfo application:application];
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)application:(UIApplication *)application
-didReceiveLocalNotification:(UILocalNotification *)notification {
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
-- (void)application:(UIApplication *)application
-didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     // Optional
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+}
+
+- (void)setAlias {
+
+    if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
+        [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
+    }else {
+        [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
+    }
+}
+
+/** 处理推送信息 */
+- (void)parsePushDictionary:(NSDictionary*)userInfo
+                application:(UIApplication*)application {
+
+    self.jpushInfo = userInfo;
+    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    if (application.applicationState == UIApplicationStateActive) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:alert
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"确定",nil];
+        [alertView show];
+    } else {
+        [self pushImageDetailViewController];
+    }
+}
+
+/**
+ *  收到消息推送后跳转详情页面
+ */
+- (void)pushImageDetailViewController {
+    MainTabBarViewController *tabVC = (MainTabBarViewController *)self.window.rootViewController;
+    [tabVC setSelectedIndex:2];
+    UINavigationController *navVC = tabVC.childViewControllers[2];
+    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+    if (vc == nil) {
+        vc = [[ImageDetailViewController alloc] init];
+    }
+    vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
+    [vc setHidesBottomBarWhenPushed:YES];
+    [navVC pushViewController:vc animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self pushImageDetailViewController];
+    }
 }
 
 @end
