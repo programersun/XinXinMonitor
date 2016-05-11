@@ -114,8 +114,7 @@
         }
         self.pickerView.hidden = YES;
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"开始时间不能晚于结束时间！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
+        [SVProgressHUD showSuccessWithStatus:@"开始时间不能晚于结束时间！" duration:1.0];
     }
 }
 

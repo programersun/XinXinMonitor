@@ -12,8 +12,8 @@
 #import "MainTabBarViewController.h"
 #import "LoginViewController.h"
 
-#define JPushKey @"a7d3b0bd528f3157e64b0623"
-#define BaiDuKey @"1T7hGSEgTOHo3agDWzQ524gREm9Y0xqL"
+#define JPushKey @"b4d6225846279da13d593a07"
+#define BaiDuKey @"rZzjh5uvuHku5GcmoQrriEjOeYRr4Qu7"
 
 @interface AppDelegate ()
 
@@ -31,6 +31,8 @@ BMKMapManager *_mapManager;
     
     //设置缓存策略(最多缓存10M图片)
     [SDImageCache sharedImageCache].maxCacheSize = 1024 * 1024 * 10;
+    
+    //实时监听网络状态
     [[AFNetworkingTools sharedManager] networkStateChange];
     
     //极光推送

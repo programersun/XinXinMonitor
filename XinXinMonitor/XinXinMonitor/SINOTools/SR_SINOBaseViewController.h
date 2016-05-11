@@ -101,4 +101,16 @@
  *  @param number 跳过的ViewController数量 1返回表示返回上一个界面 超出navigationController数量无反应
  */
 - (void)popToViewControllerWithNumber:(NSInteger)number;
+
+/**
+ *  显示提示
+ *
+ *  @param string 提示内容
+ *  @param showTime 显示时间
+ */
+- (void)showMessageWithString:(NSString *)string showTime:(NSTimeInterval)showTime;
+
+- (void)showSVProgressHUD;
+
+- (void)hideSVProgressHUD;
 @end

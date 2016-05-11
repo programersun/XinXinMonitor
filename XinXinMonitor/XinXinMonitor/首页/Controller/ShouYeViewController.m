@@ -114,7 +114,7 @@
 #pragma mark - 实例化地图BMKMapView
 - (void)addMapView {
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 49 - 64)];
-    _mapView.backgroundColor = [UIColor greenColor];
+    _mapView.backgroundColor = [UIColor whiteColor];
     
     //定位
     _locService = [[BMKLocationService alloc]init];
@@ -437,7 +437,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return 3;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

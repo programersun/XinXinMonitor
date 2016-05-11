@@ -29,6 +29,8 @@
 		A456B2341CDF73BE00F7FC1A /* AddMonitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */; };
 		A456B2421CDF916C00F7FC1A /* TimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2401CDF916C00F7FC1A /* TimeView.m */; };
 		A456B2431CDF916C00F7FC1A /* TimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A456B2411CDF916C00F7FC1A /* TimeView.xib */; };
+		A456B2461CE1B33800F7FC1A /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2451CE1B33800F7FC1A /* ChangePasswordViewController.m */; };
+		A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2481CE1B48A00F7FC1A /* AboutUsViewController.m */; };
 		A49A27521CC5C7A400ED5A61 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */; };
 		A49A27541CC5C7AB00ED5A61 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */; };
 		A49A27561CC5C7B400ED5A61 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */; };
@@ -149,6 +151,10 @@
 		A456B23F1CDF916C00F7FC1A /* TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeView.h; sourceTree = "<group>"; };
 		A456B2401CDF916C00F7FC1A /* TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeView.m; sourceTree = "<group>"; };
 		A456B2411CDF916C00F7FC1A /* TimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeView.xib; sourceTree = "<group>"; };
+		A456B2441CE1B33800F7FC1A /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		A456B2451CE1B33800F7FC1A /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		A456B2471CE1B48A00F7FC1A /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		A456B2481CE1B48A00F7FC1A /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -505,6 +511,10 @@
 			children = (
 				A4D3359E1CBFE15D00023D5C /* SettingViewController.h */,
 				A4D3359F1CBFE15D00023D5C /* SettingViewController.m */,
+				A456B2441CE1B33800F7FC1A /* ChangePasswordViewController.h */,
+				A456B2451CE1B33800F7FC1A /* ChangePasswordViewController.m */,
+				A456B2471CE1B48A00F7FC1A /* AboutUsViewController.h */,
+				A456B2481CE1B48A00F7FC1A /* AboutUsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -879,6 +889,7 @@
 				A4D336241CBFE2A400023D5C /* SDWebImageDownloaderOperation.m in Sources */,
 				A4D336191CBFE2A400023D5C /* AFURLSessionManager.m in Sources */,
 				A4505DE11CC9167B006BD80D /* ImageCollectionViewCell.m in Sources */,
+				A456B2461CE1B33800F7FC1A /* ChangePasswordViewController.m in Sources */,
 				A4D335D11CBFE1D200023D5C /* GCPath.m in Sources */,
 				A4D3362C1CBFE2A400023D5C /* UIImageView+WebCache.m in Sources */,
 				A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */,
@@ -905,6 +916,7 @@
 				A4D336161CBFE2A400023D5C /* AFSecurityPolicy.m in Sources */,
 				A4D3362A1CBFE2A400023D5C /* UIImage+WebP.m in Sources */,
 				A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */,
+				A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */,
 				A4D336261CBFE2A400023D5C /* SDWebImagePrefetcher.m in Sources */,
 				A4D335BC1CBFE16B00023D5C /* MainTabBarViewController.m in Sources */,
 				A4D336171CBFE2A400023D5C /* AFURLRequestSerialization.m in Sources */,
@@ -1052,7 +1064,7 @@
 					"$(PROJECT_DIR)/XinXinMonitor/ThirdClass/JPush/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz.HaiZhaoTong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1078,7 +1090,7 @@
 					"$(PROJECT_DIR)/XinXinMonitor/ThirdClass/JPush/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz.HaiZhaoTong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -35,6 +35,10 @@
     [self setNavigationBarTintColor:[ColorRequest MainBlueColor]];
     [self setNavigationTintColor:[UIColor whiteColor]];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [AFNetworkingTools sharedManager].noNetworkBlock = ^{
+        [self showMessageWithString:@"当前无网络!" showTime:1.0];
+    };
 }
 
 - (void)setNavigationBarTintColor:(UIColor *)barTintColor {
@@ -141,6 +145,18 @@
          popToViewController:viewControllers[viewControllers.count - number - 1]
          animated:YES];
     }
+}
+
+- (void)showMessageWithString:(NSString *)string showTime:(NSTimeInterval)showTime{
+    [SVProgressHUD showSuccessWithStatus:string duration:showTime];
+}
+
+- (void)showSVProgressHUD {
+    [SVProgressHUD show];
+}
+
+- (void)hideSVProgressHUD {
+    [SVProgressHUD dismiss];
 }
 
 #pragma mark 设置leftBarButtonItem后保留左侧手势返回
