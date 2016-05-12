@@ -64,21 +64,31 @@ static LocationManager *shareManager = nil;
            fromLocation:(CLLocation *)oldLocation
 {
     [manager stopUpdatingLocation];
+    
+//    CLLocationCoordinate2D test = (CLLocationCoordinate2D){39.915101,116.403981};
+//    CLLocation *location = [[CLLocation alloc] initWithLatitude:test.latitude longitude:test.longitude];
     [self.currentLocationGeocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          if (error == nil && [placemarks count] > 0) {
+             
              CLLocationDegrees latitude  = newLocation.coordinate.latitude;
              CLLocationDegrees longitude = newLocation.coordinate.longitude;
              NSLog(@"latitude = %f,longitude = %f",latitude,longitude);
              self.latitude = [NSString stringWithFormat:@"%f",latitude];
              self.longitude = [NSString stringWithFormat:@"%f",longitude];
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
+             
              //城市名称
              NSString *placeName = [NSString stringWithFormat:@"%@",placemark.locality];
              self.currentAddress = placeName;
+             
+             NSDictionary *addressDictionary = placemark.addressDictionary;
              //区级名称
-             NSString *districtName = [NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"SubLocality"]];
+             NSString *districtName = [NSString stringWithFormat:@"%@",[addressDictionary objectForKey:@"SubLocality"]];
              self.currentDistrict = districtName;
+             //详细地址
+             self.detailAddress = [addressDictionary objectForKey:@"FormattedAddressLines"][0];
+             
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
              [userDefault setObject:self.latitude forKey:@"Latitude"];
              [userDefault setObject:self.longitude forKey:@"Longitude"];
@@ -91,6 +101,10 @@ static LocationManager *shareManager = nil;
              if ([[LocationManager sharedManager] getDistrict] == nil) {
                  [self saveDistrictWithString:self.currentDistrict];
              }
+             if ([LocationManager sharedManager].reverseGeocodeLocationSuccessBlock) {
+                 self.reverseGeocodeLocationSuccessBlock();
+             }
+             
          }else if (error == nil && [placemarks count] == 0){
              NSLog(@"No results were returned.");
          }else if (error != nil){
@@ -118,25 +132,6 @@ static LocationManager *shareManager = nil;
     [userDefault setObject:@"0" forKey:@"Longitude"];
     [userDefault setObject:@"" forKey:@"Location"];
     [userDefault synchronize];
-    
-//    NSString *errorString;
-//    [manager stopUpdatingLocation];
-//    NSLog(@"Error: %@",[error localizedDescription]);
-//    switch([error code]) {
-//        case kCLErrorDenied:
-//            //Access denied by user
-//            errorString = @"Access to Location Services denied by user";
-//            //Do something...
-//            break;
-//        case kCLErrorLocationUnknown:
-//            //Probably temporary...
-//            errorString = @"Location data unavailable";
-//            //Do something else...
-//            break;
-//        default:
-//            errorString = @"An unknown error has occurred";
-//            break;
-//    }
 }
 
 - (void)saveCityWithString:(NSString *) city {
@@ -202,7 +197,7 @@ static LocationManager *shareManager = nil;
             [[UIApplication sharedApplication] openURL:url];
         }
     }
-    [alertView dismissWithClickedButtonIndex:1 animated:YES];
+    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
 @end

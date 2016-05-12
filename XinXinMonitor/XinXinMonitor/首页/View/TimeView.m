@@ -114,7 +114,8 @@
         }
         self.pickerView.hidden = YES;
     } else {
-        [SVProgressHUD showSuccessWithStatus:@"开始时间不能晚于结束时间！" duration:1.0];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+        [SVProgressHUD showErrorWithStatus:@"开始时间不能晚于结束时间！"];
     }
 }
 

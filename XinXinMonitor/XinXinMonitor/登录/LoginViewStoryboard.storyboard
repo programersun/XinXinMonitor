@@ -29,18 +29,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gty-aa-6Mb">
-                                                    <rect key="frame" x="73" y="20" width="175" height="110"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gty-aa-6Mb">
+                                                    <rect key="frame" x="57" y="10" width="207" height="130"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="gty-aa-6Mb" secondAttribute="height" multiplier="183:115" id="uxU-Y3-ddy"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="top" secondItem="hkK-LT-nwL" secondAttribute="top" constant="20" id="Tdi-Z5-VsK"/>
-                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hkK-LT-nwL" secondAttribute="leading" constant="15" id="kV9-MF-zRr"/>
-                                                <constraint firstAttribute="bottom" secondItem="gty-aa-6Mb" secondAttribute="bottom" constant="20" id="sfs-Ip-ffb"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gty-aa-6Mb" secondAttribute="trailing" constant="15" id="y7u-mq-lbc"/>
+                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="top" secondItem="hkK-LT-nwL" secondAttribute="top" constant="10" id="Tdi-Z5-VsK"/>
+                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hkK-LT-nwL" secondAttribute="leading" constant="10" id="kV9-MF-zRr"/>
+                                                <constraint firstAttribute="bottom" secondItem="gty-aa-6Mb" secondAttribute="bottom" constant="10" id="sfs-Ip-ffb"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gty-aa-6Mb" secondAttribute="trailing" constant="10" id="y7u-mq-lbc"/>
                                                 <constraint firstItem="gty-aa-6Mb" firstAttribute="centerX" secondItem="hkK-LT-nwL" secondAttribute="centerX" id="yfd-AI-xo1"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -55,15 +55,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k1C-TM-9xA">
-                                                    <rect key="frame" x="20" y="10" width="40" height="40"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="account" translatesAutoresizingMaskIntoConstraints="NO" id="k1C-TM-9xA">
+                                                    <rect key="frame" x="20" y="18" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="k1C-TM-9xA" secondAttribute="height" multiplier="1:1" id="6pZ-lZ-ABU"/>
-                                                        <constraint firstAttribute="width" constant="40" id="dOd-2j-gAA"/>
+                                                        <constraint firstAttribute="width" constant="24" id="dOd-2j-gAA"/>
                                                     </constraints>
                                                 </imageView>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入登录账号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdd-et-Vp8">
-                                                    <rect key="frame" x="70" y="10" width="230" height="40"/>
+                                                    <rect key="frame" x="54" y="10" width="246" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="eq1-gA-RTn"/>
                                                     </constraints>
@@ -90,15 +90,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-r4-h9F">
-                                                    <rect key="frame" x="20" y="10" width="40" height="40"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-r4-h9F">
+                                                    <rect key="frame" x="20" y="18" width="24" height="24"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="Bmf-5K-b3Q"/>
+                                                        <constraint firstAttribute="width" constant="24" id="Bmf-5K-b3Q"/>
                                                         <constraint firstAttribute="width" secondItem="qyp-r4-h9F" secondAttribute="height" multiplier="1:1" id="ugE-9K-pE5"/>
                                                     </constraints>
                                                 </imageView>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入登录密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ut9-pS-ijz">
-                                                    <rect key="frame" x="70" y="10" width="230" height="40"/>
+                                                    <rect key="frame" x="54" y="10" width="246" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="B8f-MJ-9zm"/>
                                                     </constraints>
@@ -191,4 +191,9 @@
             <point key="canvasLocation" x="421" y="310"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="account" width="24" height="24"/>
+        <image name="logo" width="281" height="139"/>
+        <image name="password" width="19" height="23"/>
+    </resources>
 </document>

@@ -11,6 +11,8 @@
 #import <CoreLocation/CLLocation.h>
 #import <MapKit/MapKit.h>
 
+typedef void(^ReverseGeocodeLocationSuccessBlock)();
+
 @interface LocationManager : NSObject 
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -18,11 +20,17 @@
 /** 当前位置 */
 @property (nonatomic, strong) NSString *currentAddress;
 /** 当前位置 */
+@property (nonatomic, strong) NSString *detailAddress;
+/** 当前位置 */
 @property (nonatomic, strong) NSString *currentDistrict;
 /** 经度 */
 @property (nonatomic, strong) NSString *longitude;
 /** 纬度 */
 @property (nonatomic, strong) NSString *latitude;
+/**
+ *  反地理编码成功
+ */
+@property(nonatomic,copy) ReverseGeocodeLocationSuccessBlock reverseGeocodeLocationSuccessBlock;
 
 + (instancetype)sharedManager;
 

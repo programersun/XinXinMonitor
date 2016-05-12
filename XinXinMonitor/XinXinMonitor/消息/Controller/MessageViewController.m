@@ -107,7 +107,7 @@
     if (buttonIndex == 1) {
         NSLog(@"删除");
     }
-    [alertView dismissWithClickedButtonIndex:1 animated:YES];
+    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

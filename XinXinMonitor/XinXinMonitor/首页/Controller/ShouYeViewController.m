@@ -183,7 +183,7 @@
     }
     if (!button.selected) {
         button.selected = YES;
-        [self.topView.mapBtn setImage:[UIImage imageNamed:@"arrows_down"] forState:UIControlStateNormal];
+        [self.topView.mapBtn setImage:[UIImage imageNamed:@"listRight"] forState:UIControlStateNormal];
         [UIView transitionFromView:self.firstView toView:_mapView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL finished) {
             [self startLocation];
         }];

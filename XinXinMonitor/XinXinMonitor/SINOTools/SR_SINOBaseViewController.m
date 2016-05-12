@@ -148,10 +148,15 @@
 }
 
 - (void)showMessageWithString:(NSString *)string showTime:(NSTimeInterval)showTime{
-    [SVProgressHUD showSuccessWithStatus:string duration:showTime];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD showErrorWithStatus:string];
+    [SVProgressHUD setMinimumDismissTimeInterval:showTime];
 }
 
 - (void)showSVProgressHUD {
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
+    [SVProgressHUD setForegroundColor:[ColorRequest MainBlueColor]];
     [SVProgressHUD show];
 }
 

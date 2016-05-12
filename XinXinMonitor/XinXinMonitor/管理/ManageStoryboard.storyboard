@@ -115,7 +115,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="济南市历下区" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2iC-Aw-DU2">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2iC-Aw-DU2">
                                 <rect key="frame" x="20" y="61" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="uDh-hl-5qF"/>
@@ -155,7 +155,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户账号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yj-W6-PvE">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入设备编号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9EZ-Ak-fUJ">
+                                <rect key="frame" x="95" y="133" width="205" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备电话" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yj-W6-PvE">
                                 <rect key="frame" x="20" y="178" width="70" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="dbe-5K-A7d"/>
@@ -164,13 +169,22 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入设备名称或编号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9EZ-Ak-fUJ">
-                                <rect key="frame" x="95" y="133" width="205" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入该设备所属用户账号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gkr-j8-5Hq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入该设备电话号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gkr-j8-5Hq">
                                 <rect key="frame" x="95" y="174" width="205" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备用户" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMB-rg-rV2">
+                                <rect key="frame" x="20" y="219" width="70" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="Lc5-1I-DGf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入该设备所属用户账号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Me0-ka-UwD">
+                                <rect key="frame" x="95" y="215" width="205" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -178,12 +192,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qo5-eh-Sun" firstAttribute="leading" secondItem="5il-KO-4lf" secondAttribute="leading" constant="20" id="20C-NR-ty6"/>
+                            <constraint firstAttribute="trailing" secondItem="Me0-ka-UwD" secondAttribute="trailing" constant="20" id="5Xg-DQ-dLJ"/>
+                            <constraint firstItem="QMB-rg-rV2" firstAttribute="leading" secondItem="5il-KO-4lf" secondAttribute="leading" constant="20" id="CaP-UI-ozH"/>
                             <constraint firstItem="2iC-Aw-DU2" firstAttribute="leading" secondItem="5il-KO-4lf" secondAttribute="leading" constant="20" id="Gw8-bF-ZqP"/>
                             <constraint firstItem="9EZ-Ak-fUJ" firstAttribute="leading" secondItem="y6F-en-RNZ" secondAttribute="trailing" constant="5" id="HMr-Q9-kaM"/>
                             <constraint firstItem="gkr-j8-5Hq" firstAttribute="centerY" secondItem="8yj-W6-PvE" secondAttribute="centerY" id="JDA-ZJ-jLH"/>
                             <constraint firstItem="y6F-en-RNZ" firstAttribute="top" secondItem="qo5-eh-Sun" secondAttribute="bottom" constant="20" id="KUQ-wc-g7r"/>
                             <constraint firstAttribute="trailing" secondItem="gkr-j8-5Hq" secondAttribute="trailing" constant="20" id="RCr-z4-X6K"/>
                             <constraint firstItem="61e-zh-xf9" firstAttribute="centerY" secondItem="ZWt-IN-nne" secondAttribute="centerY" id="TEw-Vw-5rt"/>
+                            <constraint firstItem="QMB-rg-rV2" firstAttribute="top" secondItem="8yj-W6-PvE" secondAttribute="bottom" constant="20" id="UBi-Me-kgc"/>
                             <constraint firstItem="gkr-j8-5Hq" firstAttribute="leading" secondItem="8yj-W6-PvE" secondAttribute="trailing" constant="5" id="XOK-Hw-ic7"/>
                             <constraint firstAttribute="trailing" secondItem="qo5-eh-Sun" secondAttribute="trailing" constant="20" id="bWt-4i-1u2"/>
                             <constraint firstItem="ZWt-IN-nne" firstAttribute="top" secondItem="5il-KO-4lf" secondAttribute="top" constant="20" id="dOz-nP-fph"/>
@@ -194,6 +211,8 @@
                             <constraint firstAttribute="trailing" secondItem="2iC-Aw-DU2" secondAttribute="trailing" constant="20" id="jFp-OT-ZmJ"/>
                             <constraint firstItem="ZWt-IN-nne" firstAttribute="leading" secondItem="5il-KO-4lf" secondAttribute="leading" constant="20" id="mlP-Jf-nIU"/>
                             <constraint firstAttribute="trailing" secondItem="61e-zh-xf9" secondAttribute="trailing" constant="20" id="oJX-5J-cqI"/>
+                            <constraint firstItem="Me0-ka-UwD" firstAttribute="leading" secondItem="QMB-rg-rV2" secondAttribute="trailing" constant="5" id="t2G-bf-fGL"/>
+                            <constraint firstItem="Me0-ka-UwD" firstAttribute="centerY" secondItem="QMB-rg-rV2" secondAttribute="centerY" id="tnz-DI-Pe5"/>
                             <constraint firstItem="8yj-W6-PvE" firstAttribute="top" secondItem="y6F-en-RNZ" secondAttribute="bottom" constant="20" id="wU0-C3-iAe"/>
                             <constraint firstItem="qo5-eh-Sun" firstAttribute="top" secondItem="2iC-Aw-DU2" secondAttribute="bottom" constant="5" id="waf-9C-goW"/>
                             <constraint firstItem="8yj-W6-PvE" firstAttribute="leading" secondItem="5il-KO-4lf" secondAttribute="leading" constant="20" id="yrB-gR-CjE"/>
@@ -201,8 +220,9 @@
                     </view>
                     <connections>
                         <outlet property="afreshAddressBtn" destination="61e-zh-xf9" id="HIv-KE-4rS"/>
-                        <outlet property="monitorAccountTextField" destination="gkr-j8-5Hq" id="vQV-fJ-Ntp"/>
+                        <outlet property="monitorAccountTextField" destination="Me0-ka-UwD" id="mMd-GY-ZLC"/>
                         <outlet property="monitorNameTextField" destination="9EZ-Ak-fUJ" id="9tu-82-Aix"/>
+                        <outlet property="monitorTelephoneTextField" destination="gkr-j8-5Hq" id="3ah-1g-odt"/>
                         <outlet property="myAddressTextField" destination="2iC-Aw-DU2" id="XPz-SA-PBs"/>
                     </connections>
                 </viewController>

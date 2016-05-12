@@ -98,8 +98,6 @@
 		A4D3362B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3360B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m */; };
 		A4D3362C1CBFE2A400023D5C /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3360D1CBFE2A400023D5C /* UIImageView+WebCache.m */; };
 		A4D3362D1CBFE2A400023D5C /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3360F1CBFE2A400023D5C /* UIView+WebCacheOperation.m */; };
-		A4D3362E1CBFE2A400023D5C /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4D336111CBFE2A400023D5C /* SVProgressHUD.bundle */; };
-		A4D3362F1CBFE2A400023D5C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D336131CBFE2A400023D5C /* SVProgressHUD.m */; };
 		A4D336321CBFE4E200023D5C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D336311CBFE4E200023D5C /* libz.tbd */; };
 		A4D336341CBFE4EA00023D5C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D336331CBFE4EA00023D5C /* UIKit.framework */; };
 		A4D336361CBFE4F200023D5C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D336351CBFE4F200023D5C /* Security.framework */; };
@@ -110,6 +108,11 @@
 		A4D336401CBFE51C00023D5C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D3363F1CBFE51C00023D5C /* CFNetwork.framework */; };
 		A4D336431CBFF2A100023D5C /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */; };
 		A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */; };
+		A4F973E01CE4E43C00623D79 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973D71CE4E43C00623D79 /* SVIndefiniteAnimatedView.m */; };
+		A4F973E11CE4E43C00623D79 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973D91CE4E43C00623D79 /* SVProgressAnimatedView.m */; };
+		A4F973E21CE4E43C00623D79 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A4F973DB1CE4E43C00623D79 /* SVProgressHUD.bundle */; };
+		A4F973E31CE4E43C00623D79 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973DD1CE4E43C00623D79 /* SVProgressHUD.m */; };
+		A4F973E41CE4E43C00623D79 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973DF1CE4E43C00623D79 /* SVRadialGradientLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -275,9 +278,6 @@
 		A4D3360D1CBFE2A400023D5C /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		A4D3360E1CBFE2A400023D5C /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		A4D3360F1CBFE2A400023D5C /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		A4D336111CBFE2A400023D5C /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		A4D336121CBFE2A400023D5C /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		A4D336131CBFE2A400023D5C /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		A4D336311CBFE4E200023D5C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A4D336331CBFE4EA00023D5C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A4D336351CBFE4F200023D5C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -290,6 +290,16 @@
 		A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
 		A4D9EB371CC5010F00BBD7EA /* CityChangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChangeView.h; sourceTree = "<group>"; };
 		A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChangeView.m; sourceTree = "<group>"; };
+		A4F973D61CE4E43C00623D79 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		A4F973D71CE4E43C00623D79 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		A4F973D81CE4E43C00623D79 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		A4F973D91CE4E43C00623D79 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		A4F973DA1CE4E43C00623D79 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		A4F973DB1CE4E43C00623D79 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		A4F973DC1CE4E43C00623D79 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		A4F973DD1CE4E43C00623D79 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		A4F973DE1CE4E43C00623D79 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		A4F973DF1CE4E43C00623D79 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -660,7 +670,7 @@
 				A4D335E41CBFE2A300023D5C /* JPush */,
 				A4D335E81CBFE2A400023D5C /* MBProgressHUD */,
 				A4D335EE1CBFE2A400023D5C /* SDWebImage */,
-				A4D336101CBFE2A400023D5C /* SVProgressHUD */,
+				A4F973D51CE4E43C00623D79 /* SVProgressHUD */,
 			);
 			path = ThirdClass;
 			sourceTree = "<group>";
@@ -754,16 +764,6 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
-		A4D336101CBFE2A400023D5C /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				A4D336111CBFE2A400023D5C /* SVProgressHUD.bundle */,
-				A4D336121CBFE2A400023D5C /* SVProgressHUD.h */,
-				A4D336131CBFE2A400023D5C /* SVProgressHUD.m */,
-			);
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
 		A4D336301CBFE4CA00023D5C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +782,23 @@
 				A4D336311CBFE4E200023D5C /* libz.tbd */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		A4F973D51CE4E43C00623D79 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A4F973D61CE4E43C00623D79 /* SVIndefiniteAnimatedView.h */,
+				A4F973D71CE4E43C00623D79 /* SVIndefiniteAnimatedView.m */,
+				A4F973D81CE4E43C00623D79 /* SVProgressAnimatedView.h */,
+				A4F973D91CE4E43C00623D79 /* SVProgressAnimatedView.m */,
+				A4F973DA1CE4E43C00623D79 /* SVProgressHUD-Prefix.pch */,
+				A4F973DB1CE4E43C00623D79 /* SVProgressHUD.bundle */,
+				A4F973DC1CE4E43C00623D79 /* SVProgressHUD.h */,
+				A4F973DD1CE4E43C00623D79 /* SVProgressHUD.m */,
+				A4F973DE1CE4E43C00623D79 /* SVRadialGradientLayer.h */,
+				A4F973DF1CE4E43C00623D79 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -843,6 +860,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A43A02111CCCEA7B00940950 /* city.plist in Resources */,
+				A4F973E21CE4E43C00623D79 /* SVProgressHUD.bundle in Resources */,
 				A456B2431CDF916C00F7FC1A /* TimeView.xib in Resources */,
 				A4D335B51CBFE15D00023D5C /* SettingStoryboard.storyboard in Resources */,
 				A43A02131CCCF1DA00940950 /* area.plist in Resources */,
@@ -851,7 +869,6 @@
 				A4D335B31CBFE15D00023D5C /* ManageStoryboard.storyboard in Resources */,
 				A4D335861CBFDFEE00023D5C /* Assets.xcassets in Resources */,
 				A4505DE61CC91C45006BD80D /* ImageCollectionViewCell.xib in Resources */,
-				A4D3362E1CBFE2A400023D5C /* SVProgressHUD.bundle in Resources */,
 				A43A01F91CCC73F700940950 /* mss_browseLoading@2x.png in Resources */,
 				A4D3361C1CBFE2A400023D5C /* MBProgressHUD.bundle in Resources */,
 				A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */,
@@ -877,6 +894,7 @@
 				A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */,
 				A4D335D31CBFE1D200023D5C /* PublicUtil.m in Sources */,
 				A4D336251CBFE2A400023D5C /* SDWebImageManager.m in Sources */,
+				A4F973E01CE4E43C00623D79 /* SVIndefiniteAnimatedView.m in Sources */,
 				A456B2421CDF916C00F7FC1A /* TimeView.m in Sources */,
 				A4D335811CBFDFEE00023D5C /* ViewController.m in Sources */,
 				A43A01F61CCC732A00940950 /* UIView+SRLayout.m in Sources */,
@@ -903,7 +921,6 @@
 				A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */,
 				A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */,
 				A4D336141CBFE2A400023D5C /* AFHTTPSessionManager.m in Sources */,
-				A4D3362F1CBFE2A400023D5C /* SVProgressHUD.m in Sources */,
 				A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */,
 				A43A02031CCC7A7A00940950 /* SRBrowseCollectionViewCell.m in Sources */,
 				A4D3357B1CBFDFEE00023D5C /* main.m in Sources */,
@@ -913,11 +930,13 @@
 				A4D336281CBFE2A400023D5C /* UIImage+GIF.m in Sources */,
 				A4D336291CBFE2A400023D5C /* UIImage+MultiFormat.m in Sources */,
 				A43A02071CCC8A6E00940950 /* SRBrowseModel.m in Sources */,
+				A4F973E11CE4E43C00623D79 /* SVProgressAnimatedView.m in Sources */,
 				A4D336161CBFE2A400023D5C /* AFSecurityPolicy.m in Sources */,
 				A4D3362A1CBFE2A400023D5C /* UIImage+WebP.m in Sources */,
 				A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */,
 				A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */,
 				A4D336261CBFE2A400023D5C /* SDWebImagePrefetcher.m in Sources */,
+				A4F973E41CE4E43C00623D79 /* SVRadialGradientLayer.m in Sources */,
 				A4D335BC1CBFE16B00023D5C /* MainTabBarViewController.m in Sources */,
 				A4D336171CBFE2A400023D5C /* AFURLRequestSerialization.m in Sources */,
 				A4D336151CBFE2A400023D5C /* AFNetworkReachabilityManager.m in Sources */,
@@ -925,6 +944,7 @@
 				A4D3361E1CBFE2A400023D5C /* MKAnnotationView+WebCache.m in Sources */,
 				A4D335B41CBFE15D00023D5C /* SettingViewController.m in Sources */,
 				A4D336231CBFE2A400023D5C /* SDWebImageDownloader.m in Sources */,
+				A4F973E31CE4E43C00623D79 /* SVProgressHUD.m in Sources */,
 				A4D336271CBFE2A400023D5C /* UIButton+WebCache.m in Sources */,
 				A49A27691CC5DEEE00ED5A61 /* LocationManager.m in Sources */,
 				A4D3361B1CBFE2A400023D5C /* MBProgressHUD+Add.m in Sources */,
@@ -1048,6 +1068,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1074,6 +1095,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

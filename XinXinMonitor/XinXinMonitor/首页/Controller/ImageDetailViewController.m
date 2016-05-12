@@ -302,7 +302,7 @@
         cell.timeLabel.text = @"2016.04.20 12:00:00";
         
         cell.ProblemBtnClickBlock = ^{
-            NSLog(@"%ld",indexPath.row);
+            NSLog(@"%ld",(long)indexPath.row);
         };
     }
     return cell;
@@ -340,6 +340,7 @@
             
         }
     }
+    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

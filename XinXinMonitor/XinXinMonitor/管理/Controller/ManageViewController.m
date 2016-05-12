@@ -34,7 +34,7 @@
     [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
     
     if (1) {
-        [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"arrows_up"] highlightedImg:[UIImage imageNamed:@"arrows_up"]];
+        [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
     }
     _pageNum = 0;
     // Do any additional setup after loading the view.
@@ -119,7 +119,7 @@
         [self.manageTableView reloadData];
     }
     
-    [alertView dismissWithClickedButtonIndex:1 animated:YES];
+    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
 - (void)toImageDetailView {

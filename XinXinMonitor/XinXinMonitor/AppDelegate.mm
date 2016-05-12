@@ -207,19 +207,26 @@ BMKMapManager *_mapManager;
  */
 - (void)pushImageDetailViewController {
     MainTabBarViewController *tabVC = (MainTabBarViewController *)self.window.rootViewController;
-    [tabVC setSelectedIndex:2];
-    UINavigationController *navVC = tabVC.childViewControllers[2];
-    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-    if (vc == nil) {
-        vc = [[ImageDetailViewController alloc] init];
+    for (UINavigationController *nav in tabVC.childViewControllers) {
+        [nav popToRootViewControllerAnimated:NO];
     }
-    vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
-    [vc setHidesBottomBarWhenPushed:YES];
-    [navVC pushViewController:vc animated:YES];
+    [tabVC setSelectedIndex:2];
+    
+    if ([[self.jpushInfo objectForKey:@"detail"] isEqualToString:@"yes"]) {
+        UINavigationController *navVC = tabVC.childViewControllers[2];
+        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+        if (vc == nil) {
+            vc = [[ImageDetailViewController alloc] init];
+        }
+        vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
+        [vc setHidesBottomBarWhenPushed:YES];
+        [navVC pushViewController:vc animated:YES];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
+        [alertView dismissWithClickedButtonIndex:1 animated:YES];
         [self pushImageDetailViewController];
     }
 }

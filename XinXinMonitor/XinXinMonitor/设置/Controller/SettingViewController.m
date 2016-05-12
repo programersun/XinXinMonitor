@@ -205,6 +205,7 @@
             [self logOutBtnClick];
         }
     }
+    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
