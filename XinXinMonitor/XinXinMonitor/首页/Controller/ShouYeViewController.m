@@ -20,6 +20,8 @@
     BMKLocationService* _locService;
     CLLocationCoordinate2D _center;
     NSInteger _index;
+    NSInteger _pageNum;
+    NSInteger _count;
 }
 
 @property (nonatomic, strong) HomeTopView *topView;             /**< 首页导航*/
@@ -103,12 +105,49 @@
     [self.view addSubview:self.tranbackView];
     
     self.topView.searchText.delegate = self;
+    
+    _pageNum = 0;
+    _count = 12;
+    __weak ShouYeViewController *weakself = self;
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNum = 0;
+        _count = 12;
+        [weakself loadMonitorInfo];
+    }];
+    
+    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _pageNum ++;
+        _count = 15;
+        [weakself loadMonitorInfo];
+    }];
+    
+    [self showSVProgressHUD];
+    [self loadMonitorInfo];
+    
 }
+
+#pragma mark - 结束加载
+- (void)endRefresh {
+    [self.collectionView.mj_header endRefreshing];
+    [self.collectionView.mj_footer endRefreshing];
+    [self hideSVProgressHUD];
+}
+
+#pragma mark - 加载数据
+- (void)loadMonitorInfo {
+    
+    [self endRefresh];
+    [self.collectionView reloadData];
+    if ((_count - 10 * _pageNum) < 10) {
+        [self hideSVProgressHUD];
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
 
 #pragma mark - 获取城市区域
 - (void)loadDistrict:(NSString *) cityString{
     [self.cityChangeView reloadView];
-    
 }
 
 #pragma mark - 实例化地图BMKMapView
@@ -305,7 +344,6 @@
     _mapView.showsUserLocation = NO;//先关闭显示的定位图层
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
-    
     [self animationToMyChooseLocation];
 }
 
@@ -351,7 +389,6 @@
     [_mapView updateLocationData:userLocation];
     
 }
-
 
 #pragma mark - BMKMapViewDelegate
 
@@ -437,7 +474,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 3;
+    return _count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

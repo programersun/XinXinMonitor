@@ -14,7 +14,9 @@
 @interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
+    NSInteger _count;
 }
+@property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 @property (nonatomic, strong) NSMutableArray *messageArray;
 
 @end
@@ -32,6 +34,24 @@
     [super viewDidLoad];
     
     [self setNavigationTitle:@"我的消息" TextColor:[UIColor whiteColor] Font:nil];
+    _pageNum = 0;
+    _count = 11;
+    __weak MessageViewController *weakself = self;
+    self.messageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNum = 0;
+        _count = 11;
+        [weakself loadMessageInfo];
+    }];
+    
+    self.messageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _pageNum ++;
+        _count = 15;
+        [weakself loadMessageInfo];
+    }];
+    
+    [self showSVProgressHUD];
+    [self loadMessageInfo];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -40,10 +60,30 @@
     self.tabBarController.tabBar.hidden = NO;
 }
 
+#pragma mark - 结束加载
+
+- (void)endRefresh {
+    [self.messageTableView.mj_header endRefreshing];
+    [self.messageTableView.mj_footer endRefreshing];
+    [self hideSVProgressHUD];
+}
+
+#pragma mark - 加载数据
+- (void)loadMessageInfo {
+    
+    [self endRefresh];
+    [self.messageTableView reloadData];
+    if ((_count - 10 * _pageNum) < 10) {
+        [self hideSVProgressHUD];
+        [self.messageTableView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -61,7 +101,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1 * KASAdapterSizeWidth;
+    return 0.000000001;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

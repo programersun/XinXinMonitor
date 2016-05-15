@@ -103,7 +103,15 @@
 - (void)popToViewControllerWithNumber:(NSInteger)number;
 
 /**
- *  显示提示
+ *  显示成功提示
+ *
+ *  @param string 提示内容
+ *  @param showTime 显示时间
+ */
+- (void)showSuccessWithString:(NSString *)string showTime:(NSTimeInterval)showTime;
+
+/**
+ *  显示失败提示
  *
  *  @param string 提示内容
  *  @param showTime 显示时间

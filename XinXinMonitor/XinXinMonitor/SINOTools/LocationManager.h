@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CLLocation.h>
 #import <MapKit/MapKit.h>
+#import "CLLocation+YCLocation.h"
 
 typedef void(^ReverseGeocodeLocationSuccessBlock)();
 

@@ -12,6 +12,9 @@
 
 @interface LoginViewController () <UITableViewDelegate,UITableViewDataSource>
 
+@property (nonatomic, strong) NSString *userKey;
+@property (nonatomic, strong) NSString *password;
+
 @end
 
 @implementation LoginViewController
@@ -20,6 +23,8 @@
     [super viewDidLoad];
     
     [self setNavigationTitle:@"登录" TextColor:[UIColor whiteColor] Font:nil];
+    self.userKey = @"";
+    self.password = @"";
     // Do any additional setup after loading the view.
 }
 
@@ -68,29 +73,43 @@
             
             break;
         case 1:
-            
+            cell.accountText.tag = 0;
+            [cell.accountText addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
             break;
         case 2:
-            
+            cell.passwordText.tag = 1;
+            [cell.passwordText addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
             break;
         case 3:
         {
             cell.loginBtn.layer.masksToBounds = YES;
             cell.loginBtn.layer.cornerRadius = 5;
-            
-            __weak LoginViewController *weakself = self;
             cell.loginBtnClickBlock = ^(){
-                
-                NSDictionary *dict = @{@"userid":@"1234"};
-                [[UserInfoManager sharedManager] saveUserInfo:dict];
-                
-                [weakself setAliasWithSring:[UserInfoManager sharedManager].userID];
-                
-                MainTabBarViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-                if (vc == nil) {
-                    vc = [[MainTabBarViewController alloc] init];
+                if ([self.userKey isEqualToString:@""]) {
+                    [self showMessageWithString:@"请输入账号" showTime:1.0];
+                } else if ([self.password isEqualToString:@""]) {
+                    [self showMessageWithString:@"请输入密码" showTime:1.0];
+                } else {
+                    [self.view endEditing:YES];
+                    [self showSVProgressHUD];
+                    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitor,loginAPI] params:[XinXinMonitorAPI loginWithUserKey:self.userKey password:self.password] success:^(id responseObj) {
+                        NSDictionary *dict = responseObj;
+                        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+                            [[UserInfoManager sharedManager] saveUserInfo:[dict objectForKey:@"content"]];
+                            [self setAliasWithSring:[UserInfoManager sharedManager].userID];
+                            MainTabBarViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+                            if (vc == nil) {
+                                vc = [[MainTabBarViewController alloc] init];
+                            }
+                            [[UIApplication sharedApplication].delegate window].rootViewController = vc;
+                        } else {
+                            [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
+                        }
+                        
+                    } failure:^(NSError *error) {
+                        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+                    }];
                 }
-                [[UIApplication sharedApplication].delegate window].rootViewController = vc;
             };
             break;
         }
@@ -99,6 +118,19 @@
     }
     
     return cell;
+}
+
+- (void)textFieldWithText:(UITextField *)textField  {
+    switch (textField.tag) {
+        case 0:
+            self.userKey = textField.text;
+            break;
+        case 1:
+            self.password = textField.text;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)setAliasWithSring:(NSString *)userString {

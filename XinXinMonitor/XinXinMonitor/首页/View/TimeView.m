@@ -115,6 +115,7 @@
         self.pickerView.hidden = YES;
     } else {
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
         [SVProgressHUD showErrorWithStatus:@"开始时间不能晚于结束时间！"];
     }
 }

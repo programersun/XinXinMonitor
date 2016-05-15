@@ -10,8 +10,12 @@
 
 @interface UserInfoManager : NSObject
 
+/** 用户账号 */
 @property (nonatomic, retain) NSString *userID;
-//@property (nonatomic, retain) NSString *userAccount;
+/** 用户身份 */
+@property (nonatomic, retain) NSString *userType;
+/** 用户名字 */
+@property (nonatomic, retain) NSString *userName;
 
 + (instancetype)sharedManager;
 

@@ -71,6 +71,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="yLd-R3-v15"/>
+                    <connections>
+                        <outlet property="messageTableView" destination="xbr-dB-C4J" id="Fkb-yL-jXg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fmc-Bs-bQ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -34,13 +34,16 @@ static UserInfoManager *shareManager = nil;
 - (id)init {
     if (self = [super init]) {
         self.userID = @"";
-//        self.userAccount = @"";
+        self.userType = @"";
+        self.userName = @"";
     }
     return  self;
 }
 
 - (void)resetInfo:(NSDictionary *)dict {
-    self.userID = [dict objectForKey:@"userid"];
+    self.userID = [dict objectForKey:@"userkey"];
+    self.userType = [dict objectForKey:@"anzhuang"];
+    self.userName = [dict objectForKey:@"username"];
 }
 
 - (void)saveUserInfo:(NSDictionary *)dict {

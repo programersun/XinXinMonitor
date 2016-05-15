@@ -14,6 +14,7 @@
 @interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
+    NSInteger _count;
 }
 @property (weak, nonatomic) IBOutlet UITableView *manageTableView;
 @property (nonatomic, strong) NSMutableArray *manageArray;
@@ -33,10 +34,27 @@
     [super viewDidLoad];
     [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
     
-    if (1) {
+    if ([[UserInfoManager sharedManager].userType integerValue] == 1) {
         [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
     }
     _pageNum = 0;
+    _count = 11;
+    __weak ManageViewController *weakself = self;
+    self.manageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNum = 0;
+        _count = 11;
+        [weakself loadMonitorInfo];
+    }];
+    
+    self.manageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _pageNum ++;
+        _count = 15;
+        [weakself loadMonitorInfo];
+    }];
+    
+    [self showSVProgressHUD];
+    [self loadMonitorInfo];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -56,14 +74,36 @@
 
 }
 
+#pragma mark - 结束加载
+- (void)endRefresh {
+    [self.manageTableView.mj_header endRefreshing];
+    [self.manageTableView.mj_footer endRefreshing];
+    [self hideSVProgressHUD];
+}
+
+#pragma mark - 加载数据
+- (void)loadMonitorInfo {
+    
+    [self endRefresh];
+    [self.manageTableView reloadData];
+    if ((_count - 10 * _pageNum) < 10) {
+        [self hideSVProgressHUD];
+        [self.manageTableView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return _count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 67;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.000000001;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,12 +118,12 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 1 * KASAdapterSizeWidth;
-}
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    if ([[UserInfoManager sharedManager].userType integerValue] == 1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - UITableViewDelegate

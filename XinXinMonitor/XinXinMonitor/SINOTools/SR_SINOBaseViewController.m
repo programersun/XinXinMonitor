@@ -147,16 +147,23 @@
     }
 }
 
+- (void)showSuccessWithString:(NSString *)string showTime:(NSTimeInterval)showTime{
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setMinimumDismissTimeInterval:showTime];
+    [SVProgressHUD showSuccessWithStatus:string];
+}
+
 - (void)showMessageWithString:(NSString *)string showTime:(NSTimeInterval)showTime{
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showErrorWithStatus:string];
     [SVProgressHUD setMinimumDismissTimeInterval:showTime];
+    [SVProgressHUD showErrorWithStatus:string];
 }
 
 - (void)showSVProgressHUD {
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
     [SVProgressHUD setForegroundColor:[ColorRequest MainBlueColor]];
+    [SVProgressHUD setRingNoTextRadius:18];
     [SVProgressHUD show];
 }
 

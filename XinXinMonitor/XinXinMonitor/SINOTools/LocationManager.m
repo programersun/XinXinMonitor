@@ -52,7 +52,7 @@ static LocationManager *shareManager = nil;
     }
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = 1000.0f;//用来控制定位服务更新频率。单位是“米”
+    self.locationManager.distanceFilter = 100.0f;//用来控制定位服务更新频率。单位是“米”
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;//这个属性用来控制定位精度，精度越高耗电量越大。
 //    [self setLocationAuthority];
     
@@ -64,15 +64,16 @@ static LocationManager *shareManager = nil;
            fromLocation:(CLLocation *)oldLocation
 {
     [manager stopUpdatingLocation];
-    
-//    CLLocationCoordinate2D test = (CLLocationCoordinate2D){39.915101,116.403981};
-//    CLLocation *location = [[CLLocation alloc] initWithLatitude:test.latitude longitude:test.longitude];
+
     [self.currentLocationGeocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          if (error == nil && [placemarks count] > 0) {
              
-             CLLocationDegrees latitude  = newLocation.coordinate.latitude;
-             CLLocationDegrees longitude = newLocation.coordinate.longitude;
+             CLLocation *MarsLocation = [newLocation locationMarsFromEarth];
+             CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+             
+             CLLocationDegrees latitude  = BaiduLocation.coordinate.latitude;
+             CLLocationDegrees longitude = BaiduLocation.coordinate.longitude;
              NSLog(@"latitude = %f,longitude = %f",latitude,longitude);
              self.latitude = [NSString stringWithFormat:@"%f",latitude];
              self.longitude = [NSString stringWithFormat:@"%f",longitude];
@@ -86,8 +87,8 @@ static LocationManager *shareManager = nil;
              //区级名称
              NSString *districtName = [NSString stringWithFormat:@"%@",[addressDictionary objectForKey:@"SubLocality"]];
              self.currentDistrict = districtName;
-             //详细地址
-             self.detailAddress = [addressDictionary objectForKey:@"FormattedAddressLines"][0];
+//             //详细地址
+//             self.detailAddress = [addressDictionary objectForKey:@"FormattedAddressLines"][0];
              
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
              [userDefault setObject:self.latitude forKey:@"Latitude"];

@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "PublicUtil.h"
 #import "SVProgressHUD.h"
+#import "MJRefresh.h"
 #import "SinoDefineHeader.h"
 #import "UIImageView+WebCache.h"
 #import <Availability.h>
@@ -22,6 +23,7 @@
 #import "UserInfoManager.h"
 
 #import "SRBrowseDefine.h"
+#import "XinXinMonitorAPI.h"
 
 #endif
 
