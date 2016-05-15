@@ -15,7 +15,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye7-bH-7fc">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye7-bH-7fc">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-ze-icE">
@@ -91,17 +91,17 @@
                         <constraint firstItem="jY1-vo-7LX" firstAttribute="leading" secondItem="ye7-bH-7fc" secondAttribute="leading" constant="20" id="yrN-3l-ZV0"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PfU-5o-zln">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PfU-5o-zln">
                     <rect key="frame" x="0.0" y="388" width="320" height="180"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-tG-3Ku">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-tG-3Ku">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
                             <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="e3Z-7s-c4S"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-3X-r6v">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-3X-r6v">
                             <rect key="frame" x="280" y="0.0" width="30" height="30"/>
                             <state key="normal" title="确定"/>
                             <connections>
@@ -109,11 +109,8 @@
                             </connections>
                         </button>
                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="i0k-jB-58I">
-                            <rect key="frame" x="0.0" y="30" width="320" height="150"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="150" id="ZlL-Fj-9zX"/>
-                            </constraints>
                             <date key="date" timeIntervalSinceReferenceDate="484413179.49986303">
                                 <!--2016-05-08 15:12:59 +0000-->
                             </date>
@@ -121,6 +118,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="i0k-jB-58I" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="0Gv-ds-VQN"/>
                         <constraint firstItem="i0k-jB-58I" firstAttribute="leading" secondItem="PfU-5o-zln" secondAttribute="leading" id="2uu-x3-7Tt"/>
                         <constraint firstItem="wkr-3X-r6v" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="BZ8-jV-DuS"/>
                         <constraint firstItem="7FZ-tG-3Ku" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="Gh3-J9-3q5"/>

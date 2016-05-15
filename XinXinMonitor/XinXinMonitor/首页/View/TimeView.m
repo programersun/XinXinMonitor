@@ -84,45 +84,40 @@
 
 - (IBAction)pickerBtnClick:(id)sender {
     
-    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"YYYY-MM-dd"];
-    NSString *timeString = [dateformatter stringFromDate:self.datePicker.date];
+//    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+//    [dateformatter setDateFormat:@"YYYY-MM-dd"];
+//    NSString *timeString = [dateformatter stringFromDate:self.datePicker.date];
     
-    [dateformatter setDateFormat:@"YYYYMMdd"];
-    NSInteger timeInteger = [[dateformatter stringFromDate:self.datePicker.date] integerValue];
-    
-    if (self.startTimeBtn.selected) {
-        self.startTime = timeInteger;
-    }
-    if (self.endTimeBtn.selected) {
-        self.endTime = timeInteger;
-    }
-    if (self.startTime <= self.endTime) {
-        if (self.startTimeBtn.selected) {
-            self.startTimeString = timeString;
-            self.startTimeLabel.text = timeString;
-            [self.startTimeBtn setBackgroundColor:[UIColor whiteColor]];
-            self.startTimeBtn.selected = NO;
-            
-        }
-        if (self.endTimeBtn.selected) {
-            self.endTimeString = timeString;
-            self.endTimeLabel.text = timeString;
-            [self.endTimeBtn setBackgroundColor:[UIColor whiteColor]];
-            self.endTimeBtn.selected = NO;
-            
-        }
-        self.pickerView.hidden = YES;
-    } else {
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
-        [SVProgressHUD showErrorWithStatus:@"开始时间不能晚于结束时间！"];
-    }
-}
-
-- (void)timeCheck {
-    
-
+//    [dateformatter setDateFormat:@"YYYYMMdd"];
+//    NSInteger timeInteger = [[dateformatter stringFromDate:self.datePicker.date] integerValue];
+//    
+//    if (self.startTimeBtn.selected) {
+//        self.startTime = timeInteger;
+//    }
+//    if (self.endTimeBtn.selected) {
+//        self.endTime = timeInteger;
+//    }
+//    if (self.startTime <= self.endTime) {
+//        if (self.startTimeBtn.selected) {
+//            self.startTimeString = timeString;
+//            self.startTimeLabel.text = timeString;
+//            [self.startTimeBtn setBackgroundColor:[UIColor whiteColor]];
+//            self.startTimeBtn.selected = NO;
+//            
+//        }
+//        if (self.endTimeBtn.selected) {
+//            self.endTimeString = timeString;
+//            self.endTimeLabel.text = timeString;
+//            [self.endTimeBtn setBackgroundColor:[UIColor whiteColor]];
+//            self.endTimeBtn.selected = NO;
+//            
+//        }
+//        self.pickerView.hidden = YES;
+//    } else {
+//        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+//        [SVProgressHUD setMinimumDismissTimeInterval:1.0];
+//        [SVProgressHUD showErrorWithStatus:@"开始时间不能晚于结束时间！"];
+//    }
 }
 
 @end

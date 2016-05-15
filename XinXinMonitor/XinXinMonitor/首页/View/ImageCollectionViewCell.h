@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MonitorListRows.h"
 
 @interface ImageCollectionViewCell : UICollectionViewCell
 
-- (void)loadCellWithModel:(id) model;
+- (void)loadCellWithModel:(MonitorListRows *) model;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
 @property (weak, nonatomic) IBOutlet UILabel *cellTitle;
 

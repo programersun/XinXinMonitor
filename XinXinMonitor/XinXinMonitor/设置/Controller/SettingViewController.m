@@ -133,7 +133,7 @@
     }
     
     if (indexPath.section == 0) {
-        cell.accountLabel.text = [NSString stringWithFormat:@"账号:%@",@"XXXX"];
+        cell.accountLabel.text = [NSString stringWithFormat:@"账号:%@",[UserInfoManager sharedManager].userName];
     }
     
     if (indexPath.section == 1 && indexPath.row == 2) {

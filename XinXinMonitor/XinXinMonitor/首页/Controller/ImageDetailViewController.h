@@ -10,4 +10,6 @@
 
 @interface ImageDetailViewController : SR_SINOBaseViewController
 @property (nonatomic, weak) NSString *monitorId;
+@property (nonatomic, weak) NSString *telephone;
+@property (nonatomic, weak) NSString *address;
 @end

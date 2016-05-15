@@ -84,15 +84,17 @@
         {
             cell.loginBtn.layer.masksToBounds = YES;
             cell.loginBtn.layer.cornerRadius = 5;
+            __weak LoginTableViewCell *weakcell = cell;
             cell.loginBtnClickBlock = ^(){
                 if ([self.userKey isEqualToString:@""]) {
                     [self showMessageWithString:@"请输入账号" showTime:1.0];
                 } else if ([self.password isEqualToString:@""]) {
                     [self showMessageWithString:@"请输入密码" showTime:1.0];
                 } else {
+                    weakcell.loginBtn.enabled = NO;
                     [self.view endEditing:YES];
                     [self showSVProgressHUD];
-                    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitor,loginAPI] params:[XinXinMonitorAPI loginWithUserKey:self.userKey password:self.password] success:^(id responseObj) {
+                    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,LoginAPI] params:[XinXinMonitorAPI loginWithUserKey:self.userKey password:self.password] success:^(id responseObj) {
                         NSDictionary *dict = responseObj;
                         if ([[dict objectForKey:@"code"] integerValue] == 1) {
                             [[UserInfoManager sharedManager] saveUserInfo:[dict objectForKey:@"content"]];
@@ -103,10 +105,12 @@
                             }
                             [[UIApplication sharedApplication].delegate window].rootViewController = vc;
                         } else {
+                            weakcell.loginBtn.enabled = YES;
                             [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
                         }
                         
                     } failure:^(NSError *error) {
+                        weakcell.loginBtn.enabled = YES;
                         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
                     }];
                 }

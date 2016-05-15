@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MonitorListRows.h"
 
 @interface ManageTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -14,5 +15,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *cellRightBtn;
 @property (nonatomic, copy) void(^cellRightBtnClickBlock)();
 
-- (void)loadCellWithModel:(id) model;
+- (void)loadCellWithModel:(MonitorListRows *) model;
 @end

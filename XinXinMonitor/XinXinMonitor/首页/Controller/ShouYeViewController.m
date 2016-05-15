@@ -15,13 +15,14 @@
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import "MonitorListBaseClass.h"
+#import "MonitorListRows.h"
 
 @interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
     BMKLocationService* _locService;
     CLLocationCoordinate2D _center;
     NSInteger _index;
-    NSInteger _pageNum;
-    NSInteger _count;
+    int _pageNum;
 }
 
 @property (nonatomic, strong) HomeTopView *topView;             /**< 首页导航*/
@@ -31,6 +32,8 @@
 @property (nonatomic, strong) BMKMapView *mapView;              /**< 地图view*/
 @property (nonatomic, strong) UICollectionView *collectionView; /**< 列表collectionview*/
 @property (nonatomic, strong) NSMutableArray *monitorArray;     /**< 摄像头信息数组*/
+@property (nonatomic, strong) NSMutableArray *monitorListArray;     /**< 摄像头信息数组*/
+@property (nonatomic, strong) MonitorListBaseClass *monitorListBaseClass;
 
 @end
 
@@ -43,13 +46,16 @@
     return _monitorArray;
 }
 
+- (NSMutableArray *)monitorListArray {
+    if (!_monitorListArray) {
+        _monitorListArray = [NSMutableArray array];
+    }
+    return _monitorListArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addTopView];
-    
-    [self.monitorArray addObject:@"1000"];
-    [self.monitorArray addObject:@"2000"];
-    
     //显示当前位置信息
     NSString *city;
     if ([[LocationManager sharedManager] getCity] != nil && [[LocationManager sharedManager] getCity]) {
@@ -106,18 +112,10 @@
     
     self.topView.searchText.delegate = self;
     
-    _pageNum = 0;
-    _count = 12;
+    _pageNum = 1;
     __weak ShouYeViewController *weakself = self;
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _pageNum = 0;
-        _count = 12;
-        [weakself loadMonitorInfo];
-    }];
-    
-    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _pageNum ++;
-        _count = 15;
+        _pageNum = 1;
         [weakself loadMonitorInfo];
     }];
     
@@ -133,17 +131,63 @@
     [self hideSVProgressHUD];
 }
 
-#pragma mark - 加载数据
+#pragma mark - 加载列表数据
 - (void)loadMonitorInfo {
     
-    [self endRefresh];
-    [self.collectionView reloadData];
-    if ((_count - 10 * _pageNum) < 10) {
-        [self hideSVProgressHUD];
-        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
-    }
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
+    
+//    [dic setValue:[[LocationManager sharedManager] getMyCity] forKey:@"cityName"];
+//    if (![[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
+//        [dic setValue:[[LocationManager sharedManager] getDistrict] forKey:@"areaName"];
+    
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        
+        self.monitorListBaseClass = [[MonitorListBaseClass alloc] initWithDictionary:dict];
+        if (_pageNum == 1) {
+            [self.monitorListArray removeAllObjects];
+        }
+        for (MonitorListRows *row in self.monitorListBaseClass.rows) {
+            [self.monitorListArray addObject:row];
+        }
+        if (self.monitorListArray.count > 0) {
+            __weak ShouYeViewController *weakself = self;
+            self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                _pageNum ++;
+                [weakself loadMonitorInfo];
+            }];
+        }
+        
+        [self endRefresh];
+        [self.collectionView reloadData];
+        if (_pageNum == self.monitorListBaseClass.pagenums) {
+            [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+        }
+    } failure:^(NSError *error) {
+        [self endRefresh];
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
 }
 
+#pragma mark - 加载地图数据
+- (void)loadMapMonitorInfo {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AllMonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
+        
+        [self.monitorArray removeAllObjects];
+        for (NSDictionary *dict in responseObj) {
+            MonitorListRows *model = [[MonitorListRows alloc] initWithDictionary:dict];
+            [self.monitorArray addObject:model];
+        }
+        [self addMonitor];
+
+    } failure:^(NSError *error) {
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
 
 #pragma mark - 获取城市区域
 - (void)loadDistrict:(NSString *) cityString{
@@ -282,6 +326,7 @@
         [[LocationManager sharedManager] saveCityWithString:chooseCityString];
         [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
         [self animationToMyChooseLocation];
+        [self loadMonitorInfo];
     };
     [self presentViewController:vc animated:YES completion:^{
         
@@ -289,25 +334,35 @@
 }
 
 #pragma mark - 添加大头针
--(void)addMonitor:(CLLocationCoordinate2D)coordinate {
+-(void)addMonitor {
     
     NSArray *array = [NSArray arrayWithArray:_mapView.annotations];
     [_mapView removeAnnotations:array];
     
-    if (coordinate.latitude != 0 && coordinate.longitude != 0) {
+    for (int i = 0; i < self.monitorArray.count; i++) {
+        MonitorListRows *model = self.monitorArray[i];
+        //纬度
+        CLLocationDegrees latitude = model.latitude;
+        //经度
+        CLLocationDegrees longitude = model.longitude;
+        CLLocationCoordinate2D coordinate  = (CLLocationCoordinate2D){latitude, longitude};
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
         annotation.coordinate = coordinate;
-        annotation.title = @"ceshi";
-        _index = 0;
+        annotation.title = model.address;
+        _index = i;
         [_mapView addAnnotation:annotation];
-        
-        CLLocationCoordinate2D test = CLLocationCoordinate2DMake(coordinate.latitude - 0.01, coordinate.longitude - 0.01);
-        BMKPointAnnotation *annotation1 = [[BMKPointAnnotation alloc] init];
-        annotation1.coordinate = test;
-        annotation1.title = @"2222";
-        _index = 1;
-        [_mapView addAnnotation:annotation1];
     }
+    
+//    if (coordinate.latitude != 0 && coordinate.longitude != 0) {
+//        
+//        
+//        CLLocationCoordinate2D test = CLLocationCoordinate2DMake(coordinate.latitude - 0.01, coordinate.longitude - 0.01);
+//        BMKPointAnnotation *annotation1 = [[BMKPointAnnotation alloc] init];
+//        annotation1.coordinate = test;
+//        annotation1.title = @"2222";
+//        _index = 1;
+//        [_mapView addAnnotation:annotation1];
+//    }
 }
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation {
@@ -323,7 +378,7 @@
     annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
     annotationView.canShowCallout = YES;
-    annotationView.tag = [self.monitorArray[_index] integerValue];
+    annotationView.tag = _index;
     return annotationView;
 }
 
@@ -333,7 +388,8 @@
 }
 
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view {
-    [self toImageDetailView:[NSString stringWithFormat:@"%ld",(long)view.tag]];
+    MonitorListRows *model = self.monitorArray[view.tag];
+    [self toImageDetailView:model];
 }
 
 #pragma mark - 进入普通定位态
@@ -345,6 +401,7 @@
     _mapView.userTrackingMode = BMKUserTrackingModeNone;//设置定位的状态
     _mapView.showsUserLocation = YES;//显示定位图层
     [self animationToMyChooseLocation];
+    [self loadMapMonitorInfo];
 }
 
 #pragma mark - 停止定位态
@@ -415,16 +472,14 @@
     [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error == nil && [placemarks count] > 0) {
             //取出获取的地理信息数组中的第一个显示在界面上
-            CLPlacemark *firstPlacemark=[placemarks firstObject];
+            CLPlacemark *firstPlacemark = [placemarks firstObject];
             //纬度
-            CLLocationDegrees latitude=firstPlacemark.location.coordinate.latitude;
+            CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
             //经度
-            CLLocationDegrees longitude=firstPlacemark.location.coordinate.longitude;
+            CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
 
             _center.latitude = latitude;
             _center.longitude = longitude;
-            
-            [self addMonitor:_center];
             
             BMKCoordinateSpan span;
             if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
@@ -474,13 +529,14 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _count;
+    return self.monitorListArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImageCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell loadCellWithModel:@""];
+    MonitorListRows *model = self.monitorListArray[indexPath.row];
+    [cell loadCellWithModel:model];
     return cell;
 }
 
@@ -498,15 +554,18 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self toImageDetailView:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+    MonitorListRows *model = self.monitorListArray[indexPath.row];
+    [self toImageDetailView:model];
 }
 
-- (void)toImageDetailView:(NSString *)monitorId {
+- (void)toImageDetailView:(MonitorListRows *)model {
     ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    vc.monitorId = monitorId;
+    vc.monitorId = model.code;
+    vc.telephone = model.phone;
+    vc.address = model.address;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }

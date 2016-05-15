@@ -1,5 +1,5 @@
 //
-//  MonitorListBaseClass.h
+//  ImageDetailBaseClass.h
 //
 //  Created by 瑞 孙 on 16/5/15
 //  Copyright (c) 2016 __MyCompanyName__. All rights reserved.
@@ -9,7 +9,7 @@
 
 
 
-@interface MonitorListBaseClass : NSObject <NSCoding, NSCopying>
+@interface ImageDetailBaseClass : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, assign) double pagenums;
 @property (nonatomic, strong) NSArray *rows;

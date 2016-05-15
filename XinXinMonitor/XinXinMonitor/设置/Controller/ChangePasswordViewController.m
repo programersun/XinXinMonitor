@@ -41,7 +41,28 @@
     } else if (![self.confirmPassword.text isEqualToString:self.changePassword.text]) {
         [self showMessageWithString:@"新密码与确认密码不同" showTime:1.0];
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        [self.view endEditing:YES];
+        [self showSVProgressHUD];
+        [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ChangePasswordAPI] params:[XinXinMonitorAPI changePasswordWithOldPasseord:self.currentPassword.text newPasseord:self.changePassword.text] success:^(id responseObj) {
+            
+            NSDictionary *dic = responseObj;
+            if ([[dic objectForKey:@"code"] integerValue] == 1) {
+                [self showSuccessWithString:[dic objectForKey:@"message"] showTime:1.0];
+                dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
+                dispatch_after(time, dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                self.navigationItem.rightBarButtonItem.enabled = YES;
+                [self showSuccessWithString:[dic objectForKey:@"message"] showTime:1.0];
+            }
+            
+        } failure:^(NSError *error) {
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+        }];
     }
 }
 

@@ -42,12 +42,12 @@
         _count = 11;
         [weakself loadMessageInfo];
     }];
-    
-    self.messageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _pageNum ++;
-        _count = 15;
-        [weakself loadMessageInfo];
-    }];
+//
+//    self.messageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        _pageNum ++;
+//        _count = 15;
+//        [weakself loadMessageInfo];
+//    }];
     
     [self showSVProgressHUD];
     [self loadMessageInfo];

@@ -87,8 +87,6 @@ static LocationManager *shareManager = nil;
              //区级名称
              NSString *districtName = [NSString stringWithFormat:@"%@",[addressDictionary objectForKey:@"SubLocality"]];
              self.currentDistrict = districtName;
-//             //详细地址
-//             self.detailAddress = [addressDictionary objectForKey:@"FormattedAddressLines"][0];
              
              NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
              [userDefault setObject:self.latitude forKey:@"Latitude"];

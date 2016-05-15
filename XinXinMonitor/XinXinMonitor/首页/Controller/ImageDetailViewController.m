@@ -11,30 +11,45 @@
 #import "UIImage+SRScale.h"
 #import "ImageDetailCollectionViewCell.h"
 #import "TimeView.h"
+#import "ImageDetailRows.h"
+#import "ImageDetailBaseClass.h"
 
 @interface ImageDetailViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UIScrollViewDelegate>
 {
-    NSString *_telephoneNumber;
+    NSInteger _pageNum;
+    NSInteger _pageTotal;
+    NSInteger _deleteIndex;
+    BOOL _isRefresh;
 }
 
-@property (nonatomic,strong)UICollectionView *collectionView;
-@property (nonatomic,strong)NSMutableArray *browseItemArray;
-@property (nonatomic,assign)NSInteger currentIndex;
-@property (nonatomic,strong)NSMutableArray *verticalBigRectArray;
-@property (nonatomic,strong)NSMutableArray *horizontalBigRectArray;
-@property (nonatomic,strong)UIView *bgView;
-@property (nonatomic,strong)SRBrowseRemindView *browseRemindView;
-@property (nonatomic,strong) TimeView *timeView;        /**< 时间选择*/
+@property (nonatomic,strong) UICollectionView *collectionView;
+@property (nonatomic,strong) NSMutableArray *browseItemArray;
+@property (nonatomic,assign) NSInteger currentIndex;
+@property (nonatomic,strong) NSMutableArray *verticalBigRectArray;
+@property (nonatomic,strong) NSMutableArray *horizontalBigRectArray;
+@property (nonatomic,strong) UIView *bgView;
+@property (nonatomic,strong) SRBrowseRemindView *browseRemindView;
+@property (nonatomic,strong) TimeView *timeView;                        /**< 时间选择*/
+@property (nonatomic,strong) ImageDetailBaseClass *imageDetalBaseClass;
+@property (nonatomic,strong) NSMutableArray *imageListArray;
+@property (nonatomic,strong) NSString *timeString;                      /**< 时间*/
 
 @end
 
 @implementation ImageDetailViewController
 
-- (NSArray *)browseItemArray {
+- (NSMutableArray *)browseItemArray {
     if (!_browseItemArray) {
         _browseItemArray = [NSMutableArray array];
     }
     return _browseItemArray;
+}
+
+- (NSMutableArray *)imageListArray {
+    if (!_imageListArray) {
+        _imageListArray = [NSMutableArray array];
+    }
+    return _imageListArray;
 }
 
 - (NSMutableArray *)verticalBigRectArray {
@@ -56,65 +71,46 @@
     [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrows_left"] highlightedImg:[UIImage imageNamed:@"arrows_left"]];
     [self setNavigationRightItemWithString:@"筛选"];
     
-//    self.telephoneBtn.layer.masksToBounds = YES;
-//    self.telephoneBtn.layer.cornerRadius = 44 * KASAdapterSizeWidth / 2;
-//    self.telephoneBtnWidth.constant = 44 * KASAdapterSizeWidth;
+    _pageNum = 1;
+    _pageTotal = 0;
+    _isRefresh = NO;
     
-    NSArray *smallUrlArray = @[@"http://7xjtvh.com1.z0.glb.clouddn.com/browse01_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse02_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse03_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse04_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse05_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse06_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse07_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse08_s.jpg",
-                       @"http://7xjtvh.com1.z0.glb.clouddn.com/browse09_s.jpg"];
-    NSArray *bigUrlArray = @[@"http://7xjtvh.com1.z0.glb.clouddn.com/browse01.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse02.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse03.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse04.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse05.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse06.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse07.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse08.jpg",
-                             @"http://7xjtvh.com1.z0.glb.clouddn.com/browse09.jpg"];
-    
-    for(int i = 0;i < [smallUrlArray count];i++)
-    {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        SRBrowseModel *browseItem = [[SRBrowseModel alloc]init];
-        browseItem.bigImageUrl = bigUrlArray[i];// 大图url地址
-        browseItem.smallImageView = imageView;// 小图
-        [self.browseItemArray addObject:browseItem];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",smallUrlArray[i]]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [self initData];
-        }];
-    }
-    
-//    [self initData];
+    NSDate *nowDate = [NSDate date];
+    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"YYYY-MM-dd"];
+    self.timeString = [dateformatter stringFromDate:nowDate];
+    [self setNavigationTitle:self.timeString TextColor:[UIColor whiteColor] Font:nil];
     
     [self createBrowseView];
-    
-    _telephoneNumber = @"18513600046";
     [self addTelephoneBtn];
-    
-    
     self.timeView = [[TimeView alloc] init];
     self.timeView.hidden = YES;
     [self.view addSubview:self.timeView];
+    
+    [self loadImageList];
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 添加拍照按钮
-- (void)addTelephoneBtn {
-    CGFloat btnWidth = 44 * KASAdapterSizeWidth;
-    UIButton *telephoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(40, kkViewHeight - btnWidth - 104, btnWidth, btnWidth)];
-//    telephoneBtn.layer.masksToBounds = YES;
-//    telephoneBtn.layer.cornerRadius = btnWidth / 2;
-//    [telephoneBtn setImage:[UIImage imageNamed:@"cameraImg"] forState:UIControlStateNormal];
-    [telephoneBtn setBackgroundImage:[UIImage imageNamed:@"cameraImg"] forState:UIControlStateNormal];
-    [telephoneBtn addTarget:self action:@selector(telephoneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:telephoneBtn];
+#pragma mark - 加载图片
+- (void)showImage:(NSArray *)imageArray {
+    
+    [self.browseItemArray removeAllObjects];
+    __block int num = 0;
+    for(int i = 0; i < imageArray.count; i++)
+    {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        SRBrowseModel *browseItem = [[SRBrowseModel alloc]init];
+        browseItem.bigImageUrl = imageArray[i];// 大图url地址
+        browseItem.smallImageView = imageView;// 小图
+        [self.browseItemArray addObject:browseItem];
+#warning 默认图片未设置
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageArray[i]]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            num ++;
+            if (num >= imageArray.count) {
+                [self initData];
+            }
+        }];
+    }
 }
 
 - (void)initData
@@ -134,6 +130,77 @@
     [_collectionView reloadData];
 }
 
+#pragma mark - 获取图片列表
+- (void)loadImageList {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ImageListAPI] params:[XinXinMonitorAPI ImageList:self.monitorId page:_pageNum startTime:self.timeString endTime:self.timeString] success:^(id responseObj) {
+        
+        NSDictionary *dic = responseObj;
+        
+        self.imageDetalBaseClass = [[ImageDetailBaseClass alloc] initWithDictionary:dic];
+        _pageTotal = self.imageDetalBaseClass.pagenums;
+        if (_pageNum == 1) {
+            [self.imageListArray removeAllObjects];
+        }
+        for (ImageDetailRows *row in self.imageDetalBaseClass.rows) {
+            [self.imageListArray addObject:row];
+        }
+        
+        if (self.imageListArray.count == 0) {
+            [self showMessageWithString:@"暂无图片" showTime:1.0];
+        } else {
+            NSMutableArray *imageArray = [NSMutableArray array];
+            for (ImageDetailRows *row in self.imageListArray) {
+                [imageArray addObject:[NSString stringWithFormat:@"%@%@",XinXinMonitorIMGURL,row.url]];
+            }
+            
+            [self showImage:imageArray];
+        }
+        
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            _isRefresh = NO;
+        });
+    } failure:^(NSError *error) {
+        _isRefresh = NO;
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
+
+#pragma mark - 删除图片
+
+- (void)deleteImage {
+    [self showSVProgressHUD];
+    ImageDetailRows *model = self.imageListArray[_deleteIndex];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteImageAPI] params:[XinXinMonitorAPI deleteImage:model.pkid] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+            [self hideSVProgressHUD];
+            [self.imageListArray removeObjectAtIndex:_deleteIndex];
+            NSMutableArray *imageArray = [NSMutableArray array];
+            for (ImageDetailRows *row in self.imageListArray) {
+                [imageArray addObject:[NSString stringWithFormat:@"%@%@",XinXinMonitorIMGURL,row.url]];
+            }
+            [self showImage:imageArray];
+        } else {
+            [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
+        }
+        
+    } failure:^(NSError *error) {
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
+
+#pragma mark - 添加拍照按钮
+- (void)addTelephoneBtn {
+    CGFloat btnWidth = 44 * KASAdapterSizeWidth;
+    UIButton *telephoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(40, kkViewHeight - btnWidth - 104, btnWidth, btnWidth)];
+    [telephoneBtn setBackgroundImage:[UIImage imageNamed:@"cameraImg"] forState:UIControlStateNormal];
+    [telephoneBtn addTarget:self action:@selector(telephoneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:telephoneBtn];
+}
+
+#pragma mark - 创建collectionView
 - (void)createBrowseView
 {
     self.view.backgroundColor = [UIColor blackColor];
@@ -179,7 +246,7 @@
 #pragma mark - 拍照
 - (void)telephoneBtnClick:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"是否要拨打电话%@进行拍照",_telephoneNumber] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"是否要拨打电话%@进行拍照",self.telephone] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = 1001;
     [alert show];
 }
@@ -188,11 +255,16 @@
     
     if (self.timeView.hidden) {
         self.timeView.hidden = NO;
-        self.timeView.pickerView.hidden = YES;
+//        self.timeView.pickerView.hidden = YES;
     }else {
         self.timeView.hidden = YES;
         //加载数据
-        
+        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"YYYY-MM-dd"];
+        NSString *timeString = [dateformatter stringFromDate:self.timeView.datePicker.date];
+        self.timeString = timeString;
+        [self setNavigationTitle:self.timeString TextColor:[UIColor whiteColor] Font:nil];
+        [self loadImageList];
     }
     
 }
@@ -298,11 +370,16 @@
             }
         }];
         
-        cell.addressLabel.text = @"设备地址";
-        cell.timeLabel.text = @"2016.04.20 12:00:00";
+        cell.tag = indexPath.row;
+        cell.addressLabel.text = self.address;
+        
+        ImageDetailRows *model = self.imageListArray[indexPath.row];
+        cell.timeLabel.text = model.pictureTime;
         
         cell.ProblemBtnClickBlock = ^{
-            NSLog(@"%ld",(long)indexPath.row);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认照片安全或排除故障后排除问题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alert.tag = 1003;
+            [alert show];
         };
     }
     return cell;
@@ -323,6 +400,7 @@
 
 #pragma mark 图片长按事件
 - (void)longPress:(SRBrowseCollectionViewCell *)browseCell {
+    _deleteIndex = browseCell.tag;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否要删除这张照片,删除后不可恢复" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = 1002;
     [alert show];
@@ -333,12 +411,16 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         if (alertView.tag == 1001) {
-            NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",_telephoneNumber];
+            NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",self.telephone];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
         }
         if (alertView.tag == 1002) {
+            [self deleteImage];
+        }
+        if (alertView.tag == 1003) {
             
         }
+
     }
     [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
@@ -348,11 +430,21 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat scollX = scrollView.contentOffset.x;
     
-    if (scollX < -100) {
-        NSLog(@"AAAA");
+    if (scollX < -100 && !_isRefresh) {
+        _isRefresh = YES;
+        _pageNum = 1;
+        [self loadImageList];
     }
-    if (scollX > scrollView.contentSize.width + 100) {
-        NSLog(@"BBBB");
+    if (scollX > scrollView.contentSize.width + 50 - kkViewWidth && !_isRefresh ) {
+        
+        if ( _pageNum < _pageTotal) {
+            _isRefresh = YES;
+            _pageNum ++;
+            NSLog(@"%ld",(long)_pageNum);
+            [self loadImageList];
+        } else {
+            [self showMessageWithString:@"已加载全部图片" showTime:1.0];
+        }
     }
 }
 

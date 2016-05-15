@@ -10,9 +10,10 @@
 
 @implementation ImageCollectionViewCell
 
-- (void)loadCellWithModel:(id)model {
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:@"http://cqtv.sinosns.cn/attachments/2016/01/14524897120bf343acdae699ec.png"]];
-    self.cellTitle.text = @"测试";
+- (void)loadCellWithModel:(MonitorListRows *)model {
+#warning 默认图片未设置
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:nil];
+    self.cellTitle.text = model.address;
 }
 
 @end

@@ -10,11 +10,34 @@
 
 @interface XinXinMonitorAPI : NSObject
 
-#define XinXinMonitor @"http://202.194.7.21:9097/dc_ms_mobile"
+/** APIURL*/
+#define XinXinMonitorURL @"http://202.194.7.21:9097/dc_ms_mobile"
+/** IMGURL*/
+#define XinXinMonitorIMGURL @"http://202.194.7.21:9097"
+/** 登录*/
+#define LoginAPI @"/mobile/personal/checkLogin"
+/** 修改密码*/
+#define ChangePasswordAPI @"/mobile/personal/modifyPassword"
+/** 设备列表*/
+#define MonitorListAPI @"/mobile/camera/getCameraDataGrid"
+/** 全部设备列表*/
+#define AllMonitorListAPI @"/mobile/camera/getCameraListData"
+/** 添加设备*/
+#define AddMonitorAPI @"/mobile/camera/addCameraInfo"
+/** 删除设备*/
+#define DeleteMonitorAPI @"/mobile/camera/deleteCamera"
+/** 设置隐患点*/
+#define SetYinHuanStatusAPI @"/mobile/camera/modifyYinHuanStatus"
+/** 消息列表*/
+#define MessageListAPI @""
+/** 删除消息*/
+#define DeleteMessageAPI @""
 
-#define loginAPI @"/mobile/personal/checkLogin"
-
-#define addMonitorAPI @"/mobile/camera/addCameraInfo"
+#define ImageListAPI @"/mobile/camera/picture/getPicturesDataGridByCameraPkid"
+/** 删除图片*/
+#define DeleteImageAPI @"/mobile/camera/picture/deleteCameraPictureByPkid"
+/** 取消问题图片*/
+#define cancelProblemImageAPI @"/mobile/camera/picture/modifyPictureStatusByPkid"
 
 /**
  *  登录
@@ -37,6 +60,13 @@
 + (NSMutableDictionary *)changePasswordWithOldPasseord:(NSString *)oldPasseord newPasseord:(NSString *)newPasseord;
 
 /**
+ *  设备列表
+ *
+ *  @return 设备列表字典
+ */
++ (NSMutableDictionary *)monitorListWithDic:(NSMutableDictionary *)dic;
+
+/**
  *  设备添加
  *
  *  @param address        中文地址
@@ -51,5 +81,41 @@
  *  @return 设备添加字典
  */
 + (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey;
+
+/**
+ *  设备删除
+ *
+ *  @return 设备pkid字典
+ */
++ (NSMutableDictionary *)deleteMonitorWithMonitorID:(NSString *)monitorID;
+
+/**
+ *  设置/取消隐患点
+ *
+ *  @param monitorID 设备pkid
+ *  @param status    设置 = 1 /取消 = 0
+ *
+ *  @return 设置/取消隐患点字典
+ */
++ (NSMutableDictionary *)setMonitorWithMonitorID:(NSString *)monitorID status:(NSString *)status;
+
+/**
+ *  图片列表
+ *
+ *  @param monitorCode 设备编号
+ *  @param page        页码
+ *
+ *  @return 图片列表字典
+ */
++ (NSMutableDictionary *)ImageList:(NSString *)monitorCode page:(NSInteger)page startTime:(NSString *)startTime endTime:(NSString *)endTime;
+
+/**
+ *  删除图片
+ *
+ *  @param imageID 图片pkid
+ *
+ *  @return 删除图片字典
+ */
++ (NSMutableDictionary *)deleteImage:(NSString *)imagepkid;
 
 @end

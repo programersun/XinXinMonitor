@@ -15,8 +15,26 @@
     // Initialization code
 }
 
-- (void)loadCellWithModel:(id)model {
+- (void)loadCellWithModel:(MonitorListRows *)model {
     
+    self.nameLabel.text = model.code;
+    self.addressLabel.text = model.address;
+    
+    if (model.lixianStatus == 1) {
+        self.cellRightBtn.enabled = NO;
+        [self.cellRightBtn setTitle:@"离线设备" forState:UIControlStateNormal];
+    } else if (model.lixianStatus == 2) {
+        self.cellRightBtn.enabled = NO;
+        [self.cellRightBtn setTitle:@"问题设备" forState:UIControlStateNormal];
+    } else if (model.lixianStatus == 0) {
+        self.cellRightBtn.enabled = YES;
+        if (model.yinhuanStatus == 0) {
+            [self.cellRightBtn setTitle:@"设置隐患" forState:UIControlStateNormal];
+        }
+        if (model.yinhuanStatus == 1) {
+            [self.cellRightBtn setTitle:@"取消隐患" forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (IBAction)cellRightBtnCilck:(id)sender {

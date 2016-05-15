@@ -10,21 +10,23 @@
 #import "ImageDetailViewController.h"
 #import "ManageTableViewCell.h"
 #import "AddMonitorViewController.h"
+#import "MonitorListBaseClass.h"
+#import "MonitorListRows.h"
 
 @interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
-    NSInteger _count;
+    NSInteger _deleteIndex;
 }
 @property (weak, nonatomic) IBOutlet UITableView *manageTableView;
 @property (nonatomic, strong) NSMutableArray *manageArray;
-
+@property (nonatomic, strong) MonitorListBaseClass *monitorListBaseClass;
 @end
 
 @implementation ManageViewController
 
 - (NSMutableArray *)manageArray {
-    if (_manageArray == nil) {
+    if (!_manageArray ) {
         _manageArray = [NSMutableArray array];
     }
     return  _manageArray;
@@ -37,18 +39,11 @@
     if ([[UserInfoManager sharedManager].userType integerValue] == 1) {
         [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
     }
-    _pageNum = 0;
-    _count = 11;
+    _pageNum = 1;
     __weak ManageViewController *weakself = self;
-    self.manageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _pageNum = 0;
-        _count = 11;
-        [weakself loadMonitorInfo];
-    }];
     
-    self.manageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _pageNum ++;
-        _count = 15;
+    self.manageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNum = 1;
         [weakself loadMonitorInfo];
     }];
     
@@ -61,6 +56,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self endRefresh];
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
@@ -84,18 +84,63 @@
 #pragma mark - 加载数据
 - (void)loadMonitorInfo {
     
-    [self endRefresh];
-    [self.manageTableView reloadData];
-    if ((_count - 10 * _pageNum) < 10) {
-        [self hideSVProgressHUD];
-        [self.manageTableView.mj_footer endRefreshingWithNoMoreData];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
+    if (kkViewHeight > 568) {
+        [dic setValue:@"10" forKey:@"rows"];
     }
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        
+        self.monitorListBaseClass = [[MonitorListBaseClass alloc] initWithDictionary:dict];
+        if (_pageNum == 1) {
+            [self.manageArray removeAllObjects];
+        }
+        for (MonitorListRows *row in self.monitorListBaseClass.rows) {
+            [self.manageArray addObject:row];
+        }
+        if (self.manageArray.count > 0) {
+            __weak ManageViewController *weakself = self;
+            self.manageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                _pageNum ++;
+                [weakself loadMonitorInfo];
+            }];
+        }
+        
+        [self endRefresh];
+        [self.manageTableView reloadData];
+        if (_pageNum == self.monitorListBaseClass.pagenums) {
+            [self.manageTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+    } failure:^(NSError *error) {
+        [self endRefresh];
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
+
+- (void)deleteMonitorWithMonitorID:(NSString *)monitorID {
+    [self showSVProgressHUD];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteMonitorAPI] params:[XinXinMonitorAPI deleteMonitorWithMonitorID:monitorID] success:^(id responseObj) {
+        [self hideSVProgressHUD];
+        NSDictionary *dict = responseObj;
+        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+            [self.manageArray removeObjectAtIndex:_deleteIndex];
+            [self.manageTableView reloadData];
+        } else {
+            [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
+        }
+        
+    } failure:^(NSError *error) {
+        [self hideSVProgressHUD];
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _count;
+    return self.manageArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,9 +157,36 @@
     if (cell == nil) {
         cell = [[ManageTableViewCell alloc] init];
     }
-    cell.nameLabel.text = [NSString stringWithFormat:@"设备%ld",(long)indexPath.row];
-    cell.addressLabel.text = [NSString stringWithFormat:@"地址%ld",(long)indexPath.row];
-    [cell.cellRightBtn setTitle:@"设置隐患" forState:UIControlStateNormal];
+    
+    MonitorListRows *model = self.manageArray[indexPath.row];
+    [cell loadCellWithModel:model];
+    cell.cellRightBtnClickBlock = ^{
+        [self showSVProgressHUD];
+        NSMutableDictionary *params;
+        if (model.yinhuanStatus == 0) {
+            params = [XinXinMonitorAPI setMonitorWithMonitorID:model.pkid status:@"1"];
+        } else if (model.yinhuanStatus == 1) {
+            params = [XinXinMonitorAPI setMonitorWithMonitorID:model.pkid status:@"0"];
+        }
+        [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,SetYinHuanStatusAPI] params:params success:^(id responseObj) {
+            NSDictionary *dict = responseObj;
+            if ([[dict objectForKey:@"code"] integerValue] == 1) {
+                
+                if (model.yinhuanStatus == 0) {
+                    model.yinhuanStatus = 1;
+                } else if (model.yinhuanStatus == 1) {
+                    model.yinhuanStatus = 0;
+                }
+                [self.manageArray replaceObjectAtIndex:indexPath.row withObject:model];
+                [self.manageTableView reloadData];
+                [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
+            }
+            [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
+        } failure:^(NSError *error) {
+            [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+        }];
+    };
+    
     return cell;
 }
 
@@ -147,6 +219,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        _deleteIndex = indexPath.row;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除后不能恢复，是否确认删除" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
     }
@@ -155,8 +228,8 @@
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSLog(@"删除");
-        [self.manageTableView reloadData];
+        MonitorListRows *model = self.manageArray[_deleteIndex];
+        [self deleteMonitorWithMonitorID:[NSString stringWithFormat:@"%@",model.pkid]];
     }
     
     [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];

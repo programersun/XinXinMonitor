@@ -86,12 +86,12 @@
 }
 
 - (void)addMonitor {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitor,addMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;
         if ([[dic objectForKey:@"code"] integerValue] == 1) {
-            [self showSuccessWithString:@"设备添加成功" showTime:1.0];
+            [self showSuccessWithString:[dic objectForKey:@"message"] showTime:1.0];
             dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
             dispatch_after(time, dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];

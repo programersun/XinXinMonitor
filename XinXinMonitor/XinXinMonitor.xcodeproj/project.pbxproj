@@ -132,10 +132,12 @@
 		A4F974231CE5BBA700623D79 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F9740F1CE5BBA700623D79 /* UIScrollView+MJRefresh.m */; };
 		A4F974241CE5BBA700623D79 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974111CE5BBA700623D79 /* UIView+MJExtension.m */; };
 		A4F974271CE6255F00623D79 /* XinXinMonitorAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974261CE6255F00623D79 /* XinXinMonitorAPI.m */; };
-		A4F9742C1CE75D4100623D79 /* MonitorListBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974291CE75D4100623D79 /* MonitorListBaseClass.m */; };
-		A4F9742D1CE75D4100623D79 /* MonitorListRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F9742B1CE75D4100623D79 /* MonitorListRows.m */; };
 		A4F9742F1CE7626A00623D79 /* BaiduMapAPI_Search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F9742E1CE7626A00623D79 /* BaiduMapAPI_Search.framework */; };
 		A4F974331CE7745500623D79 /* CLLocation+YCLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974321CE7745500623D79 /* CLLocation+YCLocation.m */; };
+		A4F9743E1CE8B5D000623D79 /* MonitorListBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F9743B1CE8B5D000623D79 /* MonitorListBaseClass.m */; };
+		A4F9743F1CE8B5D000623D79 /* MonitorListRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F9743D1CE8B5D000623D79 /* MonitorListRows.m */; };
+		A4F9744A1CE8D1B400623D79 /* ImageDetailBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974471CE8D1B400623D79 /* ImageDetailBaseClass.m */; };
+		A4F9744B1CE8D1B400623D79 /* ImageDetailRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F974491CE8D1B400623D79 /* ImageDetailRows.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -361,13 +363,17 @@
 		A4F974111CE5BBA700623D79 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		A4F974251CE6255F00623D79 /* XinXinMonitorAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XinXinMonitorAPI.h; sourceTree = "<group>"; };
 		A4F974261CE6255F00623D79 /* XinXinMonitorAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XinXinMonitorAPI.m; sourceTree = "<group>"; };
-		A4F974281CE75D4100623D79 /* MonitorListBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorListBaseClass.h; sourceTree = "<group>"; };
-		A4F974291CE75D4100623D79 /* MonitorListBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorListBaseClass.m; sourceTree = "<group>"; };
-		A4F9742A1CE75D4100623D79 /* MonitorListRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorListRows.h; sourceTree = "<group>"; };
-		A4F9742B1CE75D4100623D79 /* MonitorListRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorListRows.m; sourceTree = "<group>"; };
 		A4F9742E1CE7626A00623D79 /* BaiduMapAPI_Search.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Search.framework; sourceTree = "<group>"; };
 		A4F974311CE7745500623D79 /* CLLocation+YCLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+YCLocation.h"; sourceTree = "<group>"; };
 		A4F974321CE7745500623D79 /* CLLocation+YCLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+YCLocation.m"; sourceTree = "<group>"; };
+		A4F9743A1CE8B5D000623D79 /* MonitorListBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorListBaseClass.h; sourceTree = "<group>"; };
+		A4F9743B1CE8B5D000623D79 /* MonitorListBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorListBaseClass.m; sourceTree = "<group>"; };
+		A4F9743C1CE8B5D000623D79 /* MonitorListRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorListRows.h; sourceTree = "<group>"; };
+		A4F9743D1CE8B5D000623D79 /* MonitorListRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorListRows.m; sourceTree = "<group>"; };
+		A4F974461CE8D1B400623D79 /* ImageDetailBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailBaseClass.h; sourceTree = "<group>"; };
+		A4F974471CE8D1B400623D79 /* ImageDetailBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailBaseClass.m; sourceTree = "<group>"; };
+		A4F974481CE8D1B400623D79 /* ImageDetailRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailRows.h; sourceTree = "<group>"; };
+		A4F974491CE8D1B400623D79 /* ImageDetailRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailRows.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -641,10 +647,14 @@
 		A4D335A71CBFE15D00023D5C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4F974281CE75D4100623D79 /* MonitorListBaseClass.h */,
-				A4F974291CE75D4100623D79 /* MonitorListBaseClass.m */,
-				A4F9742A1CE75D4100623D79 /* MonitorListRows.h */,
-				A4F9742B1CE75D4100623D79 /* MonitorListRows.m */,
+				A4F9743A1CE8B5D000623D79 /* MonitorListBaseClass.h */,
+				A4F9743B1CE8B5D000623D79 /* MonitorListBaseClass.m */,
+				A4F9743C1CE8B5D000623D79 /* MonitorListRows.h */,
+				A4F9743D1CE8B5D000623D79 /* MonitorListRows.m */,
+				A4F974461CE8D1B400623D79 /* ImageDetailBaseClass.h */,
+				A4F974471CE8D1B400623D79 /* ImageDetailBaseClass.m */,
+				A4F974481CE8D1B400623D79 /* ImageDetailRows.h */,
+				A4F974491CE8D1B400623D79 /* ImageDetailRows.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1106,8 +1116,10 @@
 				A4505DDE1CC8D9DF006BD80D /* pinyin.c in Sources */,
 				A4505DDD1CC8D9DF006BD80D /* ChineseString.m in Sources */,
 				A4D336141CBFE2A400023D5C /* AFHTTPSessionManager.m in Sources */,
+				A4F9744B1CE8D1B400623D79 /* ImageDetailRows.m in Sources */,
 				A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */,
 				A43A02031CCC7A7A00940950 /* SRBrowseCollectionViewCell.m in Sources */,
+				A4F9743E1CE8B5D000623D79 /* MonitorListBaseClass.m in Sources */,
 				A4D3357B1CBFDFEE00023D5C /* main.m in Sources */,
 				A4F974231CE5BBA700623D79 /* UIScrollView+MJRefresh.m in Sources */,
 				A4D335CF1CBFE1D200023D5C /* ColorRequest.m in Sources */,
@@ -1120,7 +1132,6 @@
 				A4D336161CBFE2A400023D5C /* AFSecurityPolicy.m in Sources */,
 				A4D3362A1CBFE2A400023D5C /* UIImage+WebP.m in Sources */,
 				A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */,
-				A4F9742C1CE75D4100623D79 /* MonitorListBaseClass.m in Sources */,
 				A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */,
 				A4D336261CBFE2A400023D5C /* SDWebImagePrefetcher.m in Sources */,
 				A4F973E41CE4E43C00623D79 /* SVRadialGradientLayer.m in Sources */,
@@ -1130,6 +1141,7 @@
 				A4F974331CE7745500623D79 /* CLLocation+YCLocation.m in Sources */,
 				A4D336181CBFE2A400023D5C /* AFURLResponseSerialization.m in Sources */,
 				A4D3361E1CBFE2A400023D5C /* MKAnnotationView+WebCache.m in Sources */,
+				A4F9744A1CE8D1B400623D79 /* ImageDetailBaseClass.m in Sources */,
 				A4D335B41CBFE15D00023D5C /* SettingViewController.m in Sources */,
 				A4D336231CBFE2A400023D5C /* SDWebImageDownloader.m in Sources */,
 				A4F973E31CE4E43C00623D79 /* SVProgressHUD.m in Sources */,
@@ -1146,9 +1158,9 @@
 				A4D335CE1CBFE1D200023D5C /* AFNetworkingTools.m in Sources */,
 				A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */,
 				A43A01F21CCC708B00940950 /* SRImageBrowseZoomScrollView.m in Sources */,
+				A4F9743F1CE8B5D000623D79 /* MonitorListRows.m in Sources */,
 				A43A01EA1CCB58EE00940950 /* ImageDetailCollectionViewCell.m in Sources */,
 				A4F9741C1CE5BBA700623D79 /* MJRefreshBackStateFooter.m in Sources */,
-				A4F9742D1CE75D4100623D79 /* MonitorListRows.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

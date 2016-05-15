@@ -77,6 +77,7 @@ BMKMapManager *_mapManager;
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     //赶紧清除所有的内存缓存
     [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearDisk];
     //赶紧停止正在进行的图片下载操作
     [[SDWebImageManager sharedManager] cancelAll];
 }
