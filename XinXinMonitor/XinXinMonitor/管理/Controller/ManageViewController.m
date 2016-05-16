@@ -13,7 +13,7 @@
 #import "MonitorListBaseClass.h"
 #import "MonitorListRows.h"
 
-@interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,UISearchBarDelegate>
 {
     NSInteger _pageNum;
     NSInteger _deleteIndex;
@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *manageTableView;
 @property (nonatomic, strong) NSMutableArray *manageArray;
 @property (nonatomic, strong) MonitorListBaseClass *monitorListBaseClass;
+@property (nonatomic, strong) UISearchBar *searchBar;
 @end
 
 @implementation ManageViewController
@@ -34,8 +35,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
-    
+//    [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 10, kkViewWidth - 20, 44)];
+    self.searchBar.placeholder = @"请输入设备类型";
+    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
     if ([[UserInfoManager sharedManager].userType integerValue] == 1) {
         [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
     }
@@ -78,7 +82,6 @@
 - (void)endRefresh {
     [self.manageTableView.mj_header endRefreshing];
     [self.manageTableView.mj_footer endRefreshing];
-    [self hideSVProgressHUD];
 }
 
 #pragma mark - 加载数据
@@ -88,6 +91,9 @@
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
     if (kkViewHeight > 568) {
         [dic setValue:@"10" forKey:@"rows"];
+    }
+    if (self.searchBar.text.length > 0) {
+//        [dic setValue:self.searchBar.text forKey:@"monitorType"];
     }
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
         
@@ -101,11 +107,15 @@
             [self.manageArray addObject:row];
         }
         if (self.manageArray.count > 0) {
+            [self hideSVProgressHUD];
             __weak ManageViewController *weakself = self;
             self.manageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
                 _pageNum ++;
                 [weakself loadMonitorInfo];
             }];
+        } else {
+            [self showMessageWithString:@"暂无数据" showTime:1.0];
+            self.manageTableView.mj_footer = nil;
         }
         
         [self endRefresh];
@@ -122,9 +132,9 @@
 - (void)deleteMonitorWithMonitorID:(NSString *)monitorID {
     [self showSVProgressHUD];
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteMonitorAPI] params:[XinXinMonitorAPI deleteMonitorWithMonitorID:monitorID] success:^(id responseObj) {
-        [self hideSVProgressHUD];
         NSDictionary *dict = responseObj;
         if ([[dict objectForKey:@"code"] integerValue] == 1) {
+            [self hideSVProgressHUD];
             [self.manageArray removeObjectAtIndex:_deleteIndex];
             [self.manageTableView reloadData];
         } else {
@@ -132,9 +142,14 @@
         }
         
     } failure:^(NSError *error) {
-        [self hideSVProgressHUD];
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
     }];
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar endEditing:YES];
+    [self loadMonitorInfo];
 }
 
 #pragma mark - UITableViewDataSource
@@ -157,10 +172,11 @@
     if (cell == nil) {
         cell = [[ManageTableViewCell alloc] init];
     }
-    
     MonitorListRows *model = self.manageArray[indexPath.row];
     [cell loadCellWithModel:model];
+    __weak ManageTableViewCell *weakcell = cell;
     cell.cellRightBtnClickBlock = ^{
+        weakcell.cellRightBtn.enabled = NO;
         [self showSVProgressHUD];
         NSMutableDictionary *params;
         if (model.yinhuanStatus == 0) {
@@ -182,7 +198,9 @@
                 [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
             }
             [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
+            weakcell.cellRightBtn.enabled = NO;
         } failure:^(NSError *error) {
+            weakcell.cellRightBtn.enabled = NO;
             [self showMessageWithString:@"服务器开小差了" showTime:1.0];
         }];
     };
@@ -201,12 +219,8 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-    if (vc == nil) {
-        vc = [[ImageDetailViewController alloc] init];
-    }
-    [vc setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:vc animated:YES];
+    MonitorListRows *model = self.manageArray[indexPath.row];
+    [self toImageDetailView:model];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -235,11 +249,15 @@
     [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
 
-- (void)toImageDetailView {
+- (void)toImageDetailView:(MonitorListRows *)model {
     ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
+    vc.monitorId = model.code;
+    vc.telephone = model.phone;
+    vc.address = model.address;
+    vc.monitorCode = model.code;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }

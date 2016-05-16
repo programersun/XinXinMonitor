@@ -19,6 +19,7 @@
     NSInteger _pageNum;
     NSInteger _pageTotal;
     NSInteger _deleteIndex;
+    NSInteger _cancelProblemIndex;
     BOOL _isRefresh;
 }
 
@@ -79,12 +80,16 @@
     NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:@"YYYY-MM-dd"];
     self.timeString = [dateformatter stringFromDate:nowDate];
-    [self setNavigationTitle:self.timeString TextColor:[UIColor whiteColor] Font:nil];
+    [self setNavigationTitle:self.monitorCode TextColor:[UIColor whiteColor] Font:nil];
     
     [self createBrowseView];
     [self addTelephoneBtn];
     self.timeView = [[TimeView alloc] init];
     self.timeView.hidden = YES;
+    __weak ImageDetailViewController *weakself = self;
+    self.timeView.pickerBtnClickBlock = ^{
+        [weakself chooseTime];
+    };
     [self.view addSubview:self.timeView];
     
     [self loadImageList];
@@ -93,6 +98,8 @@
 
 #pragma mark - 加载图片
 - (void)showImage:(NSArray *)imageArray {
+    
+    [self showSVProgressHUD];
     
     [self.browseItemArray removeAllObjects];
     __block int num = 0;
@@ -103,7 +110,6 @@
         browseItem.bigImageUrl = imageArray[i];// 大图url地址
         browseItem.smallImageView = imageView;// 小图
         [self.browseItemArray addObject:browseItem];
-#warning 默认图片未设置
         [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageArray[i]]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             num ++;
             if (num >= imageArray.count) {
@@ -127,6 +133,7 @@
         NSValue *horizontalValue = [NSValue valueWithCGRect:horizontalRect];
         [_horizontalBigRectArray addObject:horizontalValue];
     }
+    [self hideSVProgressHUD];
     [_collectionView reloadData];
 }
 
@@ -175,20 +182,52 @@
         
         NSDictionary *dict = responseObj;
         if ([[dict objectForKey:@"code"] integerValue] == 1) {
-            [self hideSVProgressHUD];
             [self.imageListArray removeObjectAtIndex:_deleteIndex];
             NSMutableArray *imageArray = [NSMutableArray array];
             for (ImageDetailRows *row in self.imageListArray) {
                 [imageArray addObject:[NSString stringWithFormat:@"%@%@",XinXinMonitorIMGURL,row.url]];
             }
             [self showImage:imageArray];
-        } else {
-            [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
         }
+        [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
         
     } failure:^(NSError *error) {
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
     }];
+}
+
+#pragma mark - 取消问题图片
+- (void)cancelProblem {
+    [self showSVProgressHUD];
+    ImageDetailRows *model = self.imageListArray[_cancelProblemIndex];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,cancelProblemImageAPI] params:[XinXinMonitorAPI CancelProblemImage:model.pkid] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+            model.usersetResult = 1;
+            [self.imageListArray replaceObjectAtIndex:_cancelProblemIndex withObject:model];
+            [self.collectionView reloadData];
+        }
+        [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
+        
+    } failure:^(NSError *error) {
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
+
+#pragma mark - 时间筛选
+- (void)chooseTime {
+    if (self.timeView.hidden) {
+        self.timeView.hidden = NO;
+    }else {
+        self.timeView.hidden = YES;
+        //加载数据
+        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"YYYY-MM-dd"];
+        NSString *timeString = [dateformatter stringFromDate:self.timeView.datePicker.date];
+        self.timeString = timeString;
+        [self loadImageList];
+    }
 }
 
 #pragma mark - 添加拍照按钮
@@ -252,21 +291,7 @@
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
-    
-    if (self.timeView.hidden) {
-        self.timeView.hidden = NO;
-//        self.timeView.pickerView.hidden = YES;
-    }else {
-        self.timeView.hidden = YES;
-        //加载数据
-        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-        [dateformatter setDateFormat:@"YYYY-MM-dd"];
-        NSString *timeString = [dateformatter stringFromDate:self.timeView.datePicker.date];
-        self.timeString = timeString;
-        [self setNavigationTitle:self.timeString TextColor:[UIColor whiteColor] Font:nil];
-        [self loadImageList];
-    }
-    
+    [self chooseTime];
 }
 
 - (void)showBigImage:(UIImageView *)imageView browseItem:(SRBrowseModel *)browseItem rect:(CGRect)rect
@@ -376,11 +401,17 @@
         ImageDetailRows *model = self.imageListArray[indexPath.row];
         cell.timeLabel.text = model.pictureTime;
         
-        cell.ProblemBtnClickBlock = ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认照片安全或排除故障后排除问题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            alert.tag = 1003;
-            [alert show];
-        };
+        if (model.usersetResult == 2) {
+            cell.problemBtn.hidden = NO;
+            cell.ProblemBtnClickBlock = ^{
+                _cancelProblemIndex = indexPath.row;
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认照片安全或排除故障后排除问题" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alert.tag = 1003;
+                [alert show];
+            };
+        } else {
+            cell.problemBtn.hidden = YES;
+        }
     }
     return cell;
 }
@@ -418,7 +449,7 @@
             [self deleteImage];
         }
         if (alertView.tag == 1003) {
-            
+            [self cancelProblem];
         }
 
     }

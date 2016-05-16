@@ -15,7 +15,7 @@ static HomeTopView *instance;
         if (instance == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HomeTopView" owner:self options:nil];
             instance = [nib objectAtIndex:0];
-            instance.frame = CGRectMake(0, 0, kkViewWidth - 20 * KASAdapterSizeWidth, 44);
+            instance.frame = CGRectMake(0, 10, kkViewWidth - 10, 44);
             instance.searchView.layer.masksToBounds = YES;
             instance.searchView.layer.cornerRadius = 15;
             instance.backgroundColor = [ColorRequest MainBlueColor];

@@ -13,7 +13,7 @@
 - (void)loadCellWithModel:(MonitorListRows *)model {
 #warning 默认图片未设置
     [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:nil];
-    self.cellTitle.text = model.address;
+    self.cellTitle.text = model.code;
 }
 
 @end

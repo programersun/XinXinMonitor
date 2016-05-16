@@ -30,7 +30,7 @@
     return dic;
 }
 
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey {
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:[UserInfoManager sharedManager].userID forKey:@"createUserKey"];
     [dic setValue:[LocationManager sharedManager].longitude forKey:@"longitude"];
@@ -42,7 +42,7 @@
     [dic setValue:cameraCode forKey:@"code"];
     [dic setValue:phone forKey:@"phone"];
     [dic setValue:customerKey forKey:@"customerKey"];
-    
+//    [dic setValue:monitorType forKey:@"monitorType"];
     return dic;
 }
 
@@ -71,6 +71,32 @@
 + (NSMutableDictionary *)deleteImage:(NSString *)imagepkid {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:imagepkid forKey:@"pkid"];
+    return dic;
+}
+
++ (NSMutableDictionary *)CancelProblemImage:(NSString *)imagepkid {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:imagepkid forKey:@"pkid"];
+    [dic setValue:@"1" forKey:@"status"];
+    return dic;
+}
+
++ (NSMutableDictionary *)MessageListWithPage:(NSInteger )page {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[UserInfoManager sharedManager].userID forKey:@"user_key"];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"page"];
+    return dic;
+}
+
++ (NSMutableDictionary *)deleteMessageWithPkid:(NSString *)messagePkid {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:messagePkid forKey:@"user_key"];
+    return dic;
+}
+
++ (NSMutableDictionary *)ReadMessageWithPkid:(NSString *)messagePkid {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:messagePkid forKey:@"user_key"];
     return dic;
 }
 

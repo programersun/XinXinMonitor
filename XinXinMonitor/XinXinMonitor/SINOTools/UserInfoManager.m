@@ -36,6 +36,7 @@ static UserInfoManager *shareManager = nil;
         self.userID = @"";
         self.userType = @"";
         self.userName = @"";
+        self.departmentId = @"";
     }
     return  self;
 }
@@ -44,6 +45,7 @@ static UserInfoManager *shareManager = nil;
     self.userID = [dict objectForKey:@"userkey"];
     self.userType = [dict objectForKey:@"anzhuang"];
     self.userName = [dict objectForKey:@"username"];
+    self.departmentId = [dict objectForKey:@"deptKey"];
 }
 
 - (void)saveUserInfo:(NSDictionary *)dict {

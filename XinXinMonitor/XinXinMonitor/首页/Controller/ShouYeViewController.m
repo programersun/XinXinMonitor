@@ -128,7 +128,6 @@
 - (void)endRefresh {
     [self.collectionView.mj_header endRefreshing];
     [self.collectionView.mj_footer endRefreshing];
-    [self hideSVProgressHUD];
 }
 
 #pragma mark - 加载列表数据
@@ -137,9 +136,13 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
     
-//    [dic setValue:[[LocationManager sharedManager] getMyCity] forKey:@"cityName"];
+//    [dic setValue:[[LocationManager sharedManager] getCity] forKey:@"cityName"];
 //    if (![[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
 //        [dic setValue:[[LocationManager sharedManager] getDistrict] forKey:@"areaName"];
+//    }
+    if (self.topView.searchText.text.length > 0) {
+        [dic setValue:self.topView.searchText.text forKey:@"camera_code"];
+    }
     
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
         
@@ -153,11 +156,15 @@
             [self.monitorListArray addObject:row];
         }
         if (self.monitorListArray.count > 0) {
+            [self hideSVProgressHUD];
             __weak ShouYeViewController *weakself = self;
             self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
                 _pageNum ++;
                 [weakself loadMonitorInfo];
             }];
+        } else {
+            [self showMessageWithString:@"暂无数据" showTime:1.0];
+            self.collectionView.mj_footer = nil;
         }
         
         [self endRefresh];
@@ -231,7 +238,7 @@
 
     self.topView = [HomeTopView instance];
     self.topView.delegate = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.topView];
+    self.navigationItem.titleView = self.topView;
 }
 
 #pragma mark - HomeTopViewDelegate
@@ -283,6 +290,12 @@
 
 - (void)searchBtnClick {
     
+    [self.topView.searchText endEditing:YES];
+    if (self.topView.searchText.text.length > 0) {
+        [self showSVProgressHUD];
+        _pageNum = 1;
+        [self loadMonitorInfo];
+    }
 }
 
 #pragma mark - CityChangeViewDelegate
@@ -348,21 +361,10 @@
         CLLocationCoordinate2D coordinate  = (CLLocationCoordinate2D){latitude, longitude};
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
         annotation.coordinate = coordinate;
-        annotation.title = model.address;
+        annotation.title = model.code;
         _index = i;
         [_mapView addAnnotation:annotation];
     }
-    
-//    if (coordinate.latitude != 0 && coordinate.longitude != 0) {
-//        
-//        
-//        CLLocationCoordinate2D test = CLLocationCoordinate2DMake(coordinate.latitude - 0.01, coordinate.longitude - 0.01);
-//        BMKPointAnnotation *annotation1 = [[BMKPointAnnotation alloc] init];
-//        annotation1.coordinate = test;
-//        annotation1.title = @"2222";
-//        _index = 1;
-//        [_mapView addAnnotation:annotation1];
-//    }
 }
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation {
@@ -526,6 +528,11 @@
     self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self searchBtnClick];
+    return YES;
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -566,7 +573,9 @@
     vc.monitorId = model.code;
     vc.telephone = model.phone;
     vc.address = model.address;
+    vc.monitorCode = model.code;
     [vc setHidesBottomBarWhenPushed:YES];
+    [self.view endEditing:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

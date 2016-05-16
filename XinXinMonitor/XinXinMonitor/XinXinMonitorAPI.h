@@ -29,10 +29,12 @@
 /** 设置隐患点*/
 #define SetYinHuanStatusAPI @"/mobile/camera/modifyYinHuanStatus"
 /** 消息列表*/
-#define MessageListAPI @""
+#define MessageListAPI @"/mobile/message/getAppMessageDataGrid"
+/** 已读消息*/
+#define ReadMessageAPI @"/mobile/message/modifyReadStatus"
 /** 删除消息*/
-#define DeleteMessageAPI @""
-
+#define DeleteMessageAPI @"/mobile/message/deleteAppMessage"
+/** 图片列表*/
 #define ImageListAPI @"/mobile/camera/picture/getPicturesDataGridByCameraPkid"
 /** 删除图片*/
 #define DeleteImageAPI @"/mobile/camera/picture/deleteCameraPictureByPkid"
@@ -77,10 +79,11 @@
  *  @param createUserKey  提交人账号
  *  @param createUserName 提交人姓名
  *  @param customerKey    所属客户账号
+ *  @param customerKey    所属类型
  *
  *  @return 设备添加字典
  */
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey;
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType;
 
 /**
  *  设备删除
@@ -112,10 +115,46 @@
 /**
  *  删除图片
  *
- *  @param imageID 图片pkid
+ *  @param imagepkid 图片pkid
  *
  *  @return 删除图片字典
  */
 + (NSMutableDictionary *)deleteImage:(NSString *)imagepkid;
+
+/**
+ *  取消问题图片
+ *
+ *  @param imagepkid 图片pkid
+ *
+ *  @return 取消问题图片字典
+ */
++ (NSMutableDictionary *)CancelProblemImage:(NSString *)imagepkid;
+
+/**
+ *  消息列表
+ *
+ *  @param page 页码
+ *
+ *  @return 消息列表字典
+ */
++ (NSMutableDictionary *)MessageListWithPage:(NSInteger)page;
+
+/**
+ *  删除消息
+ *
+ *  @param messagePkid 消息pkid
+ *
+ *  @return 删除消息字典
+ */
++ (NSMutableDictionary *)deleteMessageWithPkid:(NSString *)messagePkid;
+
+/**
+ *  标记已读消息
+ *
+ *  @param messagePkid 消息pkid
+ *
+ *  @return 标记已读消息字典
+ */
++ (NSMutableDictionary *)ReadMessageWithPkid:(NSString *)messagePkid;
 
 @end

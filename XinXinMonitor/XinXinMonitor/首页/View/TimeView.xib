@@ -94,14 +94,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PfU-5o-zln">
                     <rect key="frame" x="0.0" y="388" width="320" height="180"/>
                     <subviews>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-tG-3Ku">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FZ-tG-3Ku">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
                             <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="e3Z-7s-c4S"/>
                             </constraints>
                         </view>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-3X-r6v">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-3X-r6v">
                             <rect key="frame" x="280" y="0.0" width="30" height="30"/>
                             <state key="normal" title="确定"/>
                             <connections>
@@ -109,7 +109,7 @@
                             </connections>
                         </button>
                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="i0k-jB-58I">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                            <rect key="frame" x="0.0" y="29" width="320" height="151"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <date key="date" timeIntervalSinceReferenceDate="484413179.49986303">
                                 <!--2016-05-08 15:12:59 +0000-->
@@ -118,11 +118,11 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="i0k-jB-58I" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="0Gv-ds-VQN"/>
                         <constraint firstItem="i0k-jB-58I" firstAttribute="leading" secondItem="PfU-5o-zln" secondAttribute="leading" id="2uu-x3-7Tt"/>
                         <constraint firstItem="wkr-3X-r6v" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="BZ8-jV-DuS"/>
                         <constraint firstItem="7FZ-tG-3Ku" firstAttribute="top" secondItem="PfU-5o-zln" secondAttribute="top" id="Gh3-J9-3q5"/>
                         <constraint firstItem="7FZ-tG-3Ku" firstAttribute="leading" secondItem="PfU-5o-zln" secondAttribute="leading" id="KDv-0X-NHq"/>
+                        <constraint firstItem="i0k-jB-58I" firstAttribute="top" secondItem="7FZ-tG-3Ku" secondAttribute="bottom" id="Tw1-qC-y7S"/>
                         <constraint firstAttribute="height" constant="180" id="YUv-ey-Kqf"/>
                         <constraint firstAttribute="trailing" secondItem="wkr-3X-r6v" secondAttribute="trailing" constant="10" id="an7-D6-Yih"/>
                         <constraint firstAttribute="trailing" secondItem="i0k-jB-58I" secondAttribute="trailing" id="eIn-Hd-GSo"/>

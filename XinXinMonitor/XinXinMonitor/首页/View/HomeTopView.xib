@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMy-H7-bpN">
-                    <rect key="frame" x="0.0" y="0.0" width="30" height="44"/>
+                    <rect key="frame" x="5" y="0.0" width="30" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="h1s-ag-gUS"/>
                     </constraints>
@@ -25,7 +25,7 @@
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows_down" translatesAutoresizingMaskIntoConstraints="NO" id="aMc-ZM-MPY">
-                    <rect key="frame" x="30" y="19" width="15" height="7"/>
+                    <rect key="frame" x="35" y="19" width="15" height="7"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="8zZ-oP-eeA"/>
                         <constraint firstAttribute="height" constant="7" id="m2K-gU-vnm"/>
@@ -42,15 +42,15 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmR-TV-k3b">
-                    <rect key="frame" x="57" y="7" width="218" height="30"/>
+                    <rect key="frame" x="62" y="7" width="213" height="30"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入关键字" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KkD-gk-Naa">
-                            <rect key="frame" x="15" y="0.0" width="173" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入设备编号" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KkD-gk-Naa">
+                            <rect key="frame" x="15" y="0.0" width="168" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tkt-KE-tiE">
-                            <rect key="frame" x="193" y="8" width="15" height="15"/>
+                            <rect key="frame" x="188" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="ZAx-9h-udC"/>
                                 <constraint firstAttribute="height" constant="15" id="rRa-6p-gzC"/>
@@ -84,7 +84,7 @@
                 <constraint firstItem="UHA-kp-qmx" firstAttribute="top" secondItem="hV9-8s-qO0" secondAttribute="top" constant="2" id="kaS-9E-hJc"/>
                 <constraint firstItem="UHA-kp-qmx" firstAttribute="leading" secondItem="vmR-TV-k3b" secondAttribute="trailing" constant="5" id="tGo-M9-djl"/>
                 <constraint firstItem="vmR-TV-k3b" firstAttribute="centerY" secondItem="UHA-kp-qmx" secondAttribute="centerY" id="u98-VC-Ok6"/>
-                <constraint firstItem="hMy-H7-bpN" firstAttribute="leading" secondItem="hV9-8s-qO0" secondAttribute="leading" id="vO5-Y6-qZF"/>
+                <constraint firstItem="hMy-H7-bpN" firstAttribute="leading" secondItem="hV9-8s-qO0" secondAttribute="leading" constant="5" id="vO5-Y6-qZF"/>
                 <constraint firstItem="aMc-ZM-MPY" firstAttribute="centerY" secondItem="hV9-8s-qO0" secondAttribute="centerY" id="ziu-Y5-ZiK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

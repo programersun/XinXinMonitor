@@ -43,9 +43,6 @@ BMKMapManager *_mapManager;
     //实时监听网络状态
     [[AFNetworkingTools sharedManager] networkStateChange];
     
-    //极光推送
-    [self jpush:launchOptions];
-    
     //获取用户位置
     [[LocationManager sharedManager] currentLocation];
     
@@ -56,6 +53,9 @@ BMKMapManager *_mapManager;
     if (dict) {
         [[UserInfoManager sharedManager] resetInfo:dict];
     }
+    
+    //极光推送
+    [self jpush:launchOptions];
     
     if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
         LoginViewController *vc = [[UIStoryboard storyboardWithName:@"LoginViewStoryboard" bundle:nil] instantiateInitialViewController];
@@ -181,7 +181,7 @@ BMKMapManager *_mapManager;
     if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
         [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
     }else {
-        [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
+        [JPUSHService setAlias:[UserInfoManager sharedManager].departmentId callbackSelector:nil object:nil];
     }
 }
 
@@ -213,16 +213,16 @@ BMKMapManager *_mapManager;
     }
     [tabVC setSelectedIndex:2];
     
-    if ([[self.jpushInfo objectForKey:@"detail"] isEqualToString:@"yes"]) {
-        UINavigationController *navVC = tabVC.childViewControllers[2];
-        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-        if (vc == nil) {
-            vc = [[ImageDetailViewController alloc] init];
-        }
-        vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
-        [vc setHidesBottomBarWhenPushed:YES];
-        [navVC pushViewController:vc animated:YES];
-    }
+//    if ([[self.jpushInfo objectForKey:@"detail"] isEqualToString:@"yes"]) {
+//        UINavigationController *navVC = tabVC.childViewControllers[2];
+//        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+//        if (vc == nil) {
+//            vc = [[ImageDetailViewController alloc] init];
+//        }
+//        vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
+//        [vc setHidesBottomBarWhenPushed:YES];
+//        [navVC pushViewController:vc animated:YES];
+//    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

@@ -16,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UIView *pickerView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
-
+@property (nonatomic, copy) void(^pickerBtnClickBlock)();
 @end

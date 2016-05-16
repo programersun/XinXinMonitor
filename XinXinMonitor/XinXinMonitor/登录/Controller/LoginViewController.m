@@ -98,7 +98,7 @@
                         NSDictionary *dict = responseObj;
                         if ([[dict objectForKey:@"code"] integerValue] == 1) {
                             [[UserInfoManager sharedManager] saveUserInfo:[dict objectForKey:@"content"]];
-                            [self setAliasWithSring:[UserInfoManager sharedManager].userID];
+                            [self setAliasWithSring:[UserInfoManager sharedManager].departmentId];
                             MainTabBarViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
                             if (vc == nil) {
                                 vc = [[MainTabBarViewController alloc] init];
@@ -138,7 +138,7 @@
 }
 
 - (void)setAliasWithSring:(NSString *)userString {
-  [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
+  [JPUSHService setAlias:userString callbackSelector:nil object:nil];
 }
 
 /*

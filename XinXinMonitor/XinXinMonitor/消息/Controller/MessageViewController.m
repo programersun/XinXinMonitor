@@ -14,7 +14,7 @@
 @interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
-    NSInteger _count;
+    NSInteger _deleteIndex;
 }
 @property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 @property (nonatomic, strong) NSMutableArray *messageArray;
@@ -35,29 +35,19 @@
     
     [self setNavigationTitle:@"我的消息" TextColor:[UIColor whiteColor] Font:nil];
     _pageNum = 0;
-    _count = 11;
     __weak MessageViewController *weakself = self;
     self.messageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _pageNum = 0;
-        _count = 11;
         [weakself loadMessageInfo];
     }];
-//
-//    self.messageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        _pageNum ++;
-//        _count = 15;
-//        [weakself loadMessageInfo];
-//    }];
-    
-    [self showSVProgressHUD];
-    [self loadMessageInfo];
-    
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    [self showSVProgressHUD];
+    [self loadMessageInfo];
 }
 
 #pragma mark - 结束加载
@@ -65,25 +55,74 @@
 - (void)endRefresh {
     [self.messageTableView.mj_header endRefreshing];
     [self.messageTableView.mj_footer endRefreshing];
-    [self hideSVProgressHUD];
 }
 
 #pragma mark - 加载数据
 - (void)loadMessageInfo {
-    
-    [self endRefresh];
-    [self.messageTableView reloadData];
-    if ((_count - 10 * _pageNum) < 10) {
-        [self hideSVProgressHUD];
-        [self.messageTableView.mj_footer endRefreshingWithNoMoreData];
-    }
+    [self showSVProgressHUD];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MessageListAPI] params:[XinXinMonitorAPI MessageListWithPage:_pageNum] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        
+        if (self.messageArray.count > 0) {
+            [self hideSVProgressHUD];
+            __weak MessageViewController *weakself = self;
+            self.messageTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                _pageNum ++;
+                [weakself loadMessageInfo];
+            }];
+        } else {
+            [self showMessageWithString:@"暂无数据" showTime:1.0];
+            self.messageTableView.mj_footer = nil;
+        }
+        [self endRefresh];
+        [self.messageTableView reloadData];
+//        if (_pageNum == self.monitorListBaseClass.pagenums) {
+//            [self.messageTableView.mj_footer endRefreshingWithNoMoreData];
+//        }
+        
+    } failure:^(NSError *error) {
+        [self endRefresh];
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+
+    }];
 }
 
+- (void)deleteMessage {
+    [self showSVProgressHUD];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteMessageAPI] params:[XinXinMonitorAPI deleteMessageWithPkid:[NSString stringWithFormat:@"%ld",(long)_deleteIndex]] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        [self hideSVProgressHUD];
+        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+            [self.messageArray removeObjectAtIndex:_deleteIndex];
+            [self.messageTableView reloadData];
+        } else {
+            [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
+        }
+        
+    } failure:^(NSError *error) {
+        [self showMessageWithString:@"服务器开小差了" showTime:1.0];
+    }];
+}
+
+- (void)readMessageWithPkid:(NSString *)pkid {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ReadMessageAPI] params:[XinXinMonitorAPI ReadMessageWithPkid:pkid] success:^(id responseObj) {
+        
+        NSDictionary *dict = responseObj;
+        if ([[dict objectForKey:@"code"] integerValue] == 1) {
+#warning 阅读消息成功处理
+            
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _count;
+    return self.messageArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,12 +150,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-    if (vc == nil) {
-        vc = [[ImageDetailViewController alloc] init];
-    }
-    [vc setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:vc animated:YES];
+//     [self readMessageWithPkid:model.pkid];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -129,23 +163,29 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        _deleteIndex = indexPath.row;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除后不能恢复，是否确认删除" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
     }
 }
 
-- (void)toImageDetailView {
-    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-    if (vc == nil) {
-        vc = [[ImageDetailViewController alloc] init];
-    }
-    [vc setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//- (void)toImageDetailView:(MonitorListRows *)model {
+//
+//    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+//    if (vc == nil) {
+//        vc = [[ImageDetailViewController alloc] init];
+//    }
+//    vc.monitorId = model.code;
+//    vc.telephone = model.phone;
+//    vc.address = model.address;
+//    vc.monitorCode = model.code;
+//    [vc setHidesBottomBarWhenPushed:YES];
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSLog(@"删除");
+        [self deleteMessage];
     }
     [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }

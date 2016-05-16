@@ -15,11 +15,18 @@
 @interface AddMonitorViewController () <UIAlertViewDelegate,BMKGeoCodeSearchDelegate>
 
 @property (nonatomic, strong) BMKGeoCodeSearch *geocodesearch;
+/** 当前地址*/
 @property (weak, nonatomic) IBOutlet UITextField *myAddressTextField;
+/** 重新定位*/
 @property (weak, nonatomic) IBOutlet UIButton *afreshAddressBtn;
+/** 设备编号*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorNameTextField;
+/** 设备所属账户*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorAccountTextField;
+/** 设备电话*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorTelephoneTextField;
+/** 设备类型*/
+@property (weak, nonatomic) IBOutlet UITextField *monitorTypeTextField;
 
 @end
 
@@ -72,7 +79,9 @@
         [self showMessageWithString:@"请输入设备电话号码" showTime:1.0];
     } else if ([self.monitorTelephoneTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
-    } else {
+    } else if ([self.monitorTypeTextField.text isEqualToString:@""]) {
+        [self showMessageWithString:@"请输入设备类型" showTime:1.0];
+    } else{
         //提交
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
@@ -86,7 +95,7 @@
 }
 
 - (void)addMonitor {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorTypeTextField.text] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;

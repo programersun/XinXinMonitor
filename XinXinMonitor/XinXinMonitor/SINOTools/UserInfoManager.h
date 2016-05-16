@@ -16,6 +16,8 @@
 @property (nonatomic, retain) NSString *userType;
 /** 用户名字 */
 @property (nonatomic, retain) NSString *userName;
+/** 用户名字 */
+@property (nonatomic, retain) NSString *departmentId;
 
 + (instancetype)sharedManager;
 

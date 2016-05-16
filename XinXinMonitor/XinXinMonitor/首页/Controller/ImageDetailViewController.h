@@ -12,4 +12,5 @@
 @property (nonatomic, weak) NSString *monitorId;
 @property (nonatomic, weak) NSString *telephone;
 @property (nonatomic, weak) NSString *address;
+@property (nonatomic, weak) NSString *monitorCode;
 @end
