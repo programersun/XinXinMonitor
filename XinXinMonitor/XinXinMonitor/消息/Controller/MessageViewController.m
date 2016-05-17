@@ -175,7 +175,6 @@
 //    if (vc == nil) {
 //        vc = [[ImageDetailViewController alloc] init];
 //    }
-//    vc.monitorId = model.code;
 //    vc.telephone = model.phone;
 //    vc.address = model.address;
 //    vc.monitorCode = model.code;

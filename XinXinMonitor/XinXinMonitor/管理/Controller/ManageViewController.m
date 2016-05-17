@@ -12,16 +12,19 @@
 #import "AddMonitorViewController.h"
 #import "MonitorListBaseClass.h"
 #import "MonitorListRows.h"
+#import "ChooseMonitorTypeView.h"
 
-@interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,UISearchBarDelegate>
+@interface ManageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSInteger _pageNum;
     NSInteger _deleteIndex;
 }
 @property (weak, nonatomic) IBOutlet UITableView *manageTableView;
+
 @property (nonatomic, strong) NSMutableArray *manageArray;
 @property (nonatomic, strong) MonitorListBaseClass *monitorListBaseClass;
-@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
+
 @end
 
 @implementation ManageViewController
@@ -35,14 +38,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 10, kkViewWidth - 20, 44)];
-    self.searchBar.placeholder = @"请输入设备类型";
-    self.searchBar.delegate = self;
-    self.navigationItem.titleView = self.searchBar;
+    [self setNavigationTitle:@"设备管理" TextColor:[UIColor whiteColor] Font:nil];
     if ([[UserInfoManager sharedManager].userType integerValue] == 1) {
-        [self setNavigationRightItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
+        [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"addMonitor"] highlightedImg:[UIImage imageNamed:@"addMonitor"]];
     }
+    
+    [self setNavigationRightItemWithString:@"全部"];
     _pageNum = 1;
     __weak ManageViewController *weakself = self;
     
@@ -60,6 +61,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    if (_pageNum == self.monitorListBaseClass.pagenums) {
+        [self.manageTableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -67,15 +71,21 @@
     [self endRefresh];
 }
 
-- (void)rightBtnClick:(UIButton *)sender {
-    
+- (void)leftBtnClick:(UIButton *)sender {
     AddMonitorViewController *vc = [[UIStoryboard storyboardWithName:@"ManageStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"AddMonitorViewController"];
     if (vc == nil) {
         vc = [[AddMonitorViewController alloc] init];
     }
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
+}
 
+- (void)rightBtnClick:(UIButton *)sender {
+    
+}
+
+- (void)createMonitorTypeView {
+    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(0, 0, 50, 100)];
 }
 
 #pragma mark - 结束加载
@@ -92,9 +102,9 @@
     if (kkViewHeight > 568) {
         [dic setValue:@"10" forKey:@"rows"];
     }
-    if (self.searchBar.text.length > 0) {
+//    if (self.searchBar.text.length > 0) {
 //        [dic setValue:self.searchBar.text forKey:@"monitorType"];
-    }
+//    }
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
         
         NSDictionary *dict = responseObj;
@@ -254,7 +264,6 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    vc.monitorId = model.code;
     vc.telephone = model.phone;
     vc.address = model.address;
     vc.monitorCode = model.code;

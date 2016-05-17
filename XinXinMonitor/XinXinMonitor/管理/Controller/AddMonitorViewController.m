@@ -11,6 +11,7 @@
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import "ChooseMonitorTypeView.h"
 
 @interface AddMonitorViewController () <UIAlertViewDelegate,BMKGeoCodeSearchDelegate>
 
@@ -26,12 +27,24 @@
 /** 设备电话*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorTelephoneTextField;
 /** 设备类型*/
-@property (weak, nonatomic) IBOutlet UITextField *monitorTypeTextField;
+@property (weak, nonatomic) IBOutlet UITextField *timeTextField;
+@property (weak, nonatomic) IBOutlet UILabel *monitorTypeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *monitorTypeBtn;
+
+@property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
+@property (nonatomic, strong) NSMutableArray *monitorTypeArray;
+@property (nonatomic, strong) NSString *monitorType;
 
 @end
 
 @implementation AddMonitorViewController
 
+- (NSMutableArray *)monitorTypeArray {
+    if (!_monitorTypeArray) {
+        _monitorTypeArray = [NSMutableArray array];
+    }
+    return _monitorTypeArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,6 +58,8 @@
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
+    [self loadMonitorType];
+    self.monitorType = @"";
 //    self.myAddressTextField.text = @"1111";
     
     // Do any additional setup after loading the view.
@@ -79,9 +94,9 @@
         [self showMessageWithString:@"请输入设备电话号码" showTime:1.0];
     } else if ([self.monitorTelephoneTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
-    } else if ([self.monitorTypeTextField.text isEqualToString:@""]) {
-        [self showMessageWithString:@"请输入设备类型" showTime:1.0];
-    } else{
+    } else if ([self.monitorType isEqualToString:@""]){
+        [self showMessageWithString:@"请选择设备类型" showTime:1.0];
+    } else {
         //提交
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
@@ -94,8 +109,57 @@
     }
 }
 
+- (IBAction)monitorBtnClick:(UIButton *)sender {
+    [self.view endEditing:YES];
+    if (sender.selected) {
+        sender.selected = NO;
+        [sender setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+        self.chooseMonitorTypeView.hidden = YES;
+    } else {
+        sender.selected = YES;
+        [sender setImage:[UIImage imageNamed:@"arrows_black_up"] forState:UIControlStateNormal];
+        self.chooseMonitorTypeView.hidden = NO;
+    }
+}
+
+#pragma mark - 创建类型选择View
+- (void)createMonitorTypeView {
+    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(self.monitorTypeBtn.frame.origin.x + self.monitorTypeBtn.frame.size.width - 130, self.monitorTypeBtn.frame.origin.y + self.monitorTypeBtn.frame.size.height + 10, 130, 200)];
+    if (self.monitorTypeArray.count > 0) {
+        self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
+    }
+    __weak AddMonitorViewController *weakself = self;
+    self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
+        NSDictionary *dict = weakself.monitorTypeArray[index];
+        weakself.monitorTypeLabel.text = [dict objectForKey:@"name"];
+        weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
+        weakself.chooseMonitorTypeView.hidden = YES;
+        weakself.monitorTypeBtn.selected = NO;
+        [weakself.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+    };
+    self.chooseMonitorTypeView.hidden = YES;
+    [self.view addSubview:self.chooseMonitorTypeView];
+}
+
+#pragma mark - 获取设备类型
+- (void)loadMonitorType {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorTypeAPI] params:nil success:^(id responseObj) {
+        
+        for (NSDictionary *dict in responseObj) {
+            [self.monitorTypeArray addObject:dict];
+        }
+        [self createMonitorTypeView];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 - (void)addMonitor {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorTypeTextField.text] success:^(id responseObj) {
+    NSString *time = self.timeTextField.text;
+    if ([time isEqualToString:@""]) {
+        time = @"30";
+    }
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;

@@ -98,7 +98,7 @@
                         NSDictionary *dict = responseObj;
                         if ([[dict objectForKey:@"code"] integerValue] == 1) {
                             [[UserInfoManager sharedManager] saveUserInfo:[dict objectForKey:@"content"]];
-                            [self setAliasWithSring:[UserInfoManager sharedManager].departmentId];
+                            [self setAliasWithSring:[UserInfoManager sharedManager].userID];
                             MainTabBarViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
                             if (vc == nil) {
                                 vc = [[MainTabBarViewController alloc] init];

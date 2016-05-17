@@ -139,7 +139,7 @@
 
 #pragma mark - 获取图片列表
 - (void)loadImageList {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ImageListAPI] params:[XinXinMonitorAPI ImageList:self.monitorId page:_pageNum startTime:self.timeString endTime:self.timeString] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ImageListAPI] params:[XinXinMonitorAPI ImageList:self.monitorCode page:_pageNum startTime:self.timeString endTime:self.timeString] success:^(id responseObj) {
         
         NSDictionary *dic = responseObj;
         
@@ -153,7 +153,7 @@
         }
         
         if (self.imageListArray.count == 0) {
-            [self showMessageWithString:@"暂无图片" showTime:1.0];
+            [self showMessageWithString:[NSString stringWithFormat:@"%@暂无图片",self.timeString] showTime:1.0];
         } else {
             NSMutableArray *imageArray = [NSMutableArray array];
             for (ImageDetailRows *row in self.imageListArray) {

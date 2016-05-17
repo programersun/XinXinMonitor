@@ -24,6 +24,8 @@
 #define AllMonitorListAPI @"/mobile/camera/getCameraListData"
 /** 添加设备*/
 #define AddMonitorAPI @"/mobile/camera/addCameraInfo"
+/** 设备类型*/
+#define MonitorTypeAPI @"/mobile/camera/getCameraTypeListData"
 /** 删除设备*/
 #define DeleteMonitorAPI @"/mobile/camera/deleteCamera"
 /** 设置隐患点*/
@@ -80,10 +82,11 @@
  *  @param createUserName 提交人姓名
  *  @param customerKey    所属客户账号
  *  @param customerKey    所属类型
+ *  @param customerKey    拍摄间隔
  *
  *  @return 设备添加字典
  */
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType;
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time;
 
 /**
  *  设备删除

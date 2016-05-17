@@ -181,7 +181,7 @@ BMKMapManager *_mapManager;
     if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
         [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
     }else {
-        [JPUSHService setAlias:[UserInfoManager sharedManager].departmentId callbackSelector:nil object:nil];
+        [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
     }
 }
 

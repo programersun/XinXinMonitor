@@ -33,7 +33,7 @@
     
     UILabel *copyrightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, logoImageView.frame.origin.y + logoImageView.frame.size.height + 100, kkViewWidth, 21)];
     [copyrightLabel setTextAlignment:NSTextAlignmentCenter];
-    copyrightLabel.text = @"新鑫东信科技有限公司";
+    copyrightLabel.text = @"济南鑫新东信科技有限公司";
     
     UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, copyrightLabel.frame.origin.y + copyrightLabel.frame.size.height + 20, kkViewWidth, 21)];
     [versionLabel setTextAlignment:NSTextAlignmentCenter];
@@ -41,7 +41,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     CFShow((__bridge CFTypeRef)(infoDictionary));
     NSString *VersionKey = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    versionLabel.text = [NSString stringWithFormat:@"当前版本:%@",VersionKey];
+    versionLabel.text = [NSString stringWithFormat:@"当前版本:v%@",VersionKey];
     
     [mainScrollView addSubview:logoImageView];
     [mainScrollView addSubview:copyrightLabel];

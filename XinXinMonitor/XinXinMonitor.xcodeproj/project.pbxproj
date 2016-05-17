@@ -50,6 +50,9 @@
 		A4C81BA31CC9D23B00C6F992 /* CityChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */; };
 		A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */; };
 		A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */; };
+		A4CA37501CEB625E009A51FB /* MonitorTypeBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA374E1CEB625E009A51FB /* MonitorTypeBaseClass.m */; };
+		A4CA37531CEB689B009A51FB /* ChooseMonitorTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */; };
+		A4CA37551CEB68AC009A51FB /* ChooseMonitorTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */; };
 		A4D3357B1CBFDFEE00023D5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357A1CBFDFEE00023D5C /* main.m */; };
 		A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357D1CBFDFEE00023D5C /* AppDelegate.mm */; };
 		A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4D335821CBFDFEE00023D5C /* Main.storyboard */; };
@@ -210,6 +213,11 @@
 		A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageTableViewCell.m; sourceTree = "<group>"; };
 		A4C81BA71CCA1D9B00C6F992 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
+		A4CA374E1CEB625E009A51FB /* MonitorTypeBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorTypeBaseClass.m; sourceTree = "<group>"; };
+		A4CA374F1CEB625E009A51FB /* MonitorTypeBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorTypeBaseClass.h; sourceTree = "<group>"; };
+		A4CA37511CEB689B009A51FB /* ChooseMonitorTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseMonitorTypeView.h; sourceTree = "<group>"; };
+		A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseMonitorTypeView.m; sourceTree = "<group>"; };
+		A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseMonitorTypeView.xib; sourceTree = "<group>"; };
 		A4D335761CBFDFEE00023D5C /* XinXinMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XinXinMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D3357A1CBFDFEE00023D5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4D3357C1CBFDFEE00023D5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -567,6 +575,8 @@
 		A4D3359A1CBFE15D00023D5C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A4CA374F1CEB625E009A51FB /* MonitorTypeBaseClass.h */,
+				A4CA374E1CEB625E009A51FB /* MonitorTypeBaseClass.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -576,6 +586,9 @@
 			children = (
 				A4C81BA41CCA042300C6F992 /* ManageTableViewCell.h */,
 				A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */,
+				A4CA37511CEB689B009A51FB /* ChooseMonitorTypeView.h */,
+				A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */,
+				A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1055,6 +1068,7 @@
 				A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */,
 				A4D335B71CBFE15D00023D5C /* ShouYeStoryboard.storyboard in Resources */,
 				A49A27661CC5CA0100ED5A61 /* mapapi.bundle in Resources */,
+				A4CA37551CEB68AC009A51FB /* ChooseMonitorTypeView.xib in Resources */,
 				A49A27711CC6176C00ED5A61 /* LoginViewStoryboard.storyboard in Resources */,
 				A4360E851CC0D4DF0047C632 /* HomeTopView.xib in Resources */,
 				A43A01FA1CCC73F700940950 /* mss_browseLoading@3x.png in Resources */,
@@ -1083,6 +1097,7 @@
 				A4F974221CE5BBA700623D79 /* UIScrollView+MJExtension.m in Sources */,
 				A4F973E01CE4E43C00623D79 /* SVIndefiniteAnimatedView.m in Sources */,
 				A456B2421CDF916C00F7FC1A /* TimeView.m in Sources */,
+				A4CA37531CEB689B009A51FB /* ChooseMonitorTypeView.m in Sources */,
 				A43A01F61CCC732A00940950 /* UIView+SRLayout.m in Sources */,
 				A4D3361D1CBFE2A400023D5C /* MBProgressHUD.m in Sources */,
 				A43A02001CCC75DF00940950 /* UIImage+SRScale.m in Sources */,
@@ -1152,6 +1167,7 @@
 				A4D3361F1CBFE2A400023D5C /* NSData+ImageContentType.m in Sources */,
 				A4D335D41CBFE1D200023D5C /* SR_SINOBaseViewController.m in Sources */,
 				A4D335B81CBFE15D00023D5C /* MessageViewController.m in Sources */,
+				A4CA37501CEB625E009A51FB /* MonitorTypeBaseClass.m in Sources */,
 				A4D336201CBFE2A400023D5C /* SDImageCache.m in Sources */,
 				A4D335D21CBFE1D200023D5C /* GCTextField.m in Sources */,
 				A4F974161CE5BBA700623D79 /* MJRefreshHeader.m in Sources */,
