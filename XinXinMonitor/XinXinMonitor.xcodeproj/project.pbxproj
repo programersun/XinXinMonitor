@@ -47,14 +47,14 @@
 		A49A27741CC61B8B00ED5A61 /* LoginTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A49A27731CC61B8B00ED5A61 /* LoginTableViewCell.m */; };
 		A49A27761CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */; };
 		A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49A279D1CC8B98E00ED5A61 /* ChooseCityViewController.m */; };
+		A4B28E9C1CEE0CA400C19227 /* MessageRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B28E981CEE0CA400C19227 /* MessageRows.m */; };
+		A4B28E9D1CEE0CA400C19227 /* MessageBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B28E9A1CEE0CA400C19227 /* MessageBaseClass.m */; };
 		A4C81BA31CC9D23B00C6F992 /* CityChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */; };
 		A4C81BA61CCA042300C6F992 /* ManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA51CCA042300C6F992 /* ManageTableViewCell.m */; };
 		A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C81BA81CCA1D9B00C6F992 /* MessageTableViewCell.m */; };
 		A4CA37501CEB625E009A51FB /* MonitorTypeBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA374E1CEB625E009A51FB /* MonitorTypeBaseClass.m */; };
 		A4CA37531CEB689B009A51FB /* ChooseMonitorTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */; };
 		A4CA37551CEB68AC009A51FB /* ChooseMonitorTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */; };
-		A4CA375C1CECD582009A51FB /* MessageBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA37561CECD582009A51FB /* MessageBaseClass.m */; };
-		A4CA375D1CECD582009A51FB /* MessageRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CA37581CECD582009A51FB /* MessageRows.m */; };
 		A4D3357B1CBFDFEE00023D5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357A1CBFDFEE00023D5C /* main.m */; };
 		A4D3357E1CBFDFEE00023D5C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4D3357D1CBFDFEE00023D5C /* AppDelegate.mm */; };
 		A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4D335821CBFDFEE00023D5C /* Main.storyboard */; };
@@ -209,6 +209,10 @@
 		A49A27751CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI_Utils.framework; sourceTree = "<group>"; };
 		A49A279C1CC8B98E00ED5A61 /* ChooseCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCityViewController.h; sourceTree = "<group>"; };
 		A49A279D1CC8B98E00ED5A61 /* ChooseCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCityViewController.m; sourceTree = "<group>"; };
+		A4B28E981CEE0CA400C19227 /* MessageRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageRows.m; sourceTree = "<group>"; };
+		A4B28E991CEE0CA400C19227 /* MessageBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBaseClass.h; sourceTree = "<group>"; };
+		A4B28E9A1CEE0CA400C19227 /* MessageBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBaseClass.m; sourceTree = "<group>"; };
+		A4B28E9B1CEE0CA400C19227 /* MessageRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageRows.h; sourceTree = "<group>"; };
 		A4C81BA11CC9D23B00C6F992 /* CityChooseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseTableViewCell.h; sourceTree = "<group>"; };
 		A4C81BA21CC9D23B00C6F992 /* CityChooseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseTableViewCell.m; sourceTree = "<group>"; };
 		A4C81BA41CCA042300C6F992 /* ManageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageTableViewCell.h; sourceTree = "<group>"; };
@@ -220,10 +224,6 @@
 		A4CA37511CEB689B009A51FB /* ChooseMonitorTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseMonitorTypeView.h; sourceTree = "<group>"; };
 		A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseMonitorTypeView.m; sourceTree = "<group>"; };
 		A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseMonitorTypeView.xib; sourceTree = "<group>"; };
-		A4CA37561CECD582009A51FB /* MessageBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBaseClass.m; sourceTree = "<group>"; };
-		A4CA37571CECD582009A51FB /* MessageRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageRows.h; sourceTree = "<group>"; };
-		A4CA37581CECD582009A51FB /* MessageRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageRows.m; sourceTree = "<group>"; };
-		A4CA375B1CECD582009A51FB /* MessageBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBaseClass.h; sourceTree = "<group>"; };
 		A4D335761CBFDFEE00023D5C /* XinXinMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XinXinMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D3357A1CBFDFEE00023D5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4D3357C1CBFDFEE00023D5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -724,10 +724,10 @@
 		A4D335AF1CBFE15D00023D5C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4CA375B1CECD582009A51FB /* MessageBaseClass.h */,
-				A4CA37561CECD582009A51FB /* MessageBaseClass.m */,
-				A4CA37571CECD582009A51FB /* MessageRows.h */,
-				A4CA37581CECD582009A51FB /* MessageRows.m */,
+				A4B28E981CEE0CA400C19227 /* MessageRows.m */,
+				A4B28E991CEE0CA400C19227 /* MessageBaseClass.h */,
+				A4B28E9A1CEE0CA400C19227 /* MessageBaseClass.m */,
+				A4B28E9B1CEE0CA400C19227 /* MessageRows.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1092,7 +1092,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4CA375D1CECD582009A51FB /* MessageRows.m in Sources */,
 				A4D336221CBFE2A400023D5C /* SDWebImageDecoder.m in Sources */,
 				A4D336431CBFF2A100023D5C /* ImageDetailViewController.m in Sources */,
 				A43A020A1CCC8D5500940950 /* SRBrowseRemindView.m in Sources */,
@@ -1117,6 +1116,7 @@
 				A4D336211CBFE2A400023D5C /* SDWebImageCompat.m in Sources */,
 				A4F974151CE5BBA700623D79 /* MJRefreshFooter.m in Sources */,
 				A49A276C1CC60AED00ED5A61 /* UserInfoManager.m in Sources */,
+				A4B28E9C1CEE0CA400C19227 /* MessageRows.m in Sources */,
 				A4F974121CE5BBA700623D79 /* MJRefreshAutoFooter.m in Sources */,
 				A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */,
 				A4D336241CBFE2A400023D5C /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1160,7 +1160,6 @@
 				A49A279E1CC8B98E00ED5A61 /* ChooseCityViewController.m in Sources */,
 				A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */,
 				A4D336261CBFE2A400023D5C /* SDWebImagePrefetcher.m in Sources */,
-				A4CA375C1CECD582009A51FB /* MessageBaseClass.m in Sources */,
 				A4F973E41CE4E43C00623D79 /* SVRadialGradientLayer.m in Sources */,
 				A4D335BC1CBFE16B00023D5C /* MainTabBarViewController.m in Sources */,
 				A4D336171CBFE2A400023D5C /* AFURLRequestSerialization.m in Sources */,
@@ -1174,6 +1173,7 @@
 				A4F973E31CE4E43C00623D79 /* SVProgressHUD.m in Sources */,
 				A4F9741A1CE5BBA700623D79 /* MJRefreshBackGifFooter.m in Sources */,
 				A4D336271CBFE2A400023D5C /* UIButton+WebCache.m in Sources */,
+				A4B28E9D1CEE0CA400C19227 /* MessageBaseClass.m in Sources */,
 				A49A27691CC5DEEE00ED5A61 /* LocationManager.m in Sources */,
 				A4D3361B1CBFE2A400023D5C /* MBProgressHUD+Add.m in Sources */,
 				A4D3361F1CBFE2A400023D5C /* NSData+ImageContentType.m in Sources */,

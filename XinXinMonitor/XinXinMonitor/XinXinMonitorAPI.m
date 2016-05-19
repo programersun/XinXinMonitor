@@ -97,13 +97,13 @@
 
 + (NSMutableDictionary *)deleteMessageWithPkid:(NSString *)messagePkid {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:messagePkid forKey:@"user_key"];
+    [dic setObject:messagePkid forKey:@"pkid"];
     return dic;
 }
 
 + (NSMutableDictionary *)ReadMessageWithPkid:(NSString *)messagePkid {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:messagePkid forKey:@"user_key"];
+    [dic setObject:messagePkid forKey:@"pkid"];
     return dic;
 }
 

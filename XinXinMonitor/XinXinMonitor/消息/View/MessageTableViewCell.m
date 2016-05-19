@@ -16,8 +16,15 @@
 }
 
 - (void)loadCellWithModel:(MessageRows *)model {
-    self.timeLabel.text = model.msgTime;
+    self.timeLabel.text = model.sendtimeF;
     self.problemLabel.text = model.content;
+    if (model.readStatus == 0) {
+        self.timeLabel.textColor = [UIColor blackColor];
+        self.problemLabel.textColor = [UIColor blackColor];
+    } else {
+        self.timeLabel.textColor = [UIColor grayColor];
+        self.problemLabel.textColor = [UIColor grayColor];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

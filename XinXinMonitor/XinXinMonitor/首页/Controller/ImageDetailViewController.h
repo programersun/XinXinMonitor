@@ -9,7 +9,10 @@
 #import "SR_SINOBaseViewController.h"
 
 @interface ImageDetailViewController : SR_SINOBaseViewController
-@property (nonatomic, weak) NSString *telephone;
-@property (nonatomic, weak) NSString *address;
-@property (nonatomic, weak) NSString *monitorCode;
+@property (nonatomic, strong) NSString *telephone;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *monitorCode;
+@property (nonatomic, strong) NSString *problemPictureId;
+@property (nonatomic, strong) NSString *timeString;         /**< 时间*/
+
 @end

@@ -33,7 +33,6 @@
 @property (nonatomic,strong) TimeView *timeView;                        /**< 时间选择*/
 @property (nonatomic,strong) ImageDetailBaseClass *imageDetalBaseClass;
 @property (nonatomic,strong) NSMutableArray *imageListArray;
-@property (nonatomic,strong) NSString *timeString;                      /**< 时间*/
 
 @end
 
@@ -76,10 +75,12 @@
     _pageTotal = 0;
     _isRefresh = NO;
     
-    NSDate *nowDate = [NSDate date];
-    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-    [dateformatter setDateFormat:@"YYYY-MM-dd"];
-    self.timeString = [dateformatter stringFromDate:nowDate];
+    if ([self.timeString isEqualToString:@""]) {
+        NSDate *nowDate = [NSDate date];
+        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"YYYY-MM-dd"];
+        self.timeString = [dateformatter stringFromDate:nowDate];
+    }
     [self setNavigationTitle:self.monitorCode TextColor:[UIColor whiteColor] Font:nil];
     
     [self createBrowseView];
@@ -135,6 +136,14 @@
     }
     [self hideSVProgressHUD];
     [_collectionView reloadData];
+
+    for (int i = 0; i < self.imageDetalBaseClass.rows.count; i++) {
+        ImageDetailRows *model = self.imageDetalBaseClass.rows[i];
+        if ([model.pkid isEqualToString:self.problemPictureId]) {
+            NSLog(@"%f",kkViewWidth * i);
+            _collectionView.contentOffset = CGPointMake((kkViewWidth + kBrowseSpace) * i, 0);
+        }
+    }
 }
 
 #pragma mark - 获取图片列表

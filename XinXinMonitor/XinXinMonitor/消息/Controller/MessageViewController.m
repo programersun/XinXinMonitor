@@ -100,30 +100,31 @@
 
 - (void)deleteMessage {
     [self showSVProgressHUD];
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteMessageAPI] params:[XinXinMonitorAPI deleteMessageWithPkid:[NSString stringWithFormat:@"%ld",(long)_deleteIndex]] success:^(id responseObj) {
+    MessageRows *model = self.messageArray[_deleteIndex];
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,DeleteMessageAPI] params:[XinXinMonitorAPI deleteMessageWithPkid:[NSString stringWithFormat:@"%@",model.pkid]] success:^(id responseObj) {
         
         NSDictionary *dict = responseObj;
-        [self hideSVProgressHUD];
         if ([[dict objectForKey:@"code"] integerValue] == 1) {
             [self.messageArray removeObjectAtIndex:_deleteIndex];
             [self.messageTableView reloadData];
-        } else {
-            [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
         }
+        [self showMessageWithString:[dict objectForKey:@"message"] showTime:1.0];
         
     } failure:^(NSError *error) {
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
     }];
 }
 
-- (void)readMessageWithPkid:(NSString *)pkid {
+- (void)readMessageWithPkid:(NSString *)pkid index:(NSInteger )index{
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ReadMessageAPI] params:[XinXinMonitorAPI ReadMessageWithPkid:pkid] success:^(id responseObj) {
-        
         NSDictionary *dict = responseObj;
         if ([[dict objectForKey:@"code"] integerValue] == 1) {
-#warning 阅读消息成功处理
-            
+            MessageRows *model = self.messageArray[index];
+            model.readStatus = 1;
+            [self.messageArray replaceObjectAtIndex:index withObject:model];
+            [self.messageTableView reloadData];
         }
+        
     } failure:^(NSError *error) {
         
     }];
@@ -162,7 +163,11 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//     [self readMessageWithPkid:model.pkid];
+    MessageRows *model = self.messageArray[indexPath.row];
+    [self readMessageWithPkid:model.pkid index:indexPath.row];
+    if (model.type != 0) {
+        [self toImageDetailView:model];
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -187,6 +192,14 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
+    if (model.type == 1) {
+        vc.problemPictureId = model.picturePkid;
+        vc.timeString = model.pictureDateF;
+    }else {
+        vc.problemPictureId = @"";
+        vc.timeString = @"";
+    }
+    
     vc.monitorCode = model.cameraCode;
     vc.telephone = model.phone;
     vc.address = model.address;

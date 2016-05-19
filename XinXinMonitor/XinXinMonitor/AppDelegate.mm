@@ -143,7 +143,7 @@ BMKMapManager *_mapManager;
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushKey
                           channel:@"Publish channel"
-                 apsForProduction:NO
+                 apsForProduction:YES
             advertisingIdentifier:nil];
 }
 
@@ -219,6 +219,7 @@ BMKMapManager *_mapManager;
         if (vc == nil) {
             vc = [[ImageDetailViewController alloc] init];
         }
+        vc.timeString = @"";
         vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];

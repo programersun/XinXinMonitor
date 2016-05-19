@@ -572,6 +572,8 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
+    vc.timeString = @"";
+    vc.problemPictureId = @"";
     vc.telephone = model.phone;
     vc.address = model.address;
     vc.monitorCode = model.code;

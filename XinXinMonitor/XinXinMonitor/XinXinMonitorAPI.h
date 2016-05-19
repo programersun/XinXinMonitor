@@ -11,7 +11,10 @@
 @interface XinXinMonitorAPI : NSObject
 
 /** APIURL*/
-#define XinXinMonitorURL @"http://202.194.7.21:9097/dc_ms_mobile"
+//#define XinXinMonitorURL @"http://202.194.7.21:9097/dc_ms_mobile" //测试
+
+#define XinXinMonitorURL @"http://60.216.117.170:90/dc_ms_mobile" //正式
+
 /** IMGURL*/
 #define XinXinMonitorIMGURL @"http://202.194.7.21:9097"
 /** 登录*/
