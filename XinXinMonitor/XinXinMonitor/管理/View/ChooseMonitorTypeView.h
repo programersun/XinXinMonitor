@@ -11,5 +11,6 @@
 @interface ChooseMonitorTypeView : UIView
 @property (weak, nonatomic) IBOutlet UITableView *chooseMonitorTypeTableView;
 @property (nonatomic, strong) NSArray *MonitorTypeArray;
+@property (nonatomic, strong) NSString *viewType;  /**< view类型  1.添加设备 2.筛选 */
 @property (nonatomic, copy) void(^cellClickBlock)(NSInteger index);
 @end

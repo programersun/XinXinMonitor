@@ -26,6 +26,8 @@
 #define AddMonitorAPI @"/mobile/camera/addCameraInfo"
 /** 设备类型*/
 #define MonitorTypeAPI @"/mobile/camera/getCameraTypeListData"
+/** 我的设备类型*/
+#define MyMonitorTypeAPI @"/mobile/camera/getCameraTypesByCustomer"
 /** 删除设备*/
 #define DeleteMonitorAPI @"/mobile/camera/deleteCamera"
 /** 设置隐患点*/
@@ -87,6 +89,13 @@
  *  @return 设备添加字典
  */
 + (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time;
+
+/**
+ *  根据部门编号获取设备类型
+ *
+ *  @return 根据部门编号获取设备类型字典
+ */
++ (NSMutableDictionary *)MonitorTypes;
 
 /**
  *  设备删除

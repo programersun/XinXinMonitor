@@ -227,6 +227,7 @@
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_mapView viewWillDisappear];
+    self.cityChangeView.hidden = YES;
     _mapView.delegate = nil; // // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }

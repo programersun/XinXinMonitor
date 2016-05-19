@@ -10,7 +10,7 @@
 #import "LoginTableViewCell.h"
 #import "MainTabBarViewController.h"
 
-@interface LoginViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface LoginViewController () <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic, strong) NSString *userKey;
 @property (nonatomic, strong) NSString *password;
@@ -74,10 +74,12 @@
             break;
         case 1:
             cell.accountText.tag = 0;
+            cell.accountText.delegate = self;
             [cell.accountText addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
             break;
         case 2:
             cell.passwordText.tag = 1;
+            cell.passwordText.delegate = self;
             [cell.passwordText addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
             break;
         case 3:
@@ -135,6 +137,13 @@
         default:
             break;
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //当用户按下ruturn，把焦点从textField移开那么键盘就会消失了
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)setAliasWithSring:(NSString *)userString {

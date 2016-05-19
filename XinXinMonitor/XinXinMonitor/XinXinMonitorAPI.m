@@ -47,6 +47,12 @@
     return dic;
 }
 
++ (NSMutableDictionary *)MonitorTypes {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setValue:[UserInfoManager sharedManager].departmentId forKey:@"dept_key"];
+    return dic;
+}
+
 + (NSMutableDictionary *)deleteMonitorWithMonitorID:(NSString *)monitorID {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:monitorID forKey:@"pkid"];

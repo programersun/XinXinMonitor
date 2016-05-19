@@ -10,6 +10,8 @@
 #import "MessageViewController.h"
 #import "ImageDetailViewController.h"
 #import "MessageTableViewCell.h"
+#import "MessageBaseClass.h"
+#import "MessageRows.h"
 
 @interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -18,13 +20,14 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 @property (nonatomic, strong) NSMutableArray *messageArray;
+@property (nonatomic, strong) MessageBaseClass *messageBaseClass;
 
 @end
 
 @implementation MessageViewController
 
-- (NSMutableArray *)manageArray {
-    if (_messageArray == nil) {
+- (NSMutableArray *)messageArray {
+    if (!_messageArray) {
         _messageArray = [NSMutableArray array];
     }
     return  _messageArray;
@@ -34,10 +37,10 @@
     [super viewDidLoad];
     
     [self setNavigationTitle:@"我的消息" TextColor:[UIColor whiteColor] Font:nil];
-    _pageNum = 0;
+    _pageNum = 1;
     __weak MessageViewController *weakself = self;
     self.messageTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _pageNum = 0;
+        _pageNum = 1;
         [weakself loadMessageInfo];
     }];
     // Do any additional setup after loading the view.
@@ -63,6 +66,13 @@
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MessageListAPI] params:[XinXinMonitorAPI MessageListWithPage:_pageNum] success:^(id responseObj) {
         
         NSDictionary *dict = responseObj;
+        self.messageBaseClass = [[MessageBaseClass alloc] initWithDictionary:dict];
+        if (_pageNum == 1) {
+            [self.messageArray removeAllObjects];
+        }
+        for (MessageRows *row in self.messageBaseClass.rows) {
+            [self.messageArray addObject:row];
+        }
         
         if (self.messageArray.count > 0) {
             [self hideSVProgressHUD];
@@ -77,9 +87,9 @@
         }
         [self endRefresh];
         [self.messageTableView reloadData];
-//        if (_pageNum == self.monitorListBaseClass.pagenums) {
-//            [self.messageTableView.mj_footer endRefreshingWithNoMoreData];
-//        }
+        if (_pageNum == self.messageBaseClass.pagenums) {
+            [self.messageTableView.mj_footer endRefreshingWithNoMoreData];
+        }
         
     } failure:^(NSError *error) {
         [self endRefresh];
@@ -136,6 +146,8 @@
         cell = [[MessageTableViewCell alloc] init];
     }
     
+    MessageRows *model = self.messageArray[indexPath.row];
+    [cell loadCellWithModel:model];
     return cell;
 }
 
@@ -169,18 +181,18 @@
     }
 }
 
-//- (void)toImageDetailView:(MonitorListRows *)model {
-//
-//    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-//    if (vc == nil) {
-//        vc = [[ImageDetailViewController alloc] init];
-//    }
-//    vc.telephone = model.phone;
-//    vc.address = model.address;
-//    vc.monitorCode = model.code;
-//    [vc setHidesBottomBarWhenPushed:YES];
-//    [self.navigationController pushViewController:vc animated:YES];
-//}
+- (void)toImageDetailView:(MessageRows *)model {
+
+    ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+    if (vc == nil) {
+        vc = [[ImageDetailViewController alloc] init];
+    }
+    vc.monitorCode = model.cameraCode;
+    vc.telephone = model.phone;
+    vc.address = model.address;
+    [vc setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {

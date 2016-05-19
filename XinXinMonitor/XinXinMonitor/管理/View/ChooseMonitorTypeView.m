@@ -31,7 +31,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.MonitorTypeArray.count;
+    if ([self.viewType isEqualToString:@"1"]) {
+        return self.MonitorTypeArray.count;
+    } else {
+        return self.MonitorTypeArray.count + 1;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -44,8 +48,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary *dict = self.MonitorTypeArray[indexPath.row];
-    cell.textLabel.text = [dict objectForKey:@"name"];
+    if ([self.viewType isEqualToString:@"1"]) {
+        NSDictionary *dict = self.MonitorTypeArray[indexPath.row];
+        cell.textLabel.text = [dict objectForKey:@"name"];
+    } else if ([self.viewType isEqualToString:@"2"]){
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"全部";
+        } else {
+            NSDictionary *dict = self.MonitorTypeArray[indexPath.row - 1];
+            cell.textLabel.text = [dict objectForKey:@"name"];
+        }
+    }
+    
     return cell;
 }
 

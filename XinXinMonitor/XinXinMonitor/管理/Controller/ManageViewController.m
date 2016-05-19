@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSMutableArray *manageArray;
 @property (nonatomic, strong) MonitorListBaseClass *monitorListBaseClass;
 @property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
+@property (nonatomic, strong) NSMutableArray *monitorTypeArray;
+@property (nonatomic, strong) NSString *monitorType;
 
 @end
 
@@ -34,6 +36,13 @@
         _manageArray = [NSMutableArray array];
     }
     return  _manageArray;
+}
+
+- (NSMutableArray *)monitorTypeArray {
+    if (!_monitorTypeArray) {
+        _monitorTypeArray = [NSMutableArray array];
+    }
+    return _monitorTypeArray;
 }
 
 - (void)viewDidLoad {
@@ -68,6 +77,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    self.chooseMonitorTypeView.hidden = YES;
     [self endRefresh];
 }
 
@@ -81,11 +91,67 @@
 }
 
 - (void)rightBtnClick:(UIButton *)sender {
-    
+    if (self.chooseMonitorTypeView == nil) {
+        [self createMonitorTypeView];
+    }
+    if (self.monitorTypeArray.count == 0) {
+        [self loadMonitorType];
+    } else {
+        [self showAndHidechooseMonitorTypeView];
+    }
+}
+
+- (void)showAndHidechooseMonitorTypeView {
+    if (self.chooseMonitorTypeView.hidden) {
+        self.chooseMonitorTypeView.hidden = NO;
+    } else {
+        self.chooseMonitorTypeView.hidden = YES;
+    }
 }
 
 - (void)createMonitorTypeView {
-    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(0, 0, 50, 100)];
+    
+    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(kkViewWidth - 110, 3, 100, 40)];
+    self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
+    self.chooseMonitorTypeView.viewType = @"2";
+    __weak ManageViewController *weakself = self;
+    self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
+        if (index == 0) {
+            [weakself setNavigationRightItemWithString:@"全部"];
+            weakself.monitorType = @"";
+        } else {
+            NSDictionary *dict = weakself.monitorTypeArray[index - 1];
+            [weakself setNavigationRightItemWithString:[dict objectForKey:@"name"]];
+            weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
+        }
+        weakself.chooseMonitorTypeView.hidden = YES;
+        [weakself loadMonitorInfo];
+    };
+    self.chooseMonitorTypeView.hidden = YES;
+    [self.view addSubview:self.chooseMonitorTypeView];
+    
+}
+
+#pragma mark - 获取设备类型
+- (void)loadMonitorType {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MyMonitorTypeAPI] params:[XinXinMonitorAPI MonitorTypes] success:^(id responseObj) {
+        [self.monitorTypeArray removeAllObjects];
+        for (NSDictionary *dict in responseObj) {
+            [self.monitorTypeArray addObject:dict];
+        }
+        
+        CGFloat viewHegiht;
+        if ((self.monitorTypeArray.count + 1) * 40 > 200) {
+            viewHegiht = 200;
+        } else {
+            viewHegiht = (self.monitorTypeArray.count + 1) * 40;
+        }
+        self.chooseMonitorTypeView.frame = CGRectMake(kkViewWidth - 110, 3, 100, viewHegiht);
+        [self.chooseMonitorTypeView.chooseMonitorTypeTableView reloadData];
+        [self showAndHidechooseMonitorTypeView];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 #pragma mark - 结束加载
@@ -102,9 +168,9 @@
     if (kkViewHeight > 568) {
         [dic setValue:@"10" forKey:@"rows"];
     }
-//    if (self.searchBar.text.length > 0) {
-//        [dic setValue:self.searchBar.text forKey:@"monitorType"];
-//    }
+    if (![self.monitorType isEqualToString:@""]) {
+        [dic setValue:self.monitorType forKey:@"type"];
+    }
     [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorListAPI] params:[XinXinMonitorAPI monitorListWithDic:dic] success:^(id responseObj) {
         
         NSDictionary *dict = responseObj;

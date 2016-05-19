@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageRows.h"
 
 @interface MessageTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *problemLabel;
-- (void)loadCellWithModel:(id) model;
+- (void)loadCellWithModel:(MessageRows *) model;
 @end

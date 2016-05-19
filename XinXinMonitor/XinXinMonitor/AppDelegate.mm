@@ -213,16 +213,18 @@ BMKMapManager *_mapManager;
     }
     [tabVC setSelectedIndex:2];
     
-//    if ([[self.jpushInfo objectForKey:@"detail"] isEqualToString:@"yes"]) {
-//        UINavigationController *navVC = tabVC.childViewControllers[2];
-//        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-//        if (vc == nil) {
-//            vc = [[ImageDetailViewController alloc] init];
-//        }
-//        vc.monitorId = [self.jpushInfo objectForKey:@"monitorId"];
-//        [vc setHidesBottomBarWhenPushed:YES];
-//        [navVC pushViewController:vc animated:YES];
-//    }
+    if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"2"]) {
+        UINavigationController *navVC = tabVC.childViewControllers[2];
+        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+        if (vc == nil) {
+            vc = [[ImageDetailViewController alloc] init];
+        }
+        vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
+        vc.telephone = [self.jpushInfo objectForKey:@"phone"];
+        vc.address = [self.jpushInfo objectForKey:@"address"];
+        [vc setHidesBottomBarWhenPushed:YES];
+        [navVC pushViewController:vc animated:YES];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

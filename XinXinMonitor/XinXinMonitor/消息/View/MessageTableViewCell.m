@@ -15,8 +15,9 @@
     // Initialization code
 }
 
-- (void)loadCellWithModel:(id)model {
-    
+- (void)loadCellWithModel:(MessageRows *)model {
+    self.timeLabel.text = model.msgTime;
+    self.problemLabel.text = model.content;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -23,21 +23,21 @@
 @implementation ChooseCityViewController
 
 - (NSMutableArray *)cityArray {
-    if (_cityArray == nil) {
+    if (!_cityArray) {
         _cityArray = [NSMutableArray array];
     }
     return _cityArray;
 }
 
 - (NSMutableArray *)indexArray {
-    if (_indexArray == nil) {
+    if (!_indexArray) {
         _indexArray = [NSMutableArray array];
     }
     return _indexArray;
 }
 
 - (NSMutableArray *)letterResultArray {
-    if (_letterResultArray == nil) {
+    if (!_letterResultArray) {
         _letterResultArray = [NSMutableArray array];
     }
     return _letterResultArray;

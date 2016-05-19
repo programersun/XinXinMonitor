@@ -13,7 +13,7 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import "ChooseMonitorTypeView.h"
 
-@interface AddMonitorViewController () <UIAlertViewDelegate,BMKGeoCodeSearchDelegate>
+@interface AddMonitorViewController () <UIAlertViewDelegate,UITextFieldDelegate,BMKGeoCodeSearchDelegate>
 
 @property (nonatomic, strong) BMKGeoCodeSearch *geocodesearch;
 /** 当前地址*/
@@ -124,21 +124,30 @@
 
 #pragma mark - 创建类型选择View
 - (void)createMonitorTypeView {
-    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(self.monitorTypeBtn.frame.origin.x + self.monitorTypeBtn.frame.size.width - 130, self.monitorTypeBtn.frame.origin.y + self.monitorTypeBtn.frame.size.height + 10, 130, 200)];
+    
     if (self.monitorTypeArray.count > 0) {
+        CGFloat viewHegiht;
+        if (self.monitorTypeArray.count * 40 > 200) {
+            viewHegiht = 200;
+        } else {
+            viewHegiht = self.monitorTypeArray.count * 40;
+        }
+        
+        self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(self.monitorTypeBtn.frame.origin.x + self.monitorTypeBtn.frame.size.width - 130, self.monitorTypeBtn.frame.origin.y + self.monitorTypeBtn.frame.size.height + 5, 130, viewHegiht)];
         self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
+        self.chooseMonitorTypeView.viewType = @"1";
+        __weak AddMonitorViewController *weakself = self;
+        self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
+            NSDictionary *dict = weakself.monitorTypeArray[index];
+            weakself.monitorTypeLabel.text = [dict objectForKey:@"name"];
+            weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
+            weakself.chooseMonitorTypeView.hidden = YES;
+            weakself.monitorTypeBtn.selected = NO;
+            [weakself.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+        };
+        self.chooseMonitorTypeView.hidden = YES;
+        [self.view addSubview:self.chooseMonitorTypeView];
     }
-    __weak AddMonitorViewController *weakself = self;
-    self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
-        NSDictionary *dict = weakself.monitorTypeArray[index];
-        weakself.monitorTypeLabel.text = [dict objectForKey:@"name"];
-        weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
-        weakself.chooseMonitorTypeView.hidden = YES;
-        weakself.monitorTypeBtn.selected = NO;
-        [weakself.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
-    };
-    self.chooseMonitorTypeView.hidden = YES;
-    [self.view addSubview:self.chooseMonitorTypeView];
 }
 
 #pragma mark - 获取设备类型
@@ -178,6 +187,13 @@
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
 
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //当用户按下ruturn，把焦点从textField移开那么键盘就会消失了
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - BMKGeoCodeSearchDelegate
