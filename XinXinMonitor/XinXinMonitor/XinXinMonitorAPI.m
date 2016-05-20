@@ -70,8 +70,8 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:monitorCode forKey:@"camera_code"];
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"page"];
-    [dic setValue:startTime forKey:@"start_time"];
-    [dic setValue:endTime forKey:@"end_time"];
+//    [dic setValue:startTime forKey:@"start_time"];
+//    [dic setValue:endTime forKey:@"end_time"];
     return dic;
 }
 

@@ -73,7 +73,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
     self.geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 

@@ -20,7 +20,8 @@
 @implementation TimeView
 
 - (instancetype)init {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TimeView" owner:self options:nil];
         self = [nib objectAtIndex:0];
         self.frame = CGRectMake(0, 0, kkViewWidth, kkViewHeight);
