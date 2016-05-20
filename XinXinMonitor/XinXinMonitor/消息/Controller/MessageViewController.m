@@ -53,6 +53,12 @@
     [self loadMessageInfo];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self hideSVProgressHUD];
+    [self endRefresh];
+}
+
 #pragma mark - 结束加载
 
 - (void)endRefresh {

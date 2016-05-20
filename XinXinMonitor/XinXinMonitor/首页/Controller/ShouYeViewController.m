@@ -220,6 +220,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [_mapView viewWillAppear];
+    self.cityChangeView.hidden = YES;
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
@@ -355,12 +356,29 @@
     [_mapView removeAnnotations:array];
     
     for (int i = 0; i < self.monitorArray.count; i++) {
+        CLLocationCoordinate2D coordinate;
         MonitorListRows *model = self.monitorArray[i];
-        //纬度
-        CLLocationDegrees latitude = model.latitude;
-        //经度
-        CLLocationDegrees longitude = model.longitude;
-        CLLocationCoordinate2D coordinate  = (CLLocationCoordinate2D){latitude, longitude};
+        if (model.latitude != 0 && model.longitude != 0 ) {
+            //纬度
+            CLLocationDegrees latitude = model.latitude;
+            //经度
+            CLLocationDegrees longitude = model.longitude;
+            coordinate  = (CLLocationCoordinate2D){latitude, longitude};
+        } else {
+            __block CLLocationCoordinate2D weakcoordinate = coordinate;
+            [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                if (error == nil && [placemarks count] > 0) {
+                    //取出获取的地理信息数组中的第一个显示在界面上
+                    CLPlacemark *firstPlacemark = [placemarks firstObject];
+                    //纬度
+                    CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
+                    //经度
+                    CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
+                    weakcoordinate  = (CLLocationCoordinate2D){latitude, longitude};
+                }
+            }];
+        }
+        
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
         annotation.coordinate = coordinate;
         annotation.title = model.code;

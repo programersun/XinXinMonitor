@@ -22,7 +22,7 @@
 
 - (void)loadCellWithModel:(id)model {
     
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:@"http://cqtv.sinosns.cn/attachments/2016/01/14524897120bf343acdae699ec.png"]];
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
     self.problemBtnHeight.constant = 44 * KASAdapterSizeHeight;
     self.problemBtn.layer.masksToBounds = YES;
     self.problemBtn.layer.cornerRadius = 44 * KASAdapterSizeHeight / 2;
