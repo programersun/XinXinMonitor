@@ -166,7 +166,7 @@
         } else {
             NSMutableArray *imageArray = [NSMutableArray array];
             for (ImageDetailRows *row in self.imageListArray) {
-                [imageArray addObject:[NSString stringWithFormat:@"%@%@",XinXinMonitorIMGURL,row.url]];
+                [imageArray addObject:[NSString stringWithFormat:@"%@/mobile/camera/picture/icon?pkid=%@",XinXinMonitorURL,row.pkid]];
             }
             
             [self showImage:imageArray];
@@ -194,7 +194,7 @@
             [self.imageListArray removeObjectAtIndex:_deleteIndex];
             NSMutableArray *imageArray = [NSMutableArray array];
             for (ImageDetailRows *row in self.imageListArray) {
-                [imageArray addObject:[NSString stringWithFormat:@"%@%@",XinXinMonitorIMGURL,row.url]];
+                [imageArray addObject:[NSString stringWithFormat:@"%@/mobile/camera/picture/icon?pkid=%@",XinXinMonitorURL,row.pkid]];
             }
             [self showImage:imageArray];
         }

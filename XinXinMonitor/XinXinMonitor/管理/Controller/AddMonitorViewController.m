@@ -233,7 +233,6 @@
 
 - (void)geocode {
     BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
-//    geocodeSearchOption.city= _cityText.text;
     geocodeSearchOption.address = self.myAddressTextField.text;
     BOOL flag = [_geocodesearch geoCode:geocodeSearchOption];
     if(flag)

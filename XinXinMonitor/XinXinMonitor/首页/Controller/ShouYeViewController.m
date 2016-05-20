@@ -355,18 +355,26 @@
     NSArray *array = [NSArray arrayWithArray:_mapView.annotations];
     [_mapView removeAnnotations:array];
     
-    for (int i = 0; i < self.monitorArray.count; i++) {
-        CLLocationCoordinate2D coordinate;
+    int i;
+    for (i = 0; i < self.monitorArray.count; i++) {
+        
         MonitorListRows *model = self.monitorArray[i];
         if (model.latitude != 0 && model.longitude != 0 ) {
+            CLLocationCoordinate2D coordinate;
             //纬度
             CLLocationDegrees latitude = model.latitude;
             //经度
             CLLocationDegrees longitude = model.longitude;
             coordinate  = (CLLocationCoordinate2D){latitude, longitude};
+            BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
+            annotation.coordinate = coordinate;
+            annotation.title = model.code;
+            annotation.subtitle = model.address;
+            _index = i;
+            [_mapView addAnnotation:annotation];
         } else {
-            __block CLLocationCoordinate2D weakcoordinate = coordinate;
-            [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
+            [currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                 if (error == nil && [placemarks count] > 0) {
                     //取出获取的地理信息数组中的第一个显示在界面上
                     CLPlacemark *firstPlacemark = [placemarks firstObject];
@@ -374,17 +382,25 @@
                     CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
                     //经度
                     CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
-                    weakcoordinate  = (CLLocationCoordinate2D){latitude, longitude};
+                    CLLocationCoordinate2D coordinate;
+                    CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+                    CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
+                    CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+                    
+                    coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
+                    BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
+                    annotation.coordinate = coordinate;
+                    annotation.title = model.code;
+                    annotation.subtitle = model.address;
+                    _index = i;
+                    [_mapView addAnnotation:annotation];
+                } else {
+                    NSLog(@"aaaaaaaaa");
                 }
             }];
         }
-        
-        BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
-        annotation.coordinate = coordinate;
-        annotation.title = model.code;
-        _index = i;
-        [_mapView addAnnotation:annotation];
     }
+    NSLog(@"aaaaaaaaa");
 }
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation {
@@ -490,8 +506,8 @@
     if ([myChooseDistrict isEqualToString:@"全城"]) {
         addressString = myChooseCity;
     }
-    
-    [[LocationManager sharedManager].currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
+    [currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error == nil && [placemarks count] > 0) {
             //取出获取的地理信息数组中的第一个显示在界面上
             CLPlacemark *firstPlacemark = [placemarks firstObject];
@@ -500,8 +516,15 @@
             //经度
             CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
 
-            _center.latitude = latitude;
-            _center.longitude = longitude;
+            CLLocationCoordinate2D coordinate;
+            CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+            CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
+            CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+            
+            coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
+            
+            _center.latitude = coordinate.latitude;
+            _center.longitude = coordinate.longitude;
             
             BMKCoordinateSpan span;
             if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *code;
 @property (nonatomic, assign) double createTime;
 @property (nonatomic, strong) NSString *pkid;
+@property (nonatomic, strong) NSString *picturePkid;
 @property (nonatomic, strong) NSString *starttime;
 @property (nonatomic, strong) NSString *lastupdateUsername;
 @property (nonatomic, strong) NSString *endtime;
