@@ -114,9 +114,10 @@
         [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageArray[i]]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             num ++;
             if (num >= imageArray.count) {
-                [self initData];
+               [self initData];
             }
         }];
+        
     }
 }
 
@@ -126,11 +127,11 @@
     _horizontalBigRectArray = [[NSMutableArray alloc]init];
     for (SRBrowseModel *browseItem in _browseItemArray)
     {
-        CGRect verticalRect = [browseItem.smallImageView.image mss_getBigImageRectSizeWithScreenWidth:kkViewWidth screenHeight:kkViewHeight];
+        CGRect verticalRect = [browseItem.smallImageView.image mss_getBigImageRectSizeWithScreenWidth:kkViewWidth screenHeight:kkViewHeight - 64];
         NSValue *verticalValue = [NSValue valueWithCGRect:verticalRect];
         [_verticalBigRectArray addObject:verticalValue];
         
-        CGRect horizontalRect = [browseItem.smallImageView.image mss_getBigImageRectSizeWithScreenWidth:kkViewHeight screenHeight:kkViewWidth];
+        CGRect horizontalRect = [browseItem.smallImageView.image mss_getBigImageRectSizeWithScreenWidth:kkViewHeight - 64 screenHeight:kkViewWidth];
         NSValue *horizontalValue = [NSValue valueWithCGRect:horizontalRect];
         [_horizontalBigRectArray addObject:horizontalValue];
     }
@@ -371,10 +372,10 @@
         
         SRBrowseModel *browseItem = [_browseItemArray objectAtIndex:indexPath.row];
         // 还原初始缩放比例
-        cell.zoomScrollView.frame = CGRectMake(0, 0, kkViewWidth, kkViewHeight);
+        cell.zoomScrollView.frame = CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64);
         cell.zoomScrollView.zoomScale = 1.0f;
         // 将scrollview的contentSize还原成缩放前
-        cell.zoomScrollView.contentSize = CGSizeMake(kkViewWidth, kkViewHeight);
+        cell.zoomScrollView.contentSize = CGSizeMake(kkViewWidth, kkViewHeight - 64);
         cell.zoomScrollView.zoomImageView.contentMode = browseItem.smallImageView.contentMode;
         cell.zoomScrollView.zoomImageView.clipsToBounds = browseItem.smallImageView.clipsToBounds;
         [cell.loadingView mss_setFrameInSuperViewCenterWithSize:CGSizeMake(30, 30)];
@@ -476,7 +477,8 @@
         [self loadImageList];
     }
     if (scollX > scrollView.contentSize.width + 50 - kkViewWidth && !_isRefresh ) {
-        
+//    if (scollX > kkViewWidth * (self.imageListArray.count - 1) + 50 && !_isRefresh ) {
+    
         if ( _pageNum < _pageTotal) {
             _isRefresh = YES;
             _pageNum ++;

@@ -12,6 +12,7 @@
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import "ChooseMonitorTypeView.h"
+#import "TimePickerView.h"
 
 @interface AddMonitorViewController () <UIAlertViewDelegate,UITextFieldDelegate,BMKGeoCodeSearchDelegate>
 
@@ -30,6 +31,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *timeTextField;
 @property (weak, nonatomic) IBOutlet UILabel *monitorTypeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *monitorTypeBtn;
+@property (weak, nonatomic) IBOutlet UITextField *strikeTimeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *startTimeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *endTimeBtn;
+
 
 @property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
 @property (nonatomic, strong) NSMutableArray *monitorTypeArray;
@@ -96,7 +101,9 @@
         [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
     } else if ([self.monitorType isEqualToString:@""]){
         [self showMessageWithString:@"请选择设备类型" showTime:1.0];
-    } else {
+    } else if ([self.strikeTimeTextField.text isEqualToString:@""]){
+        [self showMessageWithString:@"请输入判断设备离线的时间" showTime:1.0];
+    } else{
         //提交
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
@@ -107,6 +114,20 @@
             [self geocode];
         }
     }
+}
+
+- (IBAction)workTimeBtnClcik:(UIButton *)sender {
+    TimePickerView *picker = [[TimePickerView alloc] init];
+    __block TimePickerView *weakpicker = picker;
+    picker.pickerBtnClickBlock = ^{
+        
+        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"HH:mm"];
+        NSString *timeString = [dateformatter stringFromDate:weakpicker.datePicker.date];
+        [sender setTitle:timeString forState:UIControlStateNormal];
+        [weakpicker removeFromSuperview];
+    };
+    [self.view addSubview:picker];
 }
 
 - (IBAction)monitorBtnClick:(UIButton *)sender {
@@ -168,7 +189,7 @@
     if ([time isEqualToString:@""]) {
         time = @"30";
     }
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;

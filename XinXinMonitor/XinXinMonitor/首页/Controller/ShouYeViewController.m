@@ -400,7 +400,6 @@
             }];
         }
     }
-    NSLog(@"aaaaaaaaa");
 }
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation {

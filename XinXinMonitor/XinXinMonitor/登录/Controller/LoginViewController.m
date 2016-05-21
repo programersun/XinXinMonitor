@@ -147,7 +147,8 @@
 }
 
 - (void)setAliasWithSring:(NSString *)userString {
-  [JPUSHService setAlias:userString callbackSelector:nil object:nil];
+    userString = [userString stringByReplacingOccurrencesOfString:@"." withString:@""];
+    [JPUSHService setAlias:[userString stringByReplacingOccurrencesOfString:@" " withString:@""] callbackSelector:nil object:nil];
 }
 
 /*

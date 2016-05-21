@@ -12,13 +12,9 @@
 
 /** APIURL*/
 //#define XinXinMonitorURL @"http://202.194.7.21:9097/dc_ms_mobile" //测试
-/** IMGURL*/
-//#define XinXinMonitorIMGURL @"http://202.194.7.21:9097"
 
 /** APIURL*/
 #define XinXinMonitorURL @"http://60.216.117.170:90/dc_ms_mobile" //正式
-/** IMGURL*/
-#define XinXinMonitorIMGURL @"http://60.216.117.170:90"
 
 /** 登录*/
 #define LoginAPI @"/mobile/personal/checkLogin"
@@ -91,10 +87,13 @@
  *  @param customerKey    所属客户账号
  *  @param customerKey    所属类型
  *  @param customerKey    拍摄间隔
+ *  @param strikeTime     离线判断时间
+ *  @param startTime      开始工作时间
+ *  @param endTime        结束工作时间
  *
  *  @return 设备添加字典
  */
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time;
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 /**
  *  根据部门编号获取设备类型
@@ -125,6 +124,8 @@
  *
  *  @param monitorCode 设备编号
  *  @param page        页码
+ *  @param startTime   开始时间
+ *  @param endTime     结束时间
  *
  *  @return 图片列表字典
  */

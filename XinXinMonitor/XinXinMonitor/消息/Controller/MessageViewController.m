@@ -12,6 +12,7 @@
 #import "MessageTableViewCell.h"
 #import "MessageBaseClass.h"
 #import "MessageRows.h"
+#import "ProblemImageViewController.h"
 
 @interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -171,7 +172,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MessageRows *model = self.messageArray[indexPath.row];
     [self readMessageWithPkid:model.pkid index:indexPath.row];
-    if (model.type != 0) {
+    if (model.type == 0) {
+        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
+    } else if (model.type == 1) {
+        ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
+        vc.pkid = model.picturePkid;
+        vc.telephone = model.phone;
+        vc.address = model.address;
+        vc.timeString = model.pictureDateF;
+        [vc setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (model.type == 2) {
         [self toImageDetailView:model];
     }
 }

@@ -79,7 +79,7 @@ BMKMapManager *_mapManager;
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDisk];
     //赶紧停止正在进行的图片下载操作
-    [[SDWebImageManager sharedManager] cancelAll];
+//    [[SDWebImageManager sharedManager] cancelAll];
 }
 
 
@@ -181,7 +181,9 @@ BMKMapManager *_mapManager;
     if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
         [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
     }else {
-        [JPUSHService setAlias:[UserInfoManager sharedManager].userID callbackSelector:nil object:nil];
+        NSString *alias = [UserInfoManager sharedManager].userID;
+        alias = [alias stringByReplacingOccurrencesOfString:@"." withString:@""];
+        [JPUSHService setAlias:[alias stringByReplacingOccurrencesOfString:@" " withString:@""] callbackSelector:nil object:nil];
     }
 }
 

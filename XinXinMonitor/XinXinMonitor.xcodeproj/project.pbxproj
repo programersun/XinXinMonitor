@@ -31,6 +31,9 @@
 		A456B2431CDF916C00F7FC1A /* TimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A456B2411CDF916C00F7FC1A /* TimeView.xib */; };
 		A456B2461CE1B33800F7FC1A /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2451CE1B33800F7FC1A /* ChangePasswordViewController.m */; };
 		A456B2491CE1B48A00F7FC1A /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A456B2481CE1B48A00F7FC1A /* AboutUsViewController.m */; };
+		A45A9BF91CF0139900789B47 /* TimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A45A9BF81CF0139900789B47 /* TimePickerView.m */; };
+		A45A9BFB1CF013B200789B47 /* TimePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45A9BFA1CF013B200789B47 /* TimePickerView.xib */; };
+		A45A9BFE1CF0567000789B47 /* ProblemImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A45A9BFD1CF0567000789B47 /* ProblemImageViewController.m */; };
 		A49A27521CC5C7A400ED5A61 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */; };
 		A49A27541CC5C7AB00ED5A61 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */; };
 		A49A27561CC5C7B400ED5A61 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */; };
@@ -188,6 +191,11 @@
 		A456B2451CE1B33800F7FC1A /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
 		A456B2471CE1B48A00F7FC1A /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
 		A456B2481CE1B48A00F7FC1A /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		A45A9BF71CF0139900789B47 /* TimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePickerView.h; sourceTree = "<group>"; };
+		A45A9BF81CF0139900789B47 /* TimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePickerView.m; sourceTree = "<group>"; };
+		A45A9BFA1CF013B200789B47 /* TimePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePickerView.xib; sourceTree = "<group>"; };
+		A45A9BFC1CF0567000789B47 /* ProblemImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProblemImageViewController.h; sourceTree = "<group>"; };
+		A45A9BFD1CF0567000789B47 /* ProblemImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProblemImageViewController.m; sourceTree = "<group>"; };
 		A49A27511CC5C7A400ED5A61 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A49A27531CC5C7AB00ED5A61 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -595,6 +603,9 @@
 				A4CA37511CEB689B009A51FB /* ChooseMonitorTypeView.h */,
 				A4CA37521CEB689B009A51FB /* ChooseMonitorTypeView.m */,
 				A4CA37541CEB68AC009A51FB /* ChooseMonitorTypeView.xib */,
+				A45A9BF71CF0139900789B47 /* TimePickerView.h */,
+				A45A9BF81CF0139900789B47 /* TimePickerView.m */,
+				A45A9BFA1CF013B200789B47 /* TimePickerView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -717,6 +728,8 @@
 			children = (
 				A4D335AC1CBFE15D00023D5C /* MessageViewController.h */,
 				A4D335AD1CBFE15D00023D5C /* MessageViewController.m */,
+				A45A9BFC1CF0567000789B47 /* ProblemImageViewController.h */,
+				A45A9BFD1CF0567000789B47 /* ProblemImageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1076,6 +1089,7 @@
 				A43A01F91CCC73F700940950 /* mss_browseLoading@2x.png in Resources */,
 				A4D3361C1CBFE2A400023D5C /* MBProgressHUD.bundle in Resources */,
 				A4D335841CBFDFEE00023D5C /* Main.storyboard in Resources */,
+				A45A9BFB1CF013B200789B47 /* TimePickerView.xib in Resources */,
 				A4D335B71CBFE15D00023D5C /* ShouYeStoryboard.storyboard in Resources */,
 				A49A27661CC5CA0100ED5A61 /* mapapi.bundle in Resources */,
 				A4CA37551CEB68AC009A51FB /* ChooseMonitorTypeView.xib in Resources */,
@@ -1135,6 +1149,7 @@
 				A43A01E11CCB148100940950 /* SettingTableViewCell.m in Sources */,
 				A4D335D01CBFE1D200023D5C /* DateEditor.m in Sources */,
 				A4F9741F1CE5BBA700623D79 /* MJRefreshStateHeader.m in Sources */,
+				A45A9BF91CF0139900789B47 /* TimePickerView.m in Sources */,
 				A4F974181CE5BBA700623D79 /* MJRefreshAutoNormalFooter.m in Sources */,
 				A4D3362B1CBFE2A400023D5C /* UIImageView+HighlightedWebCache.m in Sources */,
 				A43A01FD1CCC742300940950 /* SRBrowseLoadingView.m in Sources */,
@@ -1148,6 +1163,7 @@
 				A4F9743E1CE8B5D000623D79 /* MonitorListBaseClass.m in Sources */,
 				A4D3357B1CBFDFEE00023D5C /* main.m in Sources */,
 				A4F974231CE5BBA700623D79 /* UIScrollView+MJRefresh.m in Sources */,
+				A45A9BFE1CF0567000789B47 /* ProblemImageViewController.m in Sources */,
 				A4D335CF1CBFE1D200023D5C /* ColorRequest.m in Sources */,
 				A49A276F1CC6110400ED5A61 /* LoginViewController.m in Sources */,
 				A456B2341CDF73BE00F7FC1A /* AddMonitorViewController.m in Sources */,
@@ -1302,6 +1318,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1320,6 +1337,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxinMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1330,6 +1348,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1348,6 +1367,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sun.xinxinMonitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

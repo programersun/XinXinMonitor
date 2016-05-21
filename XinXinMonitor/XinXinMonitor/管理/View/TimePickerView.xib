@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="lQ0-5R-wMu" customClass="TimePickerView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhM-GH-DcF">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jrA-xp-KVr">
+                    <rect key="frame" x="0.0" y="388" width="320" height="180"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgh-rG-v8f">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
+                            <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="29" id="NP6-ME-hN6"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvA-bu-Apu">
+                            <rect key="frame" x="280" y="0.0" width="30" height="30"/>
+                            <state key="normal" title="确定"/>
+                            <connections>
+                                <action selector="pickerBtnClick:" destination="lQ0-5R-wMu" eventType="touchUpInside" id="YSU-Y6-Lqs"/>
+                            </connections>
+                        </button>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qWG-jH-fqX">
+                            <rect key="frame" x="0.0" y="29" width="320" height="151"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <date key="date" timeIntervalSinceReferenceDate="484413179.49986303">
+                                <!--2016-05-08 15:12:59 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="qWG-jH-fqX" secondAttribute="trailing" id="4Jt-O4-SKk"/>
+                        <constraint firstAttribute="height" constant="180" id="9KM-Sz-0Gs"/>
+                        <constraint firstAttribute="bottom" secondItem="qWG-jH-fqX" secondAttribute="bottom" id="9mi-ZQ-FGw"/>
+                        <constraint firstItem="wgh-rG-v8f" firstAttribute="top" secondItem="jrA-xp-KVr" secondAttribute="top" id="Als-uT-Fe0"/>
+                        <constraint firstItem="wgh-rG-v8f" firstAttribute="leading" secondItem="jrA-xp-KVr" secondAttribute="leading" id="CXT-Sd-FZm"/>
+                        <constraint firstItem="qWG-jH-fqX" firstAttribute="top" secondItem="wgh-rG-v8f" secondAttribute="bottom" id="TMg-KI-cGQ"/>
+                        <constraint firstItem="EvA-bu-Apu" firstAttribute="top" secondItem="jrA-xp-KVr" secondAttribute="top" id="b76-co-Alq"/>
+                        <constraint firstItem="qWG-jH-fqX" firstAttribute="leading" secondItem="jrA-xp-KVr" secondAttribute="leading" id="bUd-Va-HUD"/>
+                        <constraint firstAttribute="trailing" secondItem="wgh-rG-v8f" secondAttribute="trailing" id="i8k-EV-0EZ"/>
+                        <constraint firstAttribute="trailing" secondItem="EvA-bu-Apu" secondAttribute="trailing" constant="10" id="toN-hj-oPp"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mhM-GH-DcF" secondAttribute="bottom" id="0PJ-cu-FFT"/>
+                <constraint firstAttribute="trailing" secondItem="jrA-xp-KVr" secondAttribute="trailing" id="9Sz-W1-2zl"/>
+                <constraint firstAttribute="bottom" secondItem="jrA-xp-KVr" secondAttribute="bottom" id="Jvs-iP-GFx"/>
+                <constraint firstItem="mhM-GH-DcF" firstAttribute="top" secondItem="lQ0-5R-wMu" secondAttribute="top" id="LEm-xV-BiP"/>
+                <constraint firstItem="mhM-GH-DcF" firstAttribute="leading" secondItem="lQ0-5R-wMu" secondAttribute="leading" id="Pk9-G6-hJH"/>
+                <constraint firstAttribute="trailing" secondItem="mhM-GH-DcF" secondAttribute="trailing" id="c7B-Zh-PXx"/>
+                <constraint firstItem="jrA-xp-KVr" firstAttribute="leading" secondItem="lQ0-5R-wMu" secondAttribute="leading" id="wAo-ol-mtL"/>
+            </constraints>
+            <connections>
+                <outlet property="backgroundView" destination="mhM-GH-DcF" id="vrB-1T-Kba"/>
+                <outlet property="datePicker" destination="qWG-jH-fqX" id="tBc-zk-bx5"/>
+                <outlet property="pickerView" destination="jrA-xp-KVr" id="zd1-5Z-zXv"/>
+            </connections>
+            <point key="canvasLocation" x="264" y="171"/>
+        </view>
+    </objects>
+</document>
