@@ -288,7 +288,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Var-tg-W6v">
                                 <rect key="frame" x="200" y="319" width="100" height="30"/>
-                                <state key="normal" title="18:00">
+                                <state key="normal" title="20:00">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

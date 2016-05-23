@@ -737,10 +737,10 @@
 		A4D335AF1CBFE15D00023D5C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A4B28E981CEE0CA400C19227 /* MessageRows.m */,
 				A4B28E991CEE0CA400C19227 /* MessageBaseClass.h */,
 				A4B28E9A1CEE0CA400C19227 /* MessageBaseClass.m */,
 				A4B28E9B1CEE0CA400C19227 /* MessageRows.h */,
+				A4B28E981CEE0CA400C19227 /* MessageRows.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";

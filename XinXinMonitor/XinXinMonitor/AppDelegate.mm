@@ -91,8 +91,8 @@ BMKMapManager *_mapManager;
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [JPUSHService setBadge:0];
-    [application setApplicationIconBadgeNumber:0];
+//    [JPUSHService setBadge:0];
+//    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -193,15 +193,20 @@ BMKMapManager *_mapManager;
 
     self.jpushInfo = userInfo;
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-    if (application.applicationState == UIApplicationStateActive) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                            message:alert
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"确定",nil];
-        [alertView show];
+    
+    if (![[UserInfoManager sharedManager].userID isEqualToString:@""]) {
+        if (application.applicationState == UIApplicationStateActive) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:alert
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"确定",nil];
+            [alertView show];
+        } else {
+            [self pushImageDetailViewController];
+        }
     } else {
-        [self pushImageDetailViewController];
+        
     }
 }
 
@@ -209,6 +214,7 @@ BMKMapManager *_mapManager;
  *  收到消息推送后跳转详情页面
  */
 - (void)pushImageDetailViewController {
+    
     MainTabBarViewController *tabVC = (MainTabBarViewController *)self.window.rootViewController;
     for (UINavigationController *nav in tabVC.childViewControllers) {
         [nav popToRootViewControllerAnimated:NO];
