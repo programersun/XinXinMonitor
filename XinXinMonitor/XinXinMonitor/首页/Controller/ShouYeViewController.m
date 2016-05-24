@@ -342,6 +342,7 @@
         [[LocationManager sharedManager] saveCityWithString:chooseCityString];
         [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
         [self animationToMyChooseLocation];
+        _pageNum = 1;
         [self loadMonitorInfo];
     };
     [self presentViewController:vc animated:YES completion:^{
