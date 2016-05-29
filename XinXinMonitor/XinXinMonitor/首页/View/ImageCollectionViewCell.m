@@ -12,7 +12,9 @@
 
 - (void)loadCellWithModel:(MonitorListRows *)model {
 #warning 默认图片未设置
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/mobile/camera/picture/icon?pkid=%@",XinXinMonitorURL,model.picturePkid]] placeholderImage:nil];
+    NSInteger width = self.cellImageView.frame.size.width;
+    NSInteger height = self.cellImageView.frame.size.height;
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/mobile/camera/picture/icon?pkid=%@&width=%ld&height=%ld",XinXinMonitorURL,model.picturePkid,(long)width,(long)height]] placeholderImage:nil];
     self.cellTitle.text = model.code;
 }
 

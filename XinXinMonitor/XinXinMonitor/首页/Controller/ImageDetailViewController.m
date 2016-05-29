@@ -97,6 +97,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideSVProgressHUD];
+}
+
 #pragma mark - 加载图片
 - (void)showImage:(NSArray *)imageArray {
     
