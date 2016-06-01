@@ -173,7 +173,8 @@
     MessageRows *model = self.messageArray[indexPath.row];
     [self readMessageWithPkid:model.pkid index:indexPath.row];
     if (model.type == 0) {
-        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
+//        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
+        [self toImageDetailView:model];
     } else if (model.type == 1) {
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
         vc.pkid = model.picturePkid;
@@ -209,13 +210,23 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    if (model.type == 1) {
-        vc.problemPictureId = model.picturePkid;
-        vc.timeString = model.pictureDateF;
-    }else {
-        vc.problemPictureId = @"";
-        vc.timeString = @"";
-    }
+//    if (model.type == 0) {
+//        NSTimeInterval time = (model.sendtime + 28800)/1000;
+//        NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"YYYY-MM-dd"];
+//        vc.timeString = [formatter stringFromDate:date];
+//        vc.problemPictureId = @"";
+//    }else {
+//        vc.problemPictureId = @"";
+//        vc.timeString = @"";
+//    }
+    NSTimeInterval time = (model.sendtime + 28800)/1000;
+    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    vc.timeString = [formatter stringFromDate:date];
+    vc.problemPictureId = @"";
     
     vc.monitorCode = model.cameraCode;
     vc.telephone = model.phone;

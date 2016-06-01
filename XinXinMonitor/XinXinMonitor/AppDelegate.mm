@@ -12,6 +12,7 @@
 #import "MainTabBarViewController.h"
 #import "LoginViewController.h"
 #import "ImageDetailViewController.h"
+#import "ProblemImageViewController.h"
 
 #define JPushKey @"88ab9b2429bf675c76b3769e"
 #define BaiDuKey @"rZzjh5uvuHku5GcmoQrriEjOeYRr4Qu7"
@@ -220,9 +221,31 @@ BMKMapManager *_mapManager;
         [nav popToRootViewControllerAnimated:NO];
     }
     [tabVC setSelectedIndex:2];
-    
+    UINavigationController *navVC = tabVC.childViewControllers[2];
     if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"2"]) {
-        UINavigationController *navVC = tabVC.childViewControllers[2];
+        //拍照完成
+        
+        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
+        if (vc == nil) {
+            vc = [[ImageDetailViewController alloc] init];
+        }
+        vc.timeString = @"";
+        vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
+        vc.telephone = [self.jpushInfo objectForKey:@"phone"];
+        vc.address = [self.jpushInfo objectForKey:@"address"];
+        [vc setHidesBottomBarWhenPushed:YES];
+        [navVC pushViewController:vc animated:YES];
+    } else if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"1"]) {
+        //问题设备
+        ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
+//        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
+        vc.telephone = [self.jpushInfo objectForKey:@"phone"];
+        vc.address = [self.jpushInfo objectForKey:@"address"];
+//        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
+        [vc setHidesBottomBarWhenPushed:YES];
+        [navVC pushViewController:vc animated:YES];
+    } else if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"0"]) {
+        //设备离线
         ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
         if (vc == nil) {
             vc = [[ImageDetailViewController alloc] init];

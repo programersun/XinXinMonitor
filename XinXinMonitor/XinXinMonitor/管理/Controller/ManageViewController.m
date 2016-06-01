@@ -330,7 +330,11 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    vc.timeString = @"";
+    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
+    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    vc.timeString = [formatter stringFromDate:date];
     vc.problemPictureId = @"";
     vc.telephone = model.phone;
     vc.address = model.address;

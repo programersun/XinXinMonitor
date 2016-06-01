@@ -374,6 +374,38 @@
             _index = i;
             [_mapView addAnnotation:annotation];
         } else {
+            
+//            dispatch_queue_t queue = dispatch_queue_create("location", nil);
+//            dispatch_sync(queue , ^{
+//                CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
+//                [currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+//                    if (error == nil && [placemarks count] > 0) {
+//                        //取出获取的地理信息数组中的第一个显示在界面上
+//                        CLPlacemark *firstPlacemark = [placemarks firstObject];
+//                        //纬度
+//                        CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
+//                        //经度
+//                        CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
+//                        CLLocationCoordinate2D coordinate;
+//                        CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+//                        CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
+//                        CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+//                        
+//                        coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
+//                            annotation.coordinate = coordinate;
+//                            annotation.title = model.code;
+//                            annotation.subtitle = model.address;
+//                            _index = i;
+//                            [_mapView addAnnotation:annotation];
+//                        });
+//                    } else {
+//                        NSLog(@"aaaaaaaaa");
+//                    }
+//                }];
+//            });
+            
             CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
             [currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                 if (error == nil && [placemarks count] > 0) {
@@ -613,7 +645,12 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    vc.timeString = @"";
+    
+    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
+    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
+    vc.timeString = [formatter stringFromDate:date];
     vc.problemPictureId = @"";
     vc.telephone = model.phone;
     vc.address = model.address;
