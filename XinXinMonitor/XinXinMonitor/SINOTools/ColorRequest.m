@@ -34,7 +34,7 @@
 }
 
 + (UIColor *) BackGroundColor {
-    return [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1];
+    return [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1];
 }
 
 + (UIColor *) grayColor {

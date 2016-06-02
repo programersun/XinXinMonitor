@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XinXinMonitor/XinXinMonitorAPI.m"
-            timestampString = "485505280.126892"
+            timestampString = "486577694.892105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "+deleteMessageWithPkid:"
             landmarkType = "5">
          </BreakpointContent>

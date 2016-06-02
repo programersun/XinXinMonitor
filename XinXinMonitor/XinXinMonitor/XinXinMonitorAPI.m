@@ -93,6 +93,9 @@
 
 + (NSMutableDictionary *)MessageListWithPage:(NSInteger )page {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (kkViewHeight > 568) {
+        [dic setValue:@"10" forKey:@"rows"];
+    }
     [dic setObject:[UserInfoManager sharedManager].userID forKey:@"user_key"];
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"page"];
     return dic;

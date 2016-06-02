@@ -144,7 +144,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 67;
+    MessageRows *model = self.messageArray[indexPath.row];
+    CGFloat messageHeight = [PublicUtil heightWithString:model.content font:[UIFont systemFontOfSize:15] width:kkViewWidth - 40];
+    return 50 + messageHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
