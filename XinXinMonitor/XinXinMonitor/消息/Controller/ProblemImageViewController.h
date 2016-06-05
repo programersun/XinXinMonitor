@@ -14,4 +14,5 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *monitorCode;
 @property (nonatomic, strong) NSString *timeString;         /**< 时间*/
+@property (nonatomic, assign) NSInteger enterType;  //1.问题图片. 2拍摄成功
 @end

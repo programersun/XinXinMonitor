@@ -225,23 +225,24 @@ BMKMapManager *_mapManager;
     if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"2"]) {
         //拍照完成
         
-        ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
-        if (vc == nil) {
-            vc = [[ImageDetailViewController alloc] init];
-        }
-        vc.timeString = @"";
-        vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
+        ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
+        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];
+        vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
+        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
+        vc.enterType = 2;
         [vc setHidesBottomBarWhenPushed:YES];
         [navVC pushViewController:vc animated:YES];
     } else if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"1"]) {
         //问题设备
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
-//        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
+        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];
-//        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
+        vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
+        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
+        vc.enterType = 1;
         [vc setHidesBottomBarWhenPushed:YES];
         [navVC pushViewController:vc animated:YES];
     } else if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"0"]) {
@@ -250,7 +251,7 @@ BMKMapManager *_mapManager;
         if (vc == nil) {
             vc = [[ImageDetailViewController alloc] init];
         }
-        vc.timeString = @"";
+        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
         vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];

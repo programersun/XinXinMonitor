@@ -182,11 +182,22 @@
         vc.pkid = model.picturePkid;
         vc.telephone = model.phone;
         vc.address = model.address;
+        vc.monitorCode = model.cameraCode;
         vc.timeString = model.pictureDateF;
+        vc.enterType = 1;
         [vc setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:vc animated:YES];
     } else if (model.type == 2) {
-        [self toImageDetailView:model];
+//        [self toImageDetailView:model];
+        ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
+        vc.pkid = model.picturePkid;
+        vc.telephone = model.phone;
+        vc.address = model.address;
+        vc.monitorCode = model.cameraCode;
+        vc.timeString = model.pictureDateF;
+        vc.enterType = 2;
+        [vc setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

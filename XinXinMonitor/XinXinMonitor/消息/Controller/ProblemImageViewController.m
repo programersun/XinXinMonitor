@@ -19,8 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrows_left"] highlightedImg:[UIImage imageNamed:@"arrows_left"]];
-    [self setNavigationRightItemWithString:@"取消警报"];
-   self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64)];
+    if (self.enterType == 1) {
+        [self setNavigationRightItemWithString:@"取消警报"];
+    }
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64)];
     self.mainScrollView.minimumZoomScale = 1.0f;
     self.mainScrollView.maximumZoomScale = 3.0f;
     self.mainScrollView.showsHorizontalScrollIndicator = NO;
@@ -32,7 +34,6 @@
     self.image = [[UIImageView alloc] init];
     self.image.userInteractionEnabled = YES;
     [self.mainScrollView addSubview:self.image];
-//    [self.image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://60.216.117.170:90/dc_ms_mobile/mobile/camera/picture/icon?pkid=e69832e5-6fb0-45af-a81d-25765202b28d"]] placeholderImage:nil
     [self.image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/mobile/camera/picture/icon?pkid=%@",XinXinMonitorURL,self.pkid]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         NSLog(@"%@",self.image.image.description);
         if (self.image.image) {
