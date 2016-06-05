@@ -626,7 +626,7 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((kkViewWidth - 30)/2, 150 * KASAdapterSizeHeight);
+    return CGSizeMake((kkViewWidth - 30)/2, 150 * KASAdapterSizeWidth);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
@@ -655,6 +655,7 @@
     vc.telephone = model.phone;
     vc.address = model.address;
     vc.monitorCode = model.code;
+    vc.enterType = 1;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.view endEditing:YES];
     [self.navigationController pushViewController:vc animated:YES];

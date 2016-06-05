@@ -162,9 +162,13 @@ BMKMapManager *_mapManager;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     
-    [self parsePushDictionary:userInfo application:application];
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
+    if ([[userInfo objectForKey:@"type"] isEqualToString:@"3"]) {
+        [self logOutBtnClick];
+    } else {
+        [self parsePushDictionary:userInfo application:application];
+    }
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -176,6 +180,18 @@ BMKMapManager *_mapManager;
     // Optional
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
+
+#pragma mark - 退出
+- (void)logOutBtnClick {
+    
+    [[UserInfoManager sharedManager] clearUserInfo];
+    LoginViewController *vc = [[UIStoryboard storyboardWithName:@"LoginViewStoryboard" bundle:nil] instantiateInitialViewController];
+    if (vc == nil) {
+        vc = [[LoginViewController alloc] init];
+    }
+    [[UIApplication sharedApplication].delegate window].rootViewController = vc;
+}
+
 
 - (void)setAlias {
 
@@ -251,10 +267,11 @@ BMKMapManager *_mapManager;
         if (vc == nil) {
             vc = [[ImageDetailViewController alloc] init];
         }
-        vc.timeString = [self.jpushInfo objectForKey:@"pictureDateF"];
+        vc.timeString = [self.jpushInfo objectForKey:@"offlineTime"];
         vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];
+        vc.enterType = 0;
         [vc setHidesBottomBarWhenPushed:YES];
         [navVC pushViewController:vc animated:YES];
     }

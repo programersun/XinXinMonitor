@@ -234,16 +234,17 @@
 //        vc.problemPictureId = @"";
 //        vc.timeString = @"";
 //    }
-    NSTimeInterval time = (model.sendtime + 28800)/1000;
-    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    vc.timeString = [formatter stringFromDate:date];
+//    NSTimeInterval time = (model.sendtime + 28800)/1000;
+//    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"YYYY-MM-dd"];
+//    vc.timeString = [formatter stringFromDate:date];
+    vc.timeString = [NSString stringWithFormat:@"%f",model.sendtime];
     vc.problemPictureId = @"";
-    
     vc.monitorCode = model.cameraCode;
     vc.telephone = model.phone;
     vc.address = model.address;
+    vc.enterType = 0;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }

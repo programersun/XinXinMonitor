@@ -154,7 +154,15 @@
 
 #pragma mark - 获取图片列表
 - (void)loadImageList {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ImageListAPI] params:[XinXinMonitorAPI ImageList:self.monitorCode page:_pageNum startTime:self.timeString endTime:self.timeString] success:^(id responseObj) {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    if (self.enterType == 0) {
+        [params setValue:self.monitorCode forKey:@"camera_code"];
+        [params setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
+        [params setValue:self.timeString forKey:@"offlineTime"];
+    } else if (self.enterType == 1) {
+        params = [XinXinMonitorAPI ImageList:self.monitorCode page:_pageNum startTime:self.timeString endTime:self.timeString];
+    }
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ImageListAPI] params:params success:^(id responseObj) {
         
         NSDictionary *dic = responseObj;
         

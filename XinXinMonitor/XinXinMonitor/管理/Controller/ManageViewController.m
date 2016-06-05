@@ -339,6 +339,7 @@
     vc.telephone = model.phone;
     vc.address = model.address;
     vc.monitorCode = model.code;
+    vc.enterType = 1;
     [vc setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
