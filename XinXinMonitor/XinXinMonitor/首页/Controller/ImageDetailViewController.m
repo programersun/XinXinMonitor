@@ -176,6 +176,11 @@
         }
         
         if (self.imageListArray.count == 0) {
+            [self.imageListArray removeAllObjects];
+            [self.browseItemArray removeAllObjects];
+            [self.verticalBigRectArray removeAllObjects];
+            [self.horizontalBigRectArray removeAllObjects];
+            [_collectionView reloadData];
             [self showMessageWithString:[NSString stringWithFormat:@"%@暂无图片",self.timeString] showTime:1.0];
         } else {
             NSMutableArray *imageArray = [NSMutableArray array];
@@ -249,6 +254,7 @@
         [dateformatter setDateFormat:@"YYYY-MM-dd"];
         NSString *timeString = [dateformatter stringFromDate:self.timeView.datePicker.date];
         self.timeString = timeString;
+        self.enterType = 1;
         [self loadImageList];
     }
 }
@@ -372,7 +378,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _browseItemArray.count;
+    return self.imageListArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
