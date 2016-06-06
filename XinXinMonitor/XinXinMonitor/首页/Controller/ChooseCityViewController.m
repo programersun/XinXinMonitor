@@ -66,6 +66,7 @@
     }
     
     NSArray *bigcity = @[@"北京",@"上海",@"天津",@"重庆"];
+    self.locationBtn = [[UIButton alloc] init];
     [self.cityArray addObjectsFromArray:bigcity];
     self.indexArray = [ChineseString IndexArray:self.cityArray];
     self.letterResultArray = [ChineseString LetterSortArray:self.cityArray];
@@ -89,6 +90,8 @@
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
+    } else {
+        [self.cityTableView reloadData];
     }
 }
 
@@ -142,7 +145,7 @@
         }
         CGFloat btnWidth = [PublicUtil widthOfString:btnString withFont:15];
         
-        self.locationBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 10, btnWidth + 20, 30)];
+        self.locationBtn.frame = CGRectMake(20, 10, btnWidth + 20, 30);
         self.locationBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.locationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [self.locationBtn setTitle:btnString forState:UIControlStateNormal];
