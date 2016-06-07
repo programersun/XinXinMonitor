@@ -65,6 +65,14 @@
     [self reverseGeocode];
     [self loadMonitorType];
     self.monitorType = @"";
+    self.startTimeBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    self.startTimeBtn.layer.borderWidth = 1.0f;
+    self.startTimeBtn.layer.cornerRadius = 4.0f;
+    self.startTimeBtn.layer.masksToBounds = YES;
+    self.endTimeBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    self.endTimeBtn.layer.borderWidth = 1.0f;
+    self.endTimeBtn.layer.cornerRadius = 4.0f;
+    self.endTimeBtn.layer.masksToBounds = YES;
 //    self.myAddressTextField.text = @"1111";
     
     // Do any additional setup after loading the view.

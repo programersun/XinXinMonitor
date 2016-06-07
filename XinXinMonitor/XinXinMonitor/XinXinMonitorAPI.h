@@ -14,7 +14,8 @@
 //#define XinXinMonitorURL @"http://202.194.7.21:9097/dc_ms_mobile" //测试
 
 /** APIURL*/
-#define XinXinMonitorURL @"http://60.216.117.170:90/dc_ms_mobile" //正式
+//#define XinXinMonitorURL @"http://60.216.117.170:90/dc_ms_mobile" //正式
+#define XinXinMonitorURL @"http://www.keshihuapt.com/dc_ms_mobile"
 
 /** 登录*/
 #define LoginAPI @"/mobile/personal/checkLogin"
