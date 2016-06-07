@@ -94,7 +94,7 @@
  *
  *  @return 设备添加字典
  */
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 /**
  *  根据部门编号获取设备类型

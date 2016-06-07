@@ -13,6 +13,7 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import "ChooseMonitorTypeView.h"
 #import "TimePickerView.h"
+#import "ChooseAddressInMapViewController.h"
 
 @interface AddMonitorViewController () <UIAlertViewDelegate,UITextFieldDelegate,BMKGeoCodeSearchDelegate>
 
@@ -39,6 +40,8 @@
 @property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
 @property (nonatomic, strong) NSMutableArray *monitorTypeArray;
 @property (nonatomic, strong) NSString *monitorType;
+@property (nonatomic, strong) NSString *longitude;
+@property (nonatomic, strong) NSString *latitude;
 
 @end
 
@@ -60,6 +63,9 @@
     self.afreshAddressBtn.layer.cornerRadius = 5;
     self.afreshAddressBtn.layer.borderColor = [ColorRequest BackGroundColor].CGColor;
     self.afreshAddressBtn.layer.borderWidth = 1.0f;
+    
+    self.latitude = [LocationManager sharedManager].latitude;
+    self.longitude = [LocationManager sharedManager].longitude;
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
@@ -197,7 +203,7 @@
     if ([time isEqualToString:@""]) {
         time = @"30";
     }
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;
@@ -275,14 +281,25 @@
 }
 
 - (IBAction)afreshAddressBtnClick:(id)sender {
-    [self showSVProgressHUD];
-    [self.view endEditing:YES];
-    //获取用户位置
-    [[LocationManager sharedManager] currentLocation];
-    [LocationManager sharedManager].reverseGeocodeLocationSuccessBlock = ^{
-        [self reverseGeocode];
-        [self hideSVProgressHUD];
+//    [self showSVProgressHUD];
+//    [self.view endEditing:YES];
+//    //获取用户位置
+//    [[LocationManager sharedManager] currentLocation];
+//    [LocationManager sharedManager].reverseGeocodeLocationSuccessBlock = ^{
+//        [self reverseGeocode];
+//        [self hideSVProgressHUD];
+//    };
+    __weak AddMonitorViewController *weakself = self;
+    ChooseAddressInMapViewController *vc = [[ChooseAddressInMapViewController alloc] init];
+    vc.ChooseAddressString = self.myAddressTextField.text;
+    vc.latitude = self.latitude;
+    vc.longitude = self.longitude;
+    vc.chooseAddressInMapBlock = ^(NSString *address,NSString *latitude,NSString *longitude) {
+        weakself.myAddressTextField.text = address;
+        weakself.longitude = longitude;
+        weakself.latitude = latitude;
     };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

@@ -14,12 +14,14 @@
 #import "ImageCollectionViewCell.h"
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 #import "MonitorListBaseClass.h"
 #import "MonitorListRows.h"
 
-@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
+@interface ShouYeViewController () <HomeTopViewDelegate,CityChangeViewDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,BMKDistrictSearchDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
     BMKLocationService* _locService;
+    BMKDistrictSearch* _districtSearch;
     CLLocationCoordinate2D _center;
     NSInteger _index;
     int _pageNum;
@@ -121,6 +123,7 @@
     
     [self showSVProgressHUD];
     [self loadMonitorInfo];
+    _districtSearch = [[BMKDistrictSearch alloc] init];
     
 }
 
@@ -223,6 +226,7 @@
     self.cityChangeView.hidden = YES;
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _districtSearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -231,6 +235,7 @@
     self.cityChangeView.hidden = YES;
     _mapView.delegate = nil; // // 此处记得不用的时候需要置nil，否则影响内存的释放
     _locService.delegate = nil; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    _districtSearch.delegate = nil; // 不用时，置nil
 }
 
 /**
@@ -374,38 +379,6 @@
             _index = i;
             [_mapView addAnnotation:annotation];
         } else {
-            
-//            dispatch_queue_t queue = dispatch_queue_create("location", nil);
-//            dispatch_sync(queue , ^{
-//                CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
-//                [currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-//                    if (error == nil && [placemarks count] > 0) {
-//                        //取出获取的地理信息数组中的第一个显示在界面上
-//                        CLPlacemark *firstPlacemark = [placemarks firstObject];
-//                        //纬度
-//                        CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
-//                        //经度
-//                        CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
-//                        CLLocationCoordinate2D coordinate;
-//                        CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-//                        CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
-//                        CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
-//                        
-//                        coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
-//                            annotation.coordinate = coordinate;
-//                            annotation.title = model.code;
-//                            annotation.subtitle = model.address;
-//                            _index = i;
-//                            [_mapView addAnnotation:annotation];
-//                        });
-//                    } else {
-//                        NSLog(@"aaaaaaaaa");
-//                    }
-//                }];
-//            });
-            
             CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
             [currentLocationGeocoder geocodeAddressString:model.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
                 if (error == nil && [placemarks count] > 0) {
@@ -538,44 +511,141 @@
     if ([myChooseDistrict isEqualToString:@"全城"]) {
         addressString = myChooseCity;
     }
-    CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
-    [currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-        if (error == nil && [placemarks count] > 0) {
-            //取出获取的地理信息数组中的第一个显示在界面上
-            CLPlacemark *firstPlacemark = [placemarks firstObject];
-            //纬度
-            CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
-            //经度
-            CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
-
-            CLLocationCoordinate2D coordinate;
-            CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-            CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
-            CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
-            
-            coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
-            
-            _center.latitude = coordinate.latitude;
-            _center.longitude = coordinate.longitude;
-            
-            BMKCoordinateSpan span;
-            if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
-                span = BMKCoordinateSpanMake(0.6, 0.4);
-            } else {
-                span = BMKCoordinateSpanMake(0.2, 0.15);
-            }
-            
-            BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
-            [_mapView setRegion:region animated:YES];
-            
-            
-        }else if (error == nil && [placemarks count] == 0){
-            NSLog(@"No results were returned.");
-        }else if (error != nil){
-            NSLog(@"an error occurred = %@",error);
-        }
-    }];
+//    CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
+//    [currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+//        if (error == nil && [placemarks count] > 0) {
+//            //取出获取的地理信息数组中的第一个显示在界面上
+//            CLPlacemark *firstPlacemark = [placemarks firstObject];
+//            //纬度
+//            CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
+//            //经度
+//            CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
+//
+//            CLLocationCoordinate2D coordinate;
+//            CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+//            CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
+//            CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+//            
+//            coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
+//            
+//            _center.latitude = coordinate.latitude;
+//            _center.longitude = coordinate.longitude;
+//            
+//            BMKCoordinateSpan span;
+//            if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
+//                span = BMKCoordinateSpanMake(0.6, 0.4);
+//            } else {
+//                span = BMKCoordinateSpanMake(0.2, 0.15);
+//            }
+//            
+//            BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
+//            [_mapView setRegion:region animated:YES];
+//            
+//            
+//        }else if (error == nil && [placemarks count] == 0){
+//            NSLog(@"No results were returned.");
+//        }else if (error != nil){
+//            NSLog(@"an error occurred = %@",error);
+//        }
+//    }];
+    BMKDistrictSearchOption *option = [[BMKDistrictSearchOption alloc] init];
+    option.city = myChooseCity;
+    if (![myChooseDistrict isEqualToString:@"全城"]) {
+        option.district = myChooseDistrict;
+    }
+    BOOL flag = [_districtSearch districtSearch:option];
+    if (flag) {
+        NSLog(@"district检索发送成功");
+    } else {
+        NSLog(@"district检索发送失败");
+    }
 }
+
+/**
+ *返回行政区域搜索结果
+ *@param searcher 搜索对象
+ *@param result 搜索结BMKDistrictSearch果
+ *@param error 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetDistrictResult:(BMKDistrictSearch *)searcher result:(BMKDistrictResult *)result errorCode:(BMKSearchErrorCode)error {
+    NSLog(@"onGetDistrictResult error: %d", error);
+    if (error == BMK_SEARCH_NO_ERROR) {
+        NSLog(@"\nname:%@\ncode:%d\ncenter latlon:%lf,%lf", result.name, (int)result.code, result.center.latitude, result.center.longitude);
+        
+        BOOL flag = YES;
+        for (NSString *path in result.paths) {
+            BMKPolygon* polygon = [self transferPathStringToPolygon:path];
+            if (polygon) {
+                [_mapView addOverlay:polygon]; // 添加overlay
+                if (flag) {
+                    [self mapViewFitPolygon:polygon];
+                    flag = NO;
+                }
+            }
+        }
+    }
+}
+//根据polygone设置地图范围
+- (void)mapViewFitPolygon:(BMKPolygon *) polygon {
+    CGFloat ltX, ltY, rbX, rbY;
+    if (polygon.pointCount < 1) {
+        return;
+    }
+    BMKMapPoint pt = polygon.points[0];
+    ltX = pt.x, ltY = pt.y;
+    rbX = pt.x, rbY = pt.y;
+    for (int i = 1; i < polygon.pointCount; i++) {
+        BMKMapPoint pt = polygon.points[i];
+        if (pt.x < ltX) {
+            ltX = pt.x;
+        }
+        if (pt.x > rbX) {
+            rbX = pt.x;
+        }
+        if (pt.y > ltY) {
+            ltY = pt.y;
+        }
+        if (pt.y < rbY) {
+            rbY = pt.y;
+        }
+    }
+    BMKMapRect rect;
+    rect.origin = BMKMapPointMake(ltX , ltY);
+    rect.size = BMKMapSizeMake(rbX - ltX, rbY - ltY);
+    [_mapView setVisibleMapRect:rect];
+    _mapView.zoomLevel = _mapView.zoomLevel - 0.3;
+}
+
+- (BMKPolygon*)transferPathStringToPolygon:(NSString*) path {
+    if (path == nil || path.length < 1) {
+        return nil;
+    }
+    NSArray *pts = [path componentsSeparatedByString:@";"];
+    if (pts == nil || pts.count < 1) {
+        return nil;
+    }
+    BMKMapPoint *points = new BMKMapPoint[pts.count];
+    NSInteger index = 0;
+    for (NSString *ptStr in pts) {
+        if (ptStr && [ptStr rangeOfString:@","].location != NSNotFound) {
+            NSRange range = [ptStr rangeOfString:@","];
+            NSString *xStr = [ptStr substringWithRange:NSMakeRange(0, range.location)];
+            NSString *yStr = [ptStr substringWithRange:NSMakeRange(range.location + range.length, ptStr.length - range.location - range.length)];
+            if (xStr && xStr.length > 0 && [xStr respondsToSelector:@selector(doubleValue)]
+                && yStr && yStr.length > 0 && [yStr respondsToSelector:@selector(doubleValue)]) {
+                points[index] = BMKMapPointMake(xStr.doubleValue, yStr.doubleValue);
+                index++;
+            }
+        }
+    }
+    BMKPolygon *polygon = nil;
+    if (index > 0) {
+        polygon = [BMKPolygon polygonWithPoints:points count:index];
+    }
+    delete [] points;
+    return polygon;
+}
+
 
 /**
  *在地图View停止定位后，会调用此函数

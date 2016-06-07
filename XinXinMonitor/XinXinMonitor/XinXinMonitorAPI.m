@@ -30,11 +30,11 @@
     return dic;
 }
 
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime{
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:[UserInfoManager sharedManager].userID forKey:@"createUserKey"];
-    [dic setValue:[LocationManager sharedManager].longitude forKey:@"longitude"];
-    [dic setValue:[LocationManager sharedManager].latitude forKey:@"latitude"];
+    [dic setValue:longitude forKey:@"longitude"];
+    [dic setValue:latitude forKey:@"latitude"];
     [dic setValue:[UserInfoManager sharedManager].userName forKey:@"createUserName"];
     [dic setValue:[[LocationManager sharedManager] getMyCity] forKey:@"cityName"];
     [dic setValue:[[LocationManager sharedManager] getMyDistrict] forKey:@"areaName"];

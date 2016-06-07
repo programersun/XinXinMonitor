@@ -131,7 +131,7 @@
                                     <constraint firstAttribute="height" constant="25" id="5QW-qH-gJV"/>
                                     <constraint firstAttribute="width" constant="70" id="pzg-eh-BJu"/>
                                 </constraints>
-                                <state key="normal" title="重新定位">
+                                <state key="normal" title="地图选址">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
