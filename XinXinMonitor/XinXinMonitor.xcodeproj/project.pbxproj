@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18A360CB1D06D06C009C6582 /* ChooseAddressInMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.m */; };
+		18A360CB1D06D06C009C6582 /* ChooseAddressInMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */; };
 		A4360E851CC0D4DF0047C632 /* HomeTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4360E841CC0D4DF0047C632 /* HomeTopView.xib */; };
 		A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4360E8A1CC0D5480047C632 /* HomeTopView.m */; };
 		A43A01E11CCB148100940950 /* SettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A43A01E01CCB148100940950 /* SettingTableViewCell.m */; };
@@ -151,7 +151,7 @@
 
 /* Begin PBXFileReference section */
 		18A360C91D06D06C009C6582 /* ChooseAddressInMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseAddressInMapViewController.h; sourceTree = "<group>"; };
-		18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseAddressInMapViewController.m; sourceTree = "<group>"; };
+		18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChooseAddressInMapViewController.mm; sourceTree = "<group>"; };
 		A4360E841CC0D4DF0047C632 /* HomeTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTopView.xib; sourceTree = "<group>"; };
 		A4360E891CC0D5480047C632 /* HomeTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTopView.h; sourceTree = "<group>"; };
 		A4360E8A1CC0D5480047C632 /* HomeTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTopView.m; sourceTree = "<group>"; };
@@ -586,7 +586,7 @@
 				A456B2321CDF73BE00F7FC1A /* AddMonitorViewController.h */,
 				A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */,
 				18A360C91D06D06C009C6582 /* ChooseAddressInMapViewController.h */,
-				18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.m */,
+				18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1135,7 +1135,7 @@
 				A4D336211CBFE2A400023D5C /* SDWebImageCompat.m in Sources */,
 				A4F974151CE5BBA700623D79 /* MJRefreshFooter.m in Sources */,
 				A49A276C1CC60AED00ED5A61 /* UserInfoManager.m in Sources */,
-				18A360CB1D06D06C009C6582 /* ChooseAddressInMapViewController.m in Sources */,
+				18A360CB1D06D06C009C6582 /* ChooseAddressInMapViewController.mm in Sources */,
 				A4B28E9C1CEE0CA400C19227 /* MessageRows.m in Sources */,
 				A4F974121CE5BBA700623D79 /* MJRefreshAutoFooter.m in Sources */,
 				A4C81BA91CCA1D9B00C6F992 /* MessageTableViewCell.m in Sources */,

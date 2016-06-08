@@ -63,7 +63,7 @@
     self.afreshAddressBtn.layer.cornerRadius = 5;
     self.afreshAddressBtn.layer.borderColor = [ColorRequest BackGroundColor].CGColor;
     self.afreshAddressBtn.layer.borderWidth = 1.0f;
-    
+    self.afreshAddressBtn.hidden = YES;
     self.latitude = [LocationManager sharedManager].latitude;
     self.longitude = [LocationManager sharedManager].longitude;
     
@@ -122,11 +122,11 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
         [SVProgressHUD show];
-        if ([self.myAddressTextField.text isEqualToString:[LocationManager sharedManager].detailAddress]) {
+//        if ([self.myAddressTextField.text isEqualToString:[LocationManager sharedManager].detailAddress]) {
             [self addMonitor];
-        } else {
-            [self geocode];
-        }
+//        } else {
+//            [self geocode];
+//        }
     }
 }
 
@@ -231,19 +231,9 @@
     return YES;
 }
 
-#pragma mark - BMKGeoCodeSearchDelegate
-- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
-    if (error == 0) {
-        [LocationManager sharedManager].detailAddress = result.address;
-        self.myAddressTextField.text = result.address;
-        [[LocationManager sharedManager] saveMyCityWithString:result.addressDetail.city];
-        [[LocationManager sharedManager] saveMyDistrictWithString:result.addressDetail.district];
-    }
-}
-
 - (void)reverseGeocode {
     CLLocationCoordinate2D pt = (CLLocationCoordinate2D){0, 0};
-        pt = (CLLocationCoordinate2D){[[LocationManager sharedManager].latitude floatValue], [[LocationManager sharedManager].longitude floatValue]};
+    pt = (CLLocationCoordinate2D){[[LocationManager sharedManager].latitude doubleValue], [[LocationManager sharedManager].longitude doubleValue]};
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = pt;
     BOOL flag = [self.geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
@@ -257,12 +247,14 @@
     }
 }
 
-- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
+#pragma mark - BMKGeoCodeSearchDelegate
+- (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
     if (error == 0) {
-        [LocationManager sharedManager].latitude = [NSString stringWithFormat:@"%f",result.location.latitude];
-        [LocationManager sharedManager].longitude = [NSString stringWithFormat:@"%f",result.location.longitude];
-        [LocationManager sharedManager].detailAddress = result.address;
-        [self addMonitor];
+//        [LocationManager sharedManager].detailAddress = result.address;
+        self.myAddressTextField.text = result.address;
+        self.afreshAddressBtn.hidden = NO;
+        [[LocationManager sharedManager] saveMyCityWithString:result.addressDetail.city];
+        [[LocationManager sharedManager] saveMyDistrictWithString:result.addressDetail.district];
     }
 }
 
@@ -277,6 +269,15 @@
     else
     {
         NSLog(@"geo检索发送失败");
+    }
+}
+
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
+    if (error == 0) {
+        [LocationManager sharedManager].latitude = [NSString stringWithFormat:@"%f",result.location.latitude];
+        [LocationManager sharedManager].longitude = [NSString stringWithFormat:@"%f",result.location.longitude];
+//        [LocationManager sharedManager].detailAddress = result.address;
+        [self addMonitor];
     }
 }
 

@@ -138,7 +138,7 @@
                                     <action selector="afreshAddressBtnClick:" destination="mjC-Y8-mJ5" eventType="touchUpInside" id="rKZ-Er-FOe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果定位不精确，请手动输入正确地址！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qo5-eh-Sun">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果地址不精确，请手地图选择位置！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qo5-eh-Sun">
                                 <rect key="frame" x="20" y="81" width="280" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="AFl-lq-2ol"/>
