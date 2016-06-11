@@ -57,6 +57,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setAlias];
     [self addTopView];
     //显示当前位置信息
     NSString *city;
@@ -125,6 +127,17 @@
     [self loadMonitorInfo];
     _districtSearch = [[BMKDistrictSearch alloc] init];
     
+}
+
+- (void)setAlias {
+    
+    if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
+        [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
+    }else {
+        NSString *alias = [UserInfoManager sharedManager].userID;
+        alias = [alias stringByReplacingOccurrencesOfString:@"." withString:@""];
+        [JPUSHService setAlias:[alias stringByReplacingOccurrencesOfString:@" " withString:@""] callbackSelector:nil object:nil];
+    }
 }
 
 #pragma mark - 结束加载
@@ -365,12 +378,12 @@
     for (i = 0; i < self.monitorArray.count; i++) {
         
         MonitorListRows *model = self.monitorArray[i];
-        if (model.latitude != 0 && model.longitude != 0 ) {
+        if ([model.latitude doubleValue] != 0 && [model.longitude doubleValue] != 0 ) {
             CLLocationCoordinate2D coordinate;
             //纬度
-            CLLocationDegrees latitude = model.latitude;
+            CLLocationDegrees latitude = [model.latitude doubleValue];
             //经度
-            CLLocationDegrees longitude = model.longitude;
+            CLLocationDegrees longitude = [model.longitude doubleValue];
             coordinate  = (CLLocationCoordinate2D){latitude, longitude};
             BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
             annotation.coordinate = coordinate;
@@ -716,11 +729,12 @@
         vc = [[ImageDetailViewController alloc] init];
     }
     
-    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
-    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    vc.timeString = [formatter stringFromDate:date];
+//    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
+//    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"YYYY-MM-dd"];
+//    vc.timeString = [formatter stringFromDate:date];
+    vc.timeString = model.pictureDate;
     vc.problemPictureId = @"";
     vc.telephone = model.phone;
     vc.address = model.address;

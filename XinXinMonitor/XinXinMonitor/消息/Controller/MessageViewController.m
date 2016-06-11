@@ -183,7 +183,7 @@
         vc.telephone = model.phone;
         vc.address = model.address;
         vc.monitorCode = model.cameraCode;
-        vc.timeString = model.pictureDateF;
+        vc.timeString = [NSString stringWithFormat:@"%@ %@",model.pictureDateF,model.pictureTimeF];
         vc.enterType = 1;
         [vc setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:vc animated:YES];
@@ -194,7 +194,7 @@
         vc.telephone = model.phone;
         vc.address = model.address;
         vc.monitorCode = model.cameraCode;
-        vc.timeString = model.pictureDateF;
+        vc.timeString = [NSString stringWithFormat:@"%@ %@",model.pictureDateF,model.pictureTimeF];
         vc.enterType = 2;
         [vc setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:vc animated:YES];

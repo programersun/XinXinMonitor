@@ -164,11 +164,11 @@ BMKMapManager *_mapManager;
     
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
-    if ([[userInfo objectForKey:@"type"] isEqualToString:@"3"]) {
-        [self logOutBtnClick];
-    } else {
+//    if ([[userInfo objectForKey:@"type"] isEqualToString:@"3"]) {
+//        [self logOutBtnClick];
+//    } else {
         [self parsePushDictionary:userInfo application:application];
-    }
+//    }
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -231,6 +231,7 @@ BMKMapManager *_mapManager;
  *  收到消息推送后跳转详情页面
  */
 - (void)pushImageDetailViewController {
+    [self readMessageWithPkid:[self.jpushInfo objectForKey:@"pkid"]];
     
     MainTabBarViewController *tabVC = (MainTabBarViewController *)self.window.rootViewController;
     for (UINavigationController *nav in tabVC.childViewControllers) {
@@ -242,7 +243,7 @@ BMKMapManager *_mapManager;
         //拍照完成
         
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
-        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
+        vc.pkid = [self.jpushInfo objectForKey:@"picturePkid"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];
         vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
@@ -253,7 +254,7 @@ BMKMapManager *_mapManager;
     } else if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"1"]) {
         //问题设备
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
-        vc.pkid = [self.jpushInfo objectForKey:@"pkid"];
+        vc.pkid = [self.jpushInfo objectForKey:@"picturePkid"];
         vc.telephone = [self.jpushInfo objectForKey:@"phone"];
         vc.address = [self.jpushInfo objectForKey:@"address"];
         vc.monitorCode = [self.jpushInfo objectForKey:@"camera_code"];
@@ -275,6 +276,13 @@ BMKMapManager *_mapManager;
         [vc setHidesBottomBarWhenPushed:YES];
         [navVC pushViewController:vc animated:YES];
     }
+}
+
+- (void)readMessageWithPkid:(NSString *)pkid{
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,ReadMessageAPI] params:[XinXinMonitorAPI ReadMessageWithPkid:pkid] success:^(id responseObj) {
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
