@@ -23,9 +23,20 @@
     [super viewDidLoad];
     
     [self setNavigationTitle:@"登录" TextColor:[UIColor whiteColor] Font:nil];
+    [self setNavigationBarTintColor:[UIColor clearColor]];
     self.userKey = @"";
     self.password = @"";
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,7 +53,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            return 150;
+            return 240 * KASAdapterSizeWidth;
             break;
         case 1:
             return 50;
@@ -51,7 +62,7 @@
             return 50;
             break;
         case 3:
-            return 70;
+            return 100;
             break;
             
         default:

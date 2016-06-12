@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="fxG-3Y-Tzg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="zFj-57-2a4">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -19,28 +19,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="154" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5z4-c2-8t1">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="logoCell" rowHeight="150" id="PQ2-vh-1Yr" customClass="LoginTableViewCell">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="150"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="logoCell" rowHeight="250" id="PQ2-vh-1Yr" customClass="LoginTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PQ2-vh-1Yr" id="hkK-LT-nwL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gty-aa-6Mb">
-                                                    <rect key="frame" x="57" y="10" width="207" height="130"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gty-aa-6Mb">
+                                                    <rect key="frame" x="15" y="133" width="290" height="77"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="gty-aa-6Mb" secondAttribute="height" multiplier="183:115" id="uxU-Y3-ddy"/>
+                                                        <constraint firstAttribute="width" secondItem="gty-aa-6Mb" secondAttribute="height" multiplier="390:104" id="uxU-Y3-ddy"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="top" secondItem="hkK-LT-nwL" secondAttribute="top" constant="10" id="Tdi-Z5-VsK"/>
-                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hkK-LT-nwL" secondAttribute="leading" constant="10" id="kV9-MF-zRr"/>
-                                                <constraint firstAttribute="bottom" secondItem="gty-aa-6Mb" secondAttribute="bottom" constant="10" id="sfs-Ip-ffb"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gty-aa-6Mb" secondAttribute="trailing" constant="10" id="y7u-mq-lbc"/>
+                                                <constraint firstItem="gty-aa-6Mb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hkK-LT-nwL" secondAttribute="leading" constant="15" id="kV9-MF-zRr"/>
+                                                <constraint firstAttribute="bottom" secondItem="gty-aa-6Mb" secondAttribute="bottom" constant="40" id="xTV-1R-Wxw"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gty-aa-6Mb" secondAttribute="trailing" constant="15" id="y7u-mq-lbc"/>
                                                 <constraint firstItem="gty-aa-6Mb" firstAttribute="centerX" secondItem="hkK-LT-nwL" secondAttribute="centerX" id="yfd-AI-xo1"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -49,7 +48,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="accountCell" rowHeight="60" id="ciJ-wQ-ulU" customClass="LoginTableViewCell">
-                                        <rect key="frame" x="0.0" y="242" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="278" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ciJ-wQ-ulU" id="dsx-Es-Gjk">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
@@ -84,7 +83,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="passwordCell" rowHeight="60" id="9d8-75-TIz" customClass="LoginTableViewCell">
-                                        <rect key="frame" x="0.0" y="302" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="338" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9d8-75-TIz" id="FyF-sF-CTt">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
@@ -118,18 +117,21 @@
                                             <outlet property="passwordText" destination="Ut9-pS-ijz" id="o7I-us-znV"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="submitCell" rowHeight="70" id="eDr-5d-Fj2" customClass="LoginTableViewCell">
-                                        <rect key="frame" x="0.0" y="362" width="320" height="70"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="submitCell" rowHeight="100" id="eDr-5d-Fj2" customClass="LoginTableViewCell">
+                                        <rect key="frame" x="0.0" y="398" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eDr-5d-Fj2" id="jxK-M6-SrU">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pj-nz-V0W">
-                                                    <rect key="frame" x="20" y="15" width="280" height="41"/>
-                                                    <color key="backgroundColor" red="0.1176470588" green="0.63529411759999999" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="30" y="30" width="260" height="41"/>
+                                                    <color key="backgroundColor" red="0.1176470588" green="0.70588235290000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="toD-ER-gPb"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <state key="normal" title="登录">
+                                                    <state key="normal" title="登     录">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -138,10 +140,9 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2Pj-nz-V0W" firstAttribute="top" secondItem="jxK-M6-SrU" secondAttribute="top" constant="15" id="McY-WK-SAd"/>
-                                                <constraint firstAttribute="trailing" secondItem="2Pj-nz-V0W" secondAttribute="trailing" constant="20" id="U84-ao-Sij"/>
-                                                <constraint firstAttribute="bottom" secondItem="2Pj-nz-V0W" secondAttribute="bottom" constant="14" id="mqP-5i-eC3"/>
-                                                <constraint firstItem="2Pj-nz-V0W" firstAttribute="leading" secondItem="jxK-M6-SrU" secondAttribute="leading" constant="20" id="zF3-sf-W3C"/>
+                                                <constraint firstAttribute="trailing" secondItem="2Pj-nz-V0W" secondAttribute="trailing" constant="30" id="U84-ao-Sij"/>
+                                                <constraint firstItem="2Pj-nz-V0W" firstAttribute="centerY" secondItem="jxK-M6-SrU" secondAttribute="centerY" id="aAR-6b-giu"/>
+                                                <constraint firstItem="2Pj-nz-V0W" firstAttribute="leading" secondItem="jxK-M6-SrU" secondAttribute="leading" constant="30" id="zF3-sf-W3C"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -157,10 +158,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5z4-c2-8t1" firstAttribute="top" secondItem="aSU-Gg-3i9" secondAttribute="bottom" id="8hw-Vb-Zml"/>
                             <constraint firstAttribute="trailing" secondItem="5z4-c2-8t1" secondAttribute="trailing" id="9EG-1A-rgY"/>
                             <constraint firstItem="5z4-c2-8t1" firstAttribute="leading" secondItem="y6Z-iH-4nX" secondAttribute="leading" id="Ec5-7x-G4G"/>
                             <constraint firstItem="5kU-Cg-AXk" firstAttribute="top" secondItem="5z4-c2-8t1" secondAttribute="bottom" id="Md8-QS-BCS"/>
+                            <constraint firstItem="5z4-c2-8t1" firstAttribute="top" secondItem="y6Z-iH-4nX" secondAttribute="top" id="Pzu-vF-X3Z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6jq-VL-Vq7"/>
@@ -172,28 +173,10 @@
             </objects>
             <point key="canvasLocation" x="953" y="310"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="JHZ-zI-XDo">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fxG-3Y-Tzg" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a1p-bs-clM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="zFj-57-2a4" kind="relationship" relationship="rootViewController" id="ZKx-4G-St5"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="F3F-HM-ELf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="421" y="310"/>
-        </scene>
     </scenes>
     <resources>
         <image name="account" width="24" height="24"/>
-        <image name="logo" width="281" height="139"/>
+        <image name="logo" width="390" height="104"/>
         <image name="password" width="19" height="23"/>
     </resources>
 </document>
