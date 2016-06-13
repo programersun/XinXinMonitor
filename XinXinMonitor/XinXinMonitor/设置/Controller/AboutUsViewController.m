@@ -29,7 +29,7 @@
     mainScrollView.bounces = NO;
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake((kkViewWidth - 281 * KASAdapterSizeWidth)/2, 100, 281 * KASAdapterSizeWidth, 139 * KASAdapterSizeWidth)];
-    logoImageView.image = [UIImage imageNamed:@"logo"];
+    logoImageView.image = [UIImage imageNamed:@"logoAboutus"];
     
     UILabel *copyrightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, logoImageView.frame.origin.y + logoImageView.frame.size.height + 100, kkViewWidth, 21)];
     [copyrightLabel setTextAlignment:NSTextAlignmentCenter];
