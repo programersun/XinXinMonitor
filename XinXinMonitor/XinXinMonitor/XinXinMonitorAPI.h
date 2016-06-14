@@ -81,6 +81,8 @@
  *  @param address        中文地址
  *  @param longitude      经度
  *  @param latitude       纬度
+ *  @param cityName       选择的城市名称
+ *  @param districtName   选择的区域名称
  *  @param cameraCode     设备编号
  *  @param phone          设备电话
  *  @param createUserKey  提交人账号
@@ -94,7 +96,8 @@
  *
  *  @return 设备添加字典
  */
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
+
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cityName:(NSString *)cityName districtName:(NSString *)districtName cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 /**
  *  根据部门编号获取设备类型

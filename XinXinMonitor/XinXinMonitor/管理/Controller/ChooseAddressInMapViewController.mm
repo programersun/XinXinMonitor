@@ -50,7 +50,7 @@
 
 - (void)rightBtnClick:(UIButton *)sender {
     if (self.chooseAddressInMapBlock) {
-        self.chooseAddressInMapBlock(self.ChooseAddressString,self.latitude,self.longitude);
+        self.chooseAddressInMapBlock(self.ChooseAddressString,self.latitude,self.longitude,self.cityName,self.districtName);
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -114,8 +114,8 @@
 //        self.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district,result.addressDetail.streetName,result.addressDetail.streetNumber];
         self.addressLabel.text = result.address;
         self.ChooseAddressString = result.address;
-        [[LocationManager sharedManager] saveMyCityWithString:result.addressDetail.city];
-        [[LocationManager sharedManager] saveMyDistrictWithString:result.addressDetail.district];
+        self.cityName = result.addressDetail.city;
+        self.districtName = result.addressDetail.district;
     }
 }
 

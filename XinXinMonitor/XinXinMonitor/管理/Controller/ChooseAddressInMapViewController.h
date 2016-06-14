@@ -13,13 +13,15 @@
  *
  *  @param address 用户选址的地址
  */
-typedef void(^ChooseAddressInMapBlock)(NSString *address,NSString *longitude,NSString *latitude);
+typedef void(^ChooseAddressInMapBlock)(NSString *address,NSString *longitude,NSString *latitude,NSString *cityName,NSString *districtName);
 
 @interface ChooseAddressInMapViewController : SR_SINOBaseViewController
 
 @property (nonatomic, strong) NSString *ChooseAddressString;
 @property (nonatomic, strong) NSString *longitude;
 @property (nonatomic, strong) NSString *latitude;
+@property (nonatomic, strong) NSString *cityName;
+@property (nonatomic, strong) NSString *districtName;
 @property (nonatomic,copy) ChooseAddressInMapBlock chooseAddressInMapBlock;
 
 @end

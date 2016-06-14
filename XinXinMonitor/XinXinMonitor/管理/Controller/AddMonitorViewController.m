@@ -42,6 +42,8 @@
 @property (nonatomic, strong) NSString *monitorType;
 @property (nonatomic, strong) NSString *longitude;
 @property (nonatomic, strong) NSString *latitude;
+@property (nonatomic, strong) NSString *cityName;
+@property (nonatomic, strong) NSString *districtName;
 
 @end
 
@@ -66,6 +68,8 @@
     self.afreshAddressBtn.hidden = YES;
     self.latitude = [LocationManager sharedManager].latitude;
     self.longitude = [LocationManager sharedManager].longitude;
+    self.cityName = [[LocationManager sharedManager] getMyCity];
+    self.districtName = [[LocationManager sharedManager] getMyDistrict];
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
@@ -79,6 +83,9 @@
     self.endTimeBtn.layer.borderWidth = 1.0f;
     self.endTimeBtn.layer.cornerRadius = 4.0f;
     self.endTimeBtn.layer.masksToBounds = YES;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit:)];
+    [self.view addGestureRecognizer:tap];
 //    self.myAddressTextField.text = @"1111";
     
     // Do any additional setup after loading the view.
@@ -94,6 +101,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+}
+
+- (void)endEdit {
+    [self.view endEditing:YES];
 }
 
 - (void)dealloc {
@@ -203,7 +214,7 @@
     if ([time isEqualToString:@""]) {
         time = @"30";
     }
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;
@@ -295,10 +306,14 @@
     vc.ChooseAddressString = self.myAddressTextField.text;
     vc.latitude = self.latitude;
     vc.longitude = self.longitude;
-    vc.chooseAddressInMapBlock = ^(NSString *address,NSString *latitude,NSString *longitude) {
+    vc.cityName = self.cityName;
+    vc.districtName = self.districtName;
+    vc.chooseAddressInMapBlock = ^(NSString *address,NSString *latitude,NSString *longitude,NSString *cityName,NSString *districtName) {
         weakself.myAddressTextField.text = address;
         weakself.longitude = longitude;
         weakself.latitude = latitude;
+        self.cityName = cityName;
+        self.districtName = districtName;
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
