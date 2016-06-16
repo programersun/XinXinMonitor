@@ -11,8 +11,11 @@
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
 #import <BaiduMapAPI_Location/BMKLocationComponent.h>
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import "SearchAddressListViewController.h"
 
-@interface ChooseAddressInMapViewController ()<BMKMapViewDelegate,BMKGeoCodeSearchDelegate>
+@interface ChooseAddressInMapViewController ()<BMKMapViewDelegate,BMKGeoCodeSearchDelegate> {
+    NSString *_searchAddressString;
+}
 @property (nonatomic, strong) BMKMapView *mapView;  /**< 地图view*/
 @property (nonatomic, strong) BMKGeoCodeSearch *geocodesearch;
 @property (nonatomic, strong) UILabel *addressLabel;
@@ -31,6 +34,7 @@
     [self addCenterView];
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self mapViewAnimation];
+    _searchAddressString = nil;
     // Do any additional setup after loading the view.
 }
 
@@ -58,7 +62,7 @@
 - (void)mapViewAnimation {
     CLLocationCoordinate2D coordinate
     = (CLLocationCoordinate2D){[self.latitude doubleValue], [self.longitude doubleValue]};
-    BMKCoordinateSpan span = BMKCoordinateSpanMake(0.1,0.1);
+    BMKCoordinateSpan span = BMKCoordinateSpanMake(0.01,0.01);
     BMKCoordinateRegion region = BMKCoordinateRegionMake(coordinate, span);
     [_mapView setRegion:region animated:YES];
 }
@@ -78,10 +82,17 @@
     addAddressBackgrondView.backgroundColor = [UIColor grayColor];
     addAddressBackgrondView.alpha = 0.4f;
     [addAddressView addSubview:addAddressBackgrondView];
-    self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, kkViewWidth - 40, 30)];
+    self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, FRAMNE_W(addAddressView) - 45, 30)];
     self.addressLabel.font = [UIFont systemFontOfSize:15];
     self.addressLabel.text = self.ChooseAddressString;
     [addAddressView addSubview:self.addressLabel];
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(FRAMNE_W(addAddressView) - 30, 10, FRAMNE_H(addAddressView)/2, FRAMNE_H(addAddressView)/2)];
+    searchImageView.image = [UIImage imageNamed:@"searchImg"];
+    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, FRAMNE_W(addAddressView), FRAMNE_H(addAddressView))];
+    searchBtn.backgroundColor = [UIColor clearColor];
+    [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [addAddressView addSubview:searchImageView];
+    [addAddressView addSubview:searchBtn];
     [self.view addSubview:addAddressView];
 }
 
@@ -91,6 +102,18 @@
     self.latitude = [NSString stringWithFormat:@"%f",mapView.region.center.latitude];
     self.longitude = [NSString stringWithFormat:@"%f",mapView.region.center.longitude];
     [self reverseGeocode];
+}
+
+- (void)searchBtnClick:(UIButton *)sender {
+    SearchAddressListViewController *vc = [[UIStoryboard storyboardWithName:@"ManageStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchAddressListViewController"];
+    __weak ChooseAddressInMapViewController *weakself = self;
+    vc.searchAddressInMapBlock = ^(NSString *address,NSString *latitude,NSString *longitude) {
+        weakself.longitude = longitude;
+        weakself.latitude = latitude;
+        [weakself mapViewAnimation];
+        _searchAddressString = address;
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)reverseGeocode {
@@ -112,7 +135,12 @@
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
     if (error == 0) {
 //        self.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district,result.addressDetail.streetName,result.addressDetail.streetNumber];
-        self.addressLabel.text = result.address;
+        if (_searchAddressString) {
+            self.addressLabel.text = _searchAddressString;
+            _searchAddressString = nil;
+        } else {
+            self.addressLabel.text = result.address;
+        }
         self.ChooseAddressString = result.address;
         self.cityName = result.addressDetail.city;
         self.districtName = result.addressDetail.district;

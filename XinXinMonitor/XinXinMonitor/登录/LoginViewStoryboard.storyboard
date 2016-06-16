@@ -32,7 +32,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gty-aa-6Mb">
                                                     <rect key="frame" x="15" y="133" width="290" height="77"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="gty-aa-6Mb" secondAttribute="height" multiplier="390:104" id="uxU-Y3-ddy"/>
+                                                        <constraint firstAttribute="width" secondItem="gty-aa-6Mb" secondAttribute="height" multiplier="390:104" constant="1.25" id="uxU-Y3-ddy"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
