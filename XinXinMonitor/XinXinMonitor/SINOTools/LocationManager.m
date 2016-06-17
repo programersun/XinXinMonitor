@@ -48,7 +48,7 @@ static LocationManager *shareManager = nil;
     self.locationManager = [[CLLocationManager alloc] init];
     self.currentLocationGeocoder = [[CLGeocoder alloc] init];
     if (IOS_VERSION >= 8.0) {
-        [self.locationManager requestAlwaysAuthorization];
+        [self.locationManager requestWhenInUseAuthorization];
     }
     self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     self.locationManager.delegate = self;

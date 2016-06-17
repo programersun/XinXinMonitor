@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182EABA71D1262770025DDAB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182EABA61D1262770025DDAB /* MapKit.framework */; };
 		18A360CB1D06D06C009C6582 /* ChooseAddressInMapViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */; };
 		A4360E851CC0D4DF0047C632 /* HomeTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4360E841CC0D4DF0047C632 /* HomeTopView.xib */; };
 		A4360E8B1CC0D5480047C632 /* HomeTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4360E8A1CC0D5480047C632 /* HomeTopView.m */; };
@@ -150,6 +151,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		182EABA61D1262770025DDAB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		18A360C91D06D06C009C6582 /* ChooseAddressInMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseAddressInMapViewController.h; sourceTree = "<group>"; };
 		18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChooseAddressInMapViewController.mm; sourceTree = "<group>"; };
 		A4360E841CC0D4DF0047C632 /* HomeTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTopView.xib; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 			files = (
 				A49A275E1CC5C93F00ED5A61 /* BaiduMapAPI_Base.framework in Frameworks */,
 				A49A275A1CC5C7D200ED5A61 /* libstdc++.6.0.9.tbd in Frameworks */,
+				182EABA71D1262770025DDAB /* MapKit.framework in Frameworks */,
 				A49A27761CC68E3000ED5A61 /* BaiduMapAPI_Utils.framework in Frameworks */,
 				A49A27581CC5C7C300ED5A61 /* libsqlite3.0.tbd in Frameworks */,
 				A49A27561CC5C7B400ED5A61 /* OpenGLES.framework in Frameworks */,
@@ -895,6 +898,7 @@
 		A4D336301CBFE4CA00023D5C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				182EABA61D1262770025DDAB /* MapKit.framework */,
 				A49A27591CC5C7D200ED5A61 /* libstdc++.6.0.9.tbd */,
 				A49A27571CC5C7C300ED5A61 /* libsqlite3.0.tbd */,
 				A49A27551CC5C7B400ED5A61 /* OpenGLES.framework */,
@@ -1054,6 +1058,14 @@
 					A4D335751CBFDFEE00023D5C = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = NA242YB4F2;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

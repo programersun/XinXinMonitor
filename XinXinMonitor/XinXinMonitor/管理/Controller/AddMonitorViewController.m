@@ -86,7 +86,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit:)];
     [self.view addGestureRecognizer:tap];
-//    self.myAddressTextField.text = @"1111";
+    //    self.myAddressTextField.text = @"1111";
     
     // Do any additional setup after loading the view.
 }
@@ -115,7 +115,7 @@
 
 - (void)rightBtnClick:(UIButton *)sender {
     [self.view endEditing:YES];
-
+    
     if ([self.myAddressTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请定位当前地址或手动输入地址" showTime:1.0];
     } else if ([self.monitorNameTextField.text isEqualToString:@""]) {
@@ -133,11 +133,11 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
         [SVProgressHUD show];
-//        if ([self.myAddressTextField.text isEqualToString:[LocationManager sharedManager].detailAddress]) {
-            [self addMonitor];
-//        } else {
-//            [self geocode];
-//        }
+        //        if ([self.myAddressTextField.text isEqualToString:[LocationManager sharedManager].detailAddress]) {
+        [self addMonitor];
+        //        } else {
+        //            [self geocode];
+        //        }
     }
 }
 
@@ -232,7 +232,7 @@
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
-
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -261,7 +261,7 @@
 #pragma mark - BMKGeoCodeSearchDelegate
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
     if (error == 0) {
-//        [LocationManager sharedManager].detailAddress = result.address;
+        //        [LocationManager sharedManager].detailAddress = result.address;
         self.myAddressTextField.text = result.address;
         self.afreshAddressBtn.hidden = NO;
         [[LocationManager sharedManager] saveMyCityWithString:result.addressDetail.city];
@@ -287,20 +287,20 @@
     if (error == 0) {
         [LocationManager sharedManager].latitude = [NSString stringWithFormat:@"%f",result.location.latitude];
         [LocationManager sharedManager].longitude = [NSString stringWithFormat:@"%f",result.location.longitude];
-//        [LocationManager sharedManager].detailAddress = result.address;
+        //        [LocationManager sharedManager].detailAddress = result.address;
         [self addMonitor];
     }
 }
 
 - (IBAction)afreshAddressBtnClick:(id)sender {
-//    [self showSVProgressHUD];
-//    [self.view endEditing:YES];
-//    //获取用户位置
-//    [[LocationManager sharedManager] currentLocation];
-//    [LocationManager sharedManager].reverseGeocodeLocationSuccessBlock = ^{
-//        [self reverseGeocode];
-//        [self hideSVProgressHUD];
-//    };
+    //    [self showSVProgressHUD];
+    //    [self.view endEditing:YES];
+    //    //获取用户位置
+    //    [[LocationManager sharedManager] currentLocation];
+    //    [LocationManager sharedManager].reverseGeocodeLocationSuccessBlock = ^{
+    //        [self reverseGeocode];
+    //        [self hideSVProgressHUD];
+    //    };
     __weak AddMonitorViewController *weakself = self;
     ChooseAddressInMapViewController *vc = [[ChooseAddressInMapViewController alloc] init];
     vc.ChooseAddressString = self.myAddressTextField.text;
