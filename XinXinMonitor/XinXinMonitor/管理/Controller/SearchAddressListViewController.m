@@ -122,6 +122,8 @@
                     [self endRefresh];
                 }
             }];
+        } else {
+            self.searchListTableView.mj_footer = nil;
         }
         if (_pageNumber + 1 == result.pageNum) {
             [self.searchListTableView.mj_footer endRefreshingWithNoMoreData];
