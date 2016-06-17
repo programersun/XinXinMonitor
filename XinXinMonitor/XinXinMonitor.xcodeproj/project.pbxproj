@@ -116,6 +116,7 @@
 		A4D3363E1CBFE51500023D5C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D3363D1CBFE51500023D5C /* CoreTelephony.framework */; };
 		A4D336401CBFE51C00023D5C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D3363F1CBFE51C00023D5C /* CFNetwork.framework */; };
 		A4D336431CBFF2A100023D5C /* ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */; };
+		A4D813AA1D12FE6700771053 /* SearchAddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D813A91D12FE6700771053 /* SearchAddressListViewController.m */; };
 		A4D9EB391CC5010F00BBD7EA /* CityChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */; };
 		A4F973E01CE4E43C00623D79 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973D71CE4E43C00623D79 /* SVIndefiniteAnimatedView.m */; };
 		A4F973E11CE4E43C00623D79 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F973D91CE4E43C00623D79 /* SVProgressAnimatedView.m */; };
@@ -338,6 +339,8 @@
 		A4D3363F1CBFE51C00023D5C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		A4D336411CBFF2A100023D5C /* ImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDetailViewController.h; sourceTree = "<group>"; };
 		A4D336421CBFF2A100023D5C /* ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDetailViewController.m; sourceTree = "<group>"; };
+		A4D813A81D12FE6700771053 /* SearchAddressListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAddressListViewController.h; sourceTree = "<group>"; };
+		A4D813A91D12FE6700771053 /* SearchAddressListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAddressListViewController.m; sourceTree = "<group>"; };
 		A4D9EB371CC5010F00BBD7EA /* CityChangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChangeView.h; sourceTree = "<group>"; };
 		A4D9EB381CC5010F00BBD7EA /* CityChangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChangeView.m; sourceTree = "<group>"; };
 		A4F973D61CE4E43C00623D79 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -590,6 +593,8 @@
 				A456B2331CDF73BE00F7FC1A /* AddMonitorViewController.m */,
 				18A360C91D06D06C009C6582 /* ChooseAddressInMapViewController.h */,
 				18A360CA1D06D06C009C6582 /* ChooseAddressInMapViewController.mm */,
+				A4D813A81D12FE6700771053 /* SearchAddressListViewController.h */,
+				A4D813A91D12FE6700771053 /* SearchAddressListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1181,6 +1186,7 @@
 				A4D3357B1CBFDFEE00023D5C /* main.m in Sources */,
 				A4F974231CE5BBA700623D79 /* UIScrollView+MJRefresh.m in Sources */,
 				A45A9BFE1CF0567000789B47 /* ProblemImageViewController.m in Sources */,
+				A4D813AA1D12FE6700771053 /* SearchAddressListViewController.m in Sources */,
 				A4D335CF1CBFE1D200023D5C /* ColorRequest.m in Sources */,
 				A4FC40451D0ACA420041F4A6 /* MonitorListBaseClass.m in Sources */,
 				A49A276F1CC6110400ED5A61 /* LoginViewController.m in Sources */,

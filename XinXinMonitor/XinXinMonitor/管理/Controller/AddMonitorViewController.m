@@ -84,7 +84,7 @@
     self.endTimeBtn.layer.cornerRadius = 4.0f;
     self.endTimeBtn.layer.masksToBounds = YES;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit)];
     [self.view addGestureRecognizer:tap];
     //    self.myAddressTextField.text = @"1111";
     
@@ -263,6 +263,7 @@
     if (error == 0) {
         //        [LocationManager sharedManager].detailAddress = result.address;
         self.myAddressTextField.text = result.address;
+        [LocationManager sharedManager].detailAddress = result.address;
         self.afreshAddressBtn.hidden = NO;
         [[LocationManager sharedManager] saveMyCityWithString:result.addressDetail.city];
         [[LocationManager sharedManager] saveMyDistrictWithString:result.addressDetail.district];
@@ -301,6 +302,7 @@
     //        [self reverseGeocode];
     //        [self hideSVProgressHUD];
     //    };
+    [self.view endEditing:YES];
     __weak AddMonitorViewController *weakself = self;
     ChooseAddressInMapViewController *vc = [[ChooseAddressInMapViewController alloc] init];
     vc.ChooseAddressString = self.myAddressTextField.text;
@@ -312,8 +314,8 @@
         weakself.myAddressTextField.text = address;
         weakself.longitude = longitude;
         weakself.latitude = latitude;
-        self.cityName = cityName;
-        self.districtName = districtName;
+        weakself.cityName = cityName;
+        weakself.districtName = districtName;
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
