@@ -13,12 +13,12 @@
 #import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
 #import "SearchAddressListViewController.h"
 
-@interface ChooseAddressInMapViewController ()<BMKMapViewDelegate,BMKGeoCodeSearchDelegate> {
+@interface ChooseAddressInMapViewController ()<BMKMapViewDelegate,BMKGeoCodeSearchDelegate,UITextFieldDelegate> {
     NSString *_searchAddressString;
 }
 @property (nonatomic, strong) BMKMapView *mapView;  /**< 地图view*/
 @property (nonatomic, strong) BMKGeoCodeSearch *geocodesearch;
-@property (nonatomic, strong) UILabel *addressLabel;
+@property (nonatomic, strong) UITextField *addressTextField;
 @end
 
 @implementation ChooseAddressInMapViewController
@@ -82,13 +82,15 @@
     addAddressBackgrondView.backgroundColor = [UIColor grayColor];
     addAddressBackgrondView.alpha = 0.4f;
     [addAddressView addSubview:addAddressBackgrondView];
-    self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, FRAMNE_W(addAddressView) - 45, 30)];
-    self.addressLabel.font = [UIFont systemFontOfSize:15];
-    self.addressLabel.text = self.ChooseAddressString;
-    [addAddressView addSubview:self.addressLabel];
+    self.addressTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, FRAMNE_W(addAddressView) - 45, 30)];
+    self.addressTextField.font = [UIFont systemFontOfSize:15];
+    self.addressTextField.text = self.ChooseAddressString;
+    self.addressTextField.returnKeyType = UIReturnKeyDone;
+    self.addressTextField.delegate = self;
+    [addAddressView addSubview:self.addressTextField];
     UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(FRAMNE_W(addAddressView) - 30, 10, FRAMNE_H(addAddressView)/2, FRAMNE_H(addAddressView)/2)];
     searchImageView.image = [UIImage imageNamed:@"searchImg"];
-    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, FRAMNE_W(addAddressView), FRAMNE_H(addAddressView))];
+    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(FRAMNE_W(addAddressView) - FRAMNE_H(addAddressView), 0, FRAMNE_H(addAddressView), FRAMNE_H(addAddressView))];
     searchBtn.backgroundColor = [UIColor clearColor];
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [addAddressView addSubview:searchImageView];
@@ -134,17 +136,48 @@
 
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
     if (error == 0) {
-//        self.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district,result.addressDetail.streetName,result.addressDetail.streetNumber];
+        //        self.addressTextField.text = [NSString stringWithFormat:@"%@%@%@%@%@",result.addressDetail.province,result.addressDetail.city,result.addressDetail.district,result.addressDetail.streetName,result.addressDetail.streetNumber];
         if (_searchAddressString) {
-            self.addressLabel.text = _searchAddressString;
+            self.addressTextField.text = _searchAddressString;
             _searchAddressString = nil;
         } else {
-            self.addressLabel.text = result.address;
+            self.addressTextField.text = result.address;
         }
         self.ChooseAddressString = result.address;
         self.cityName = result.addressDetail.city;
         self.districtName = result.addressDetail.district;
     }
+}
+
+- (void)geocode {
+    BMKGeoCodeSearchOption *geocodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
+    geocodeSearchOption.address = self.addressTextField.text;
+    BOOL flag = [_geocodesearch geoCode:geocodeSearchOption];
+    if(flag)
+    {
+        NSLog(@"geo检索发送成功");
+    }
+    else
+    {
+        NSLog(@"geo检索发送失败");
+    }
+}
+
+- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error {
+    if (error == 0) {
+        self.latitude = [NSString stringWithFormat:@"%f",result.location.latitude];
+        self.longitude = [NSString stringWithFormat:@"%f",result.location.longitude];
+        [self mapViewAnimation];
+        [self reverseGeocode];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    if (textField == self.addressTextField) {
+        [self geocode];
+    }
+    return YES;
 }
 
 - (void)dealloc {
@@ -162,13 +195,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

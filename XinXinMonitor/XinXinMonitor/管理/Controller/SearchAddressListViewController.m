@@ -34,6 +34,24 @@
     self.searchBar.delegate = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
     _poisearch = [[BMKPoiSearch alloc]init];
+    
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, 1)];
+    footView.backgroundColor = RGBACOLOR(244, 245, 246, 1);
+    self.searchListTableView.tableFooterView = footView;
+    
+    __weak SearchAddressListViewController *weakself = self;
+    self.searchListTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageNumber = 0;
+        if (self.searchBar.text.length > 0) {
+            [weakself poiAddressWithString:self.searchBar.text];
+        } else {
+            [self.searchListArray removeAllObjects];
+            self.searchListTableView.mj_footer = nil;
+            [self.searchListTableView reloadData];
+            [self endRefresh];
+        }
+    }];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -43,9 +61,20 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     _poisearch.delegate = nil; // 不用时，置nil
+    [self endRefresh];
 }
 
+#pragma mark - 结束加载
+
+- (void)endRefresh {
+    [self.searchListTableView.mj_header endRefreshing];
+    [self.searchListTableView.mj_footer endRefreshing];
+    [self hideSVProgressHUD];
+}
+
+#pragma mark - 获取地址
 - (void)poiAddressWithString:(NSString *)string {
+    [self showSVProgressHUD];
     BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
     citySearchOption.pageIndex = _pageNumber;
     citySearchOption.pageCapacity = 10;
@@ -72,12 +101,30 @@
 - (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPoiResult*)result errorCode:(BMKSearchErrorCode)error
 {
     if (error == BMK_SEARCH_NO_ERROR) {
+        [self endRefresh];
         if (_pageNumber == 0) {
             [self.searchListArray removeAllObjects];
         }
         for (int i = 0; i < result.poiInfoList.count; i++) {
             BMKPoiInfo* poi = [result.poiInfoList objectAtIndex:i];
             [self.searchListArray addObject:poi];
+        }
+        if (self.searchListArray.count > 0) {
+            __weak SearchAddressListViewController *weakself = self;
+            self.searchListTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                _pageNumber ++;
+                if (self.searchBar.text.length > 0) {
+                    [weakself poiAddressWithString:self.searchBar.text];
+                } else {
+                    [self.searchListArray removeAllObjects];
+                    self.searchListTableView.mj_footer = nil;
+                    [self.searchListTableView reloadData];
+                    [self endRefresh];
+                }
+            }];
+        }
+        if (_pageNumber + 1 == result.pageNum) {
+            [self.searchListTableView.mj_footer endRefreshingWithNoMoreData];
         }
         [self.searchListTableView reloadData];
     } else {
@@ -115,7 +162,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         self.searchAddressString = [LocationManager sharedManager].detailAddress;
-        self.latitude = [NSString stringWithFormat:@"%f",[[LocationManager sharedManager].latitude doubleValue] - 1];
+        self.latitude = [LocationManager sharedManager].latitude;
         self.longitude = [LocationManager sharedManager].longitude;
     } else {
         
@@ -142,13 +189,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
