@@ -355,13 +355,14 @@
     self.cityChangeView.hidden = YES;
     self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_down"];
     
+    __weak ShouYeViewController *weakself = self;
     vc.cityChangeBlock = ^(NSString *chooseCityString){
-        [self.topView setAddressBtnTextWithString:chooseCityString];
+        [weakself.topView setAddressBtnTextWithString:chooseCityString];
         [[LocationManager sharedManager] saveCityWithString:chooseCityString];
         [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
-        [self animationToMyChooseLocation];
+        [weakself animationToMyChooseLocation];
         _pageNum = 1;
-        [self loadMonitorInfo];
+        [weakself loadMonitorInfo];
     };
     [self presentViewController:vc animated:YES completion:^{
         

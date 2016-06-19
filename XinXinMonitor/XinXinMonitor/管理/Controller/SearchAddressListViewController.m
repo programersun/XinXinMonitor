@@ -8,6 +8,7 @@
 
 #import "SearchAddressListViewController.h"
 #import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import "ChooseCityViewController.h"
 
 @interface SearchAddressListViewController () <UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,BMKPoiSearchDelegate> {
     BMKPoiSearch* _poisearch;
@@ -16,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *searchListTableView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *searchListArray;
+@property (nonatomic, strong) UIButton *changeCityBtn;
+@property (nonatomic, strong) UIView *topView;
+@property (nonatomic, strong) NSString *chooseCity;
+
 @end
 
 @implementation SearchAddressListViewController
@@ -29,10 +34,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40, 0, kkViewWidth - 50, 40)];
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(40, 0, kkViewWidth - 50, 40)];
+    self.chooseCity = [[[LocationManager sharedManager] getMyCity] stringByReplacingOccurrencesOfString:@"市" withString:@""];
+    CGFloat btnWidth = [PublicUtil widthOfString:self.chooseCity withFont:16];
+    self.changeCityBtn = [[UIButton alloc] initWithFrame:CGRectMake(FRAMNE_W(self.topView) - btnWidth - 5, 0, btnWidth + 10, 40)];
+    self.changeCityBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.changeCityBtn setTitle:self.chooseCity forState:UIControlStateNormal];
+    [self.changeCityBtn addTarget:self action:@selector(changeCityBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, FRAMNE_W(self.topView) - btnWidth - 10, 40)];
     self.searchBar.placeholder = @"请输入地址关键字";
+    UIImage* searchBarBg = [self GetImageWithColor:[UIColor clearColor] andHeight:40.0f];
+    //设置背景图片
+    [self.searchBar setBackgroundImage:searchBarBg];
+    //设置背景色
+    [self.searchBar setBackgroundColor:[UIColor clearColor]];
+    
     self.searchBar.delegate = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
+    
+    [self.topView addSubview:self.searchBar];
+    [self.topView addSubview:self.changeCityBtn];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.topView];
     _poisearch = [[BMKPoiSearch alloc]init];
     
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, 1)];
@@ -64,6 +87,21 @@
     [self endRefresh];
 }
 
+- (UIImage*) GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height
+{
+    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, height);
+    UIGraphicsBeginImageContext(r.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, r);
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 #pragma mark - 结束加载
 
 - (void)endRefresh {
@@ -72,13 +110,37 @@
     [self hideSVProgressHUD];
 }
 
+- (void)changeCityBtnClick:(UIButton *)sender {
+    ChooseCityViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ChooseCityViewController"];
+    if (vc == nil) {
+        vc = [[ChooseCityViewController alloc] init];
+    }
+    __weak SearchAddressListViewController *weakself = self;
+    vc.cityChangeBlock = ^(NSString *chooseCityString){
+        if (![weakself.chooseCity isEqualToString:chooseCityString]) {
+            weakself.chooseCity = [chooseCityString stringByReplacingOccurrencesOfString:@"市" withString:@""];;
+            CGFloat btnWidth = [PublicUtil widthOfString:weakself.chooseCity withFont:16];
+            weakself.changeCityBtn.frame = CGRectMake(FRAMNE_W(weakself.topView) - btnWidth - 5, 0, btnWidth + 10, 40);
+            weakself.searchBar.frame = CGRectMake(0, 0, FRAMNE_W(weakself.topView) - btnWidth - 10, 40);
+            [self.changeCityBtn setTitle:weakself.chooseCity forState:UIControlStateNormal];
+            _pageNumber = 0;
+            [weakself.searchListArray removeAllObjects];
+            weakself.searchListTableView.mj_footer = nil;
+            [weakself.searchListTableView reloadData];
+        }
+    };
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
+}
+
 #pragma mark - 获取地址
 - (void)poiAddressWithString:(NSString *)string {
     [self showSVProgressHUD];
     BMKCitySearchOption *citySearchOption = [[BMKCitySearchOption alloc]init];
     citySearchOption.pageIndex = _pageNumber;
     citySearchOption.pageCapacity = 10;
-    citySearchOption.city= @"";
+    citySearchOption.city= self.chooseCity;
     citySearchOption.keyword = string;
     BOOL flag = [_poisearch poiSearchInCity:citySearchOption];
     if(flag)
