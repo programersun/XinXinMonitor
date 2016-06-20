@@ -18,7 +18,7 @@
 }
 @property (nonatomic, strong) BMKMapView *mapView;  /**< 地图view*/
 @property (nonatomic, strong) BMKGeoCodeSearch *geocodesearch;
-@property (nonatomic, strong) UITextField *addressTextField;
+@property (nonatomic, strong) UILabel *addressTextField;
 @end
 
 @implementation ChooseAddressInMapViewController
@@ -27,6 +27,24 @@
     [super viewDidLoad];
     [self setNavigationLeftItemWithNormalImg:[UIImage imageNamed:@"arrows_left"] highlightedImg:[UIImage imageNamed:@"arrows_left"]];
     [self setNavigationRightItemWithString:@"确定"];
+    
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth - 90, 28)];
+    titleView.backgroundColor = [UIColor clearColor];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth - 90, 28)];
+    backgroundView.backgroundColor = [UIColor grayColor];
+    backgroundView.alpha = 0.5f;
+    [titleView addSubview:backgroundView];
+    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth - 90, 28)];
+    [searchBtn setImage:[UIImage imageNamed:@"searchImg"] forState:UIControlStateNormal];
+    [searchBtn setTitle:@"地址搜索" forState:UIControlStateNormal];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    titleView.layer.cornerRadius = 6.0f;
+    backgroundView.layer.cornerRadius = 6.0f;
+    searchBtn.layer.cornerRadius = 6.0f;
+    [titleView addSubview:searchBtn];
+    self.navigationItem.titleView = titleView;
+    
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight - 64)];
     _mapView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_mapView];
@@ -82,19 +100,10 @@
     addAddressBackgrondView.backgroundColor = [UIColor grayColor];
     addAddressBackgrondView.alpha = 0.4f;
     [addAddressView addSubview:addAddressBackgrondView];
-    self.addressTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, FRAMNE_W(addAddressView) - 45, 30)];
+    self.addressTextField = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, FRAMNE_W(addAddressView) - 20, 30)];
     self.addressTextField.font = [UIFont systemFontOfSize:15];
     self.addressTextField.text = self.ChooseAddressString;
-    self.addressTextField.returnKeyType = UIReturnKeyDone;
-    self.addressTextField.delegate = self;
     [addAddressView addSubview:self.addressTextField];
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(FRAMNE_W(addAddressView) - 30, 10, FRAMNE_H(addAddressView)/2, FRAMNE_H(addAddressView)/2)];
-    searchImageView.image = [UIImage imageNamed:@"searchImg"];
-    UIButton *searchBtn = [[UIButton alloc] initWithFrame:CGRectMake(FRAMNE_W(addAddressView) - FRAMNE_H(addAddressView), 0, FRAMNE_H(addAddressView), FRAMNE_H(addAddressView))];
-    searchBtn.backgroundColor = [UIColor clearColor];
-    [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [addAddressView addSubview:searchImageView];
-    [addAddressView addSubview:searchBtn];
     [self.view addSubview:addAddressView];
 }
 
@@ -170,14 +179,6 @@
         [self mapViewAnimation];
         [self reverseGeocode];
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    if (textField == self.addressTextField) {
-        [self geocode];
-    }
-    return YES;
 }
 
 - (void)dealloc {

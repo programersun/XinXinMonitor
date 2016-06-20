@@ -145,11 +145,11 @@
     BOOL flag = [_poisearch poiSearchInCity:citySearchOption];
     if(flag)
     {
-        NSLog(@"城市内检索发送成功");
+//        NSLog(@"城市内检索发送成功");
     }
     else
     {
-        NSLog(@"城市内检索发送失败");
+//        NSLog(@"城市内检索发送失败");
     }
 }
 
@@ -157,6 +157,24 @@
     [searchBar resignFirstResponder];
     _pageNumber = 0;
     [self poiAddressWithString:searchBar.text];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    _pageNumber = 0;
+    [self poiAddressWithString:searchBar.text];
+}
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSString *searchString;
+    if (text.length > 0) {
+        searchString = [searchBar.text stringByAppendingString:text];
+    } else {
+        searchString = [searchBar.text stringByReplacingCharactersInRange:NSMakeRange(searchBar.text.length - 1, 1) withString:@""];
+    }
+    NSLog(@"%@---%@",searchString,text);
+    _pageNumber = 0;
+    [self poiAddressWithString:searchString];
+    return YES;
 }
 
 #pragma mark implement BMKSearchDelegate
