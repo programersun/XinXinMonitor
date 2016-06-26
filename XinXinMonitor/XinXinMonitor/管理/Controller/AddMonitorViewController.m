@@ -25,7 +25,8 @@
 /** 设备编号*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorNameTextField;
 /** 设备所属账户*/
-@property (weak, nonatomic) IBOutlet UITextField *monitorAccountTextField;
+@property (weak, nonatomic) IBOutlet UILabel *monitorAccountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *monitorAccountBtn;
 /** 设备电话*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorTelephoneTextField;
 /** 设备类型*/
@@ -36,10 +37,19 @@
 @property (weak, nonatomic) IBOutlet UIButton *startTimeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *endTimeBtn;
 
-
+@property (nonatomic, strong) UIView *chooseBackgroundView;
 @property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorTypeView;
+@property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorAccountView;
 @property (nonatomic, strong) NSMutableArray *monitorTypeArray;
+@property (nonatomic, strong) NSMutableArray *monitorAccountArray;
 @property (nonatomic, strong) NSString *monitorType;
+@property (nonatomic, strong) NSString *monitorTypeString;
+@property (nonatomic, strong) NSString *account;
+@property (nonatomic, strong) NSString *accountString;
+@property (nonatomic, strong) NSString *cameraTime;
+@property (nonatomic, strong) NSString *strikeTime; //离线时间
+@property (nonatomic, strong) NSString *startTime;
+@property (nonatomic, strong) NSString *endTime;
 @property (nonatomic, strong) NSString *longitude;
 @property (nonatomic, strong) NSString *latitude;
 @property (nonatomic, strong) NSString *cityName;
@@ -54,6 +64,13 @@
         _monitorTypeArray = [NSMutableArray array];
     }
     return _monitorTypeArray;
+}
+
+- (NSMutableArray *)monitorAccountArray {
+    if (!_monitorAccountArray) {
+        _monitorAccountArray = [NSMutableArray array];
+    }
+    return _monitorAccountArray;
 }
 
 - (void)viewDidLoad {
@@ -73,7 +90,7 @@
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
-    [self loadMonitorType];
+//    [self loadMonitorType];
     self.monitorType = @"";
     self.startTimeBtn.layer.borderColor = [UIColor grayColor].CGColor;
     self.startTimeBtn.layer.borderWidth = 1.0f;
@@ -86,7 +103,14 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit)];
     [self.view addGestureRecognizer:tap];
-    //    self.myAddressTextField.text = @"1111";
+    
+    self.chooseBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kkViewWidth, kkViewHeight)];
+    self.chooseBackgroundView.backgroundColor = [UIColor blackColor];
+    self.chooseBackgroundView.alpha = 0.3f;
+    
+    UITapGestureRecognizer *chooseTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseTapClick)];
+    [self.chooseBackgroundView addGestureRecognizer:chooseTap];
+    [self loadLastInfo];
     
     // Do any additional setup after loading the view.
 }
@@ -103,8 +127,86 @@
     self.geocodesearch.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 
+- (void)leftBtnClick:(UIButton *)sender {
+    [self chooseTapClick];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)endEdit {
     [self.view endEditing:YES];
+}
+
+- (void)chooseTapClick {
+
+    [self.chooseBackgroundView removeFromSuperview];
+    [self.chooseMonitorAccountView removeFromSuperview];
+    [self.chooseMonitorTypeView removeFromSuperview];
+    self.chooseMonitorAccountView.hidden = YES;
+    self.chooseMonitorTypeView.hidden = YES;
+    [self.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+    [self.monitorAccountBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+}
+
+//@""
+//@""
+//@""
+//@""
+//@""
+
+- (void)loadLastInfo {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"] isEqualToString:@""] && [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorTypeString"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorTypeString"] isEqualToString:@""]) {
+        self.monitorType = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"];
+        self.monitorTypeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorTypeString"];
+        self.monitorTypeLabel.text = self.monitorTypeString;
+    } else {
+        self.monitorTypeString = @"请选择类型";
+        self.monitorTypeLabel.text = self.monitorTypeString;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccount"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccount"] isEqualToString:@""] && [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccountString"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccountString"] isEqualToString:@""]) {
+        self.account = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccount"];
+        self.accountString = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorAccountString"];
+        self.monitorAccountLabel.text = self.accountString;
+    } else {
+        self.accountString = @"请选择客户";
+        self.monitorAccountLabel.text = self.accountString;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"] isEqualToString:@""]) {
+        self.cameraTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"];
+        self.timeTextField.text = self.cameraTime;
+    } else {
+        self.cameraTime = @"30";
+        self.timeTextField.text = self.cameraTime;
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStrikeTime"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStrikeTime"] isEqualToString:@""]) {
+        self.strikeTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStrikeTime"];
+        self.strikeTimeTextField.text = self.strikeTime;
+    } else {
+        self.strikeTime = @"";
+        self.strikeTimeTextField.text = self.strikeTime;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStartTime"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStartTime"] isEqualToString:@""]) {
+        self.startTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStartTime"];
+        [self.startTimeBtn setTitle:self.startTime forState:UIControlStateNormal];
+    } else {
+        self.startTime = @"06:00";
+        [self.startTimeBtn setTitle:self.startTime forState:UIControlStateNormal];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorEndTime"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorEndTime"] isEqualToString:@""]) {
+        self.endTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorEndTime"];
+        [self.endTimeBtn setTitle:self.endTime forState:UIControlStateNormal];
+    } else {
+        self.endTime = @"20:00";
+        [self.endTimeBtn setTitle:self.endTime forState:UIControlStateNormal];
+    }
 }
 
 - (void)dealloc {
@@ -115,17 +217,16 @@
 
 - (void)rightBtnClick:(UIButton *)sender {
     [self.view endEditing:YES];
-    
     if ([self.myAddressTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请定位当前地址或手动输入地址" showTime:1.0];
+    } else if ([self.monitorType isEqualToString:@"请选择类型"]){
+        [self showMessageWithString:@"请选择设备类型" showTime:1.0];
+    } else if ([self.monitorAccountLabel.text isEqualToString:@"请选择客户"]) {
+        [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
     } else if ([self.monitorNameTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请输入设备编号" showTime:1.0];
-    } else if ([self.monitorAccountTextField.text isEqualToString:@""]) {
-        [self showMessageWithString:@"请输入设备电话号码" showTime:1.0];
     } else if ([self.monitorTelephoneTextField.text isEqualToString:@""]) {
-        [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
-    } else if ([self.monitorType isEqualToString:@""]){
-        [self showMessageWithString:@"请选择设备类型" showTime:1.0];
+        [self showMessageWithString:@"请输入设备电话号码" showTime:1.0];
     } else if ([self.strikeTimeTextField.text isEqualToString:@""]){
         [self showMessageWithString:@"请输入判断设备离线的时间" showTime:1.0];
     } else{
@@ -133,15 +234,12 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.view endEditing:YES];
         [SVProgressHUD show];
-        //        if ([self.myAddressTextField.text isEqualToString:[LocationManager sharedManager].detailAddress]) {
         [self addMonitor];
-        //        } else {
-        //            [self geocode];
-        //        }
     }
 }
 
 - (IBAction)workTimeBtnClcik:(UIButton *)sender {
+    [self endEdit];
     TimePickerView *picker = [[TimePickerView alloc] init];
     __block TimePickerView *weakpicker = picker;
     picker.pickerBtnClickBlock = ^{
@@ -156,69 +254,164 @@
 }
 
 - (IBAction)monitorBtnClick:(UIButton *)sender {
-    [self.view endEditing:YES];
-    if (sender.selected) {
-        sender.selected = NO;
-        [sender setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
-        self.chooseMonitorTypeView.hidden = YES;
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseBackgroundView];
+    if (self.chooseMonitorTypeView == nil) {
+        [self createMonitorTypeView];
+    }
+    if (self.monitorTypeArray.count == 0) {
+        [self loadMonitorType];
     } else {
-        sender.selected = YES;
-        [sender setImage:[UIImage imageNamed:@"arrows_black_up"] forState:UIControlStateNormal];
+        [self showAndHidechooseMonitorTypeView];
+    }
+    [self.view endEditing:YES];
+}
+
+- (void)showAndHidechooseMonitorTypeView {
+    if (self.chooseMonitorTypeView.hidden) {
         self.chooseMonitorTypeView.hidden = NO;
+        [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseMonitorTypeView];
+        [self.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_up"] forState:UIControlStateNormal];
+    } else {
+        [self.chooseBackgroundView removeFromSuperview];
+        [self.chooseMonitorTypeView removeFromSuperview];
+        self.chooseMonitorTypeView.hidden = YES;
+        [self.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)accountBtnClick:(UIButton *)sender {
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseBackgroundView];
+    if (self.chooseMonitorAccountView == nil) {
+        [self createMonitorAccountView];
+    }
+    if (self.monitorAccountArray.count == 0) {
+        [self loadMonitorAccount];
+    } else {
+        [self showAndHidechooseMonitorAccountView];
+    }
+    [self.view endEditing:YES];
+}
+
+- (void)showAndHidechooseMonitorAccountView {
+    if (self.chooseMonitorAccountView.hidden) {
+        self.chooseMonitorAccountView.hidden = NO;
+        [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseMonitorAccountView];
+        [self.monitorAccountBtn setImage:[UIImage imageNamed:@"arrows_black_up"] forState:UIControlStateNormal];
+    } else {
+        [self.chooseBackgroundView removeFromSuperview];
+        [self.chooseMonitorAccountView removeFromSuperview];
+        self.chooseMonitorAccountView.hidden = YES;
+        [self.monitorAccountBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
     }
 }
 
 #pragma mark - 创建类型选择View
 - (void)createMonitorTypeView {
-    
-    if (self.monitorTypeArray.count > 0) {
+        
+    self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] init];
+    self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
+    self.chooseMonitorTypeView.viewType = @"1";
+    __weak AddMonitorViewController *weakself = self;
+    self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
+        NSDictionary *dict = weakself.monitorTypeArray[index];
+        weakself.monitorTypeLabel.text = [dict objectForKey:@"name"];
+        weakself.monitorTypeString = [dict objectForKey:@"name"];
+        weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
+        [weakself showAndHidechooseMonitorTypeView];
+    };
+    self.chooseMonitorTypeView.hidden = YES;
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseMonitorTypeView];
+}
+
+#pragma mark - 创建用户选择View chooseMonitorAccountView
+- (void)createMonitorAccountView {
+
+    self.chooseMonitorAccountView = [[ChooseMonitorTypeView alloc] init];
+    self.chooseMonitorAccountView.MonitorTypeArray = self.monitorAccountArray;
+    self.chooseMonitorAccountView.viewType = @"1";
+    __weak AddMonitorViewController *weakself = self;
+    self.chooseMonitorAccountView.cellClickBlock = ^(NSInteger index) {
+        NSDictionary *dict = weakself.monitorAccountArray[index];
+        weakself.monitorAccountLabel.text = [dict objectForKey:@"name"];
+        weakself.accountString = [dict objectForKey:@"name"];
+        weakself.account = [NSString stringWithFormat:@"%@",[dict objectForKey:@"key"]];
+        [weakself showAndHidechooseMonitorAccountView];
+    };
+    self.chooseMonitorAccountView.hidden = YES;
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.chooseMonitorAccountView];
+}
+
+#pragma mark - 获取设备类型
+- (void)loadMonitorType {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorTypeAPI] params:nil success:^(id responseObj) {
+        [self.monitorTypeArray removeAllObjects];
+        for (NSDictionary *dict in responseObj) {
+            [self.monitorTypeArray addObject:dict];
+        }
         CGFloat viewHegiht;
         if (self.monitorTypeArray.count * 40 > 200) {
             viewHegiht = 200;
         } else {
             viewHegiht = self.monitorTypeArray.count * 40;
         }
+        self.chooseMonitorTypeView.frame = CGRectMake(self.monitorTypeBtn.frame.origin.x + self.monitorTypeBtn.frame.size.width - 130, self.monitorTypeBtn.frame.origin.y + self.monitorTypeBtn.frame.size.height + 64, 130, viewHegiht);
+        [self.chooseMonitorTypeView.chooseMonitorTypeTableView reloadData];
+        [self showAndHidechooseMonitorTypeView];
+    } failure:^(NSError *error) {
         
-        self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] initWithFrame:CGRectMake(self.monitorTypeBtn.frame.origin.x + self.monitorTypeBtn.frame.size.width - 130, self.monitorTypeBtn.frame.origin.y + self.monitorTypeBtn.frame.size.height + 5, 130, viewHegiht)];
-        self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
-        self.chooseMonitorTypeView.viewType = @"1";
-        __weak AddMonitorViewController *weakself = self;
-        self.chooseMonitorTypeView.cellClickBlock = ^(NSInteger index) {
-            NSDictionary *dict = weakself.monitorTypeArray[index];
-            weakself.monitorTypeLabel.text = [dict objectForKey:@"name"];
-            weakself.monitorType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"code"]];
-            weakself.chooseMonitorTypeView.hidden = YES;
-            weakself.monitorTypeBtn.selected = NO;
-            [weakself.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
-        };
-        self.chooseMonitorTypeView.hidden = YES;
-        [self.view addSubview:self.chooseMonitorTypeView];
-    }
+    }];
 }
 
-#pragma mark - 获取设备类型
-- (void)loadMonitorType {
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,MonitorTypeAPI] params:nil success:^(id responseObj) {
-        
+#pragma mark - 获取设备用户
+- (void)loadMonitorAccount {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,CustomerList] params:nil success:^(id responseObj) {
+        [self.monitorAccountArray removeAllObjects];
         for (NSDictionary *dict in responseObj) {
-            [self.monitorTypeArray addObject:dict];
+            [self.monitorAccountArray addObject:dict];
         }
-        [self createMonitorTypeView];
+        CGFloat viewHegiht;
+        if (self.monitorAccountArray.count * 40 > 200) {
+            viewHegiht = 200;
+        } else {
+            viewHegiht = self.monitorAccountArray.count * 40;
+        }
+        self.chooseMonitorAccountView.frame = CGRectMake(self.monitorAccountBtn.frame.origin.x + self.monitorAccountBtn.frame.size.width - 130, self.monitorAccountBtn.frame.origin.y + self.monitorAccountBtn.frame.size.height + 64, 130, viewHegiht);
+        [self.chooseMonitorAccountView.chooseMonitorTypeTableView reloadData];
+        [self showAndHidechooseMonitorAccountView];
     } failure:^(NSError *error) {
         
     }];
 }
 
 - (void)addMonitor {
-    NSString *time = self.timeTextField.text;
-    if ([time isEqualToString:@""]) {
-        time = @"30";
+
+    if (![self.timeTextField.text isEqualToString:@""]) {
+        self.cameraTime = self.timeTextField.text;
     }
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountTextField.text monitorType:self.monitorType time:time strikeTime:self.strikeTimeTextField.text startTime:self.startTimeBtn.titleLabel.text endTime:self.endTimeBtn.titleLabel.text] success:^(id responseObj) {
+    if (![self.strikeTimeTextField.text isEqualToString:@""]) {
+        self.strikeTime = self.strikeTimeTextField.text;
+    }
+    self.startTime = self.startTimeBtn.titleLabel.text;
+    self.endTime = self.endTimeBtn.titleLabel.text;
+    
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountLabel.text monitorType:self.monitorType time:self.cameraTime strikeTime:self.strikeTime startTime:self.startTime endTime:self.endTime] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;
         if ([[dic objectForKey:@"code"] integerValue] == 1) {
+            
+            NSUserDefaults *monitorDefault = [NSUserDefaults standardUserDefaults];
+            [monitorDefault setObject:self.monitorType forKey:@"MonitorType"];
+            [monitorDefault setObject:self.monitorTypeString forKey:@"MonitorTypeString"];
+            [monitorDefault setObject:self.account forKey:@"MonitorAccount"];
+            [monitorDefault setObject:self.accountString forKey:@"MonitorAccountString"];
+            [monitorDefault setObject:self.cameraTime forKey:@"MonitorCameraTime"];
+            [monitorDefault setObject:self.strikeTime forKey:@"MonitorStrikeTime"];
+            [monitorDefault setObject:self.startTime forKey:@"MonitorStartTime"];
+            [monitorDefault setObject:self.endTime forKey:@"MonitorEndTime"];
+            [monitorDefault synchronize];
+            
+            
             [self showSuccessWithString:[dic objectForKey:@"message"] showTime:1.0];
             dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC));
             dispatch_after(time, dispatch_get_main_queue(), ^{

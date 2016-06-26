@@ -29,6 +29,8 @@
 #define AddMonitorAPI @"/mobile/camera/addCameraInfo"
 /** 设备类型*/
 #define MonitorTypeAPI @"/mobile/camera/getCameraTypeListData"
+/** 客户列表*/
+#define CustomerList @"/mobile/customer/getCustomersListData"
 /** 我的设备类型*/
 #define MyMonitorTypeAPI @"/mobile/camera/getCameraTypesByCustomer"
 /** 删除设备*/
