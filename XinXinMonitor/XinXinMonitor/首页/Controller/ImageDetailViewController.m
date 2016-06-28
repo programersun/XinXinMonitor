@@ -116,10 +116,10 @@
         browseItem.bigImageUrl = imageArray[i];// 大图url地址
         browseItem.smallImageView = imageView;// 小图
         [self.browseItemArray addObject:browseItem];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageArray[i]]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageArray[i]]] placeholderImage:[UIImage imageNamed:@"ImageDefault"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             num ++;
             if (num >= imageArray.count) {
-               [self initData];
+                [self initData];
             }
         }];
         
@@ -142,7 +142,7 @@
     }
     [self hideSVProgressHUD];
     [_collectionView reloadData];
-
+    
     for (int i = 0; i < self.imageDetalBaseClass.rows.count; i++) {
         ImageDetailRows *model = self.imageDetalBaseClass.rows[i];
         if ([model.pkid isEqualToString:self.problemPictureId]) {
@@ -292,7 +292,7 @@
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.pagingEnabled = YES;
-//    _collectionView.bounces = NO;
+    //    _collectionView.bounces = NO;
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.backgroundColor = [UIColor blackColor];
@@ -455,7 +455,7 @@
 #pragma mark 图片点击事件
 - (void)tap:(SRBrowseCollectionViewCell *)browseCell
 {
-
+    
 }
 
 #pragma mark 图片长按事件
@@ -480,7 +480,7 @@
         if (alertView.tag == 1003) {
             [self cancelProblem];
         }
-
+        
     }
     [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
@@ -496,8 +496,8 @@
         [self loadImageList];
     }
     if (scollX > scrollView.contentSize.width + 50 - kkViewWidth && !_isRefresh ) {
-//    if (scollX > kkViewWidth * (self.imageListArray.count - 1) + 50 && !_isRefresh ) {
-    
+        //    if (scollX > kkViewWidth * (self.imageListArray.count - 1) + 50 && !_isRefresh ) {
+        
         if ( _pageNum < _pageTotal) {
             _isRefresh = YES;
             _pageNum ++;
@@ -515,13 +515,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

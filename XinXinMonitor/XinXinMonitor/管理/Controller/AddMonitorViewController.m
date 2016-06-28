@@ -90,7 +90,7 @@
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
-//    [self loadMonitorType];
+    //    [self loadMonitorType];
     self.monitorType = @"";
     self.startTimeBtn.layer.borderColor = [UIColor grayColor].CGColor;
     self.startTimeBtn.layer.borderWidth = 1.0f;
@@ -137,7 +137,7 @@
 }
 
 - (void)chooseTapClick {
-
+    
     [self.chooseBackgroundView removeFromSuperview];
     [self.chooseMonitorAccountView removeFromSuperview];
     [self.chooseMonitorTypeView removeFromSuperview];
@@ -146,12 +146,6 @@
     [self.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
     [self.monitorAccountBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
 }
-
-//@""
-//@""
-//@""
-//@""
-//@""
 
 - (void)loadLastInfo {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"] &&
@@ -188,7 +182,7 @@
         self.strikeTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStrikeTime"];
         self.strikeTimeTextField.text = self.strikeTime;
     } else {
-        self.strikeTime = @"";
+        self.strikeTime = @"120";
         self.strikeTimeTextField.text = self.strikeTime;
     }
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorStartTime"] &&
@@ -204,7 +198,7 @@
         self.endTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorEndTime"];
         [self.endTimeBtn setTitle:self.endTime forState:UIControlStateNormal];
     } else {
-        self.endTime = @"20:00";
+        self.endTime = @"18:00";
         [self.endTimeBtn setTitle:self.endTime forState:UIControlStateNormal];
     }
 }
@@ -241,11 +235,13 @@
 - (IBAction)workTimeBtnClcik:(UIButton *)sender {
     [self endEdit];
     TimePickerView *picker = [[TimePickerView alloc] init];
+    NSDate *chooseDate;
+    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"HH:mm"];
+    chooseDate = [dateformatter dateFromString:sender.titleLabel.text];
+    picker.datePicker.date = chooseDate;
     __block TimePickerView *weakpicker = picker;
     picker.pickerBtnClickBlock = ^{
-        
-        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
-        [dateformatter setDateFormat:@"HH:mm"];
         NSString *timeString = [dateformatter stringFromDate:weakpicker.datePicker.date];
         [sender setTitle:timeString forState:UIControlStateNormal];
         [weakpicker removeFromSuperview];
@@ -307,7 +303,7 @@
 
 #pragma mark - 创建类型选择View
 - (void)createMonitorTypeView {
-        
+    
     self.chooseMonitorTypeView = [[ChooseMonitorTypeView alloc] init];
     self.chooseMonitorTypeView.MonitorTypeArray = self.monitorTypeArray;
     self.chooseMonitorTypeView.viewType = @"1";
@@ -325,7 +321,7 @@
 
 #pragma mark - 创建用户选择View chooseMonitorAccountView
 - (void)createMonitorAccountView {
-
+    
     self.chooseMonitorAccountView = [[ChooseMonitorTypeView alloc] init];
     self.chooseMonitorAccountView.MonitorTypeArray = self.monitorAccountArray;
     self.chooseMonitorAccountView.viewType = @"1";
@@ -384,7 +380,7 @@
 }
 
 - (void)addMonitor {
-
+    
     if (![self.timeTextField.text isEqualToString:@""]) {
         self.cameraTime = self.timeTextField.text;
     }

@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "iphone",
-      "filename" : "Search_48px.png",
+      "filename" : "searchImg@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "iphone",
-      "filename" : "Search_72px.png",
+      "filename" : "searchImg@3x.png",
       "scale" : "3x"
     }
   ],

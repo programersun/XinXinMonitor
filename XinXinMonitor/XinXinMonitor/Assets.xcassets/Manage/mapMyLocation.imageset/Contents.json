@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "iphone",
-      "filename" : "location_32px_1175814_easyicon.net.png",
+      "filename" : "mapMyLocation.png",
       "scale" : "1x"
     },
     {
       "idiom" : "iphone",
-      "filename" : "location_64px_1175814_easyicon.net.png",
+      "filename" : "mapMyLocation@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "iphone",
-      "filename" : "location_96px_1175814_easyicon.net.png",
+      "filename" : "mapMyLocation@3x.png",
       "scale" : "3x"
     }
   ],
