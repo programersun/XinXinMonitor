@@ -430,7 +430,7 @@
         ImageDetailRows *model = self.imageListArray[indexPath.row];
         cell.timeLabel.text = model.pictureTime;
         
-        if (model.usersetResult == 1) {
+        if (model.usersetResult == 2) {
             cell.problemBtn.hidden = NO;
             cell.ProblemBtnClickBlock = ^{
                 _cancelProblemIndex = indexPath.row;
