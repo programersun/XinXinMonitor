@@ -330,11 +330,12 @@
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
-    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    vc.timeString = [formatter stringFromDate:date];
+    //    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
+    //    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //    [formatter setDateFormat:@"YYYY-MM-dd"];
+    //    vc.timeString = [formatter stringFromDate:date];
+    vc.timeString = model.pictureDate;;
     vc.problemPictureId = @"";
     vc.telephone = model.phone;
     vc.address = model.address;
@@ -350,13 +351,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -50,7 +50,10 @@
     _problemBtn = [[UIButton alloc] initWithFrame:CGRectMake(kkViewWidth - btnWidth - 40, kkViewHeight - btnWidth - 104, btnWidth, btnWidth)];
     _problemBtn.layer.masksToBounds = YES;
     _problemBtn.layer.cornerRadius = btnWidth / 2;
-    _problemBtn.backgroundColor = [UIColor redColor];
+    //    _problemBtn.backgroundColor = [UIColor redColor];
+    [_problemBtn setBackgroundImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateNormal];
+    [_problemBtn setBackgroundImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateSelected];
+    [_problemBtn setBackgroundImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateHighlighted];
     [_problemBtn addTarget:self action:@selector(problemBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:_problemBtn];

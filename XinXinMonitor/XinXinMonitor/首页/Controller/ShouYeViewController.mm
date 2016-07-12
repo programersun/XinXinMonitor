@@ -206,7 +206,7 @@
             [self.monitorArray addObject:model];
         }
         [self addMonitor];
-
+        
     } failure:^(NSError *error) {
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
     }];
@@ -224,7 +224,7 @@
     
     //定位
     _locService = [[BMKLocationService alloc]init];
-
+    
 }
 
 - (void)dealloc {
@@ -255,7 +255,7 @@
  *  设置顶部自定义导航
  */
 - (void)addTopView {
-
+    
     self.topView = [HomeTopView instance];
     self.topView.delegate = self;
     self.navigationItem.titleView = self.topView;
@@ -273,7 +273,7 @@
     [[[UIApplication sharedApplication].delegate window] addSubview:self.cityChangeView];
     if (self.cityChangeView.hidden) {
         self.cityChangeView.hidden = NO;
-//        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_up"];
+        //        self.topView.addressArrowsBtn.imageView.image = [UIImage imageNamed:@"arrows_up"];
         self.topView.addressArrowsImg.image = [UIImage imageNamed:@"arrows_up"];
         //获取当前城市区域
         [self loadDistrict:[[LocationManager sharedManager] getCity]];
@@ -285,7 +285,7 @@
 }
 
 - (void)mapBtnClick:(UIButton *)button {
-
+    
     [self.topView.searchText resignFirstResponder];
     if (!self.cityChangeView.hidden) {
         self.cityChangeView.hidden = YES;
@@ -297,7 +297,7 @@
         [UIView transitionFromView:self.firstView toView:_mapView duration:1.0f options:UIViewAnimationOptionTransitionFlipFromRight completion:^(BOOL finished) {
             [self startLocation];
         }];
-
+        
     } else {
         button.selected = NO;
         [self.topView.mapBtn setImage:[UIImage imageNamed:@"mapImg"] forState:UIControlStateNormal];
@@ -486,7 +486,7 @@
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
 {
     [_mapView updateLocationData:userLocation];
-//    NSLog(@"heading is %@",userLocation.heading);
+    //    NSLog(@"heading is %@",userLocation.heading);
 }
 
 /**
@@ -525,43 +525,43 @@
     if ([myChooseDistrict isEqualToString:@"全城"]) {
         addressString = myChooseCity;
     }
-//    CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
-//    [currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
-//        if (error == nil && [placemarks count] > 0) {
-//            //取出获取的地理信息数组中的第一个显示在界面上
-//            CLPlacemark *firstPlacemark = [placemarks firstObject];
-//            //纬度
-//            CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
-//            //经度
-//            CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
-//
-//            CLLocationCoordinate2D coordinate;
-//            CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-//            CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
-//            CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
-//            
-//            coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
-//            
-//            _center.latitude = coordinate.latitude;
-//            _center.longitude = coordinate.longitude;
-//            
-//            BMKCoordinateSpan span;
-//            if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
-//                span = BMKCoordinateSpanMake(0.6, 0.4);
-//            } else {
-//                span = BMKCoordinateSpanMake(0.2, 0.15);
-//            }
-//            
-//            BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
-//            [_mapView setRegion:region animated:YES];
-//            
-//            
-//        }else if (error == nil && [placemarks count] == 0){
-//            NSLog(@"No results were returned.");
-//        }else if (error != nil){
-//            NSLog(@"an error occurred = %@",error);
-//        }
-//    }];
+    //    CLGeocoder *currentLocationGeocoder = [[CLGeocoder alloc] init];
+    //    [currentLocationGeocoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    //        if (error == nil && [placemarks count] > 0) {
+    //            //取出获取的地理信息数组中的第一个显示在界面上
+    //            CLPlacemark *firstPlacemark = [placemarks firstObject];
+    //            //纬度
+    //            CLLocationDegrees latitude = firstPlacemark.location.coordinate.latitude;
+    //            //经度
+    //            CLLocationDegrees longitude = firstPlacemark.location.coordinate.longitude;
+    //
+    //            CLLocationCoordinate2D coordinate;
+    //            CLLocation *iOSLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    //            CLLocation *MarsLocation = [iOSLocation locationMarsFromEarth];
+    //            CLLocation *BaiduLocation = [MarsLocation locationBaiduFromMars];
+    //            
+    //            coordinate  = (CLLocationCoordinate2D){BaiduLocation.coordinate.latitude, BaiduLocation.coordinate.longitude};
+    //            
+    //            _center.latitude = coordinate.latitude;
+    //            _center.longitude = coordinate.longitude;
+    //            
+    //            BMKCoordinateSpan span;
+    //            if ([[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
+    //                span = BMKCoordinateSpanMake(0.6, 0.4);
+    //            } else {
+    //                span = BMKCoordinateSpanMake(0.2, 0.15);
+    //            }
+    //            
+    //            BMKCoordinateRegion region = BMKCoordinateRegionMake(_center, span);
+    //            [_mapView setRegion:region animated:YES];
+    //            
+    //            
+    //        }else if (error == nil && [placemarks count] == 0){
+    //            NSLog(@"No results were returned.");
+    //        }else if (error != nil){
+    //            NSLog(@"an error occurred = %@",error);
+    //        }
+    //    }];
     BMKDistrictSearchOption *option = [[BMKDistrictSearchOption alloc] init];
     option.city = myChooseCity;
     if (![myChooseDistrict isEqualToString:@"全城"]) {
@@ -730,11 +730,11 @@
         vc = [[ImageDetailViewController alloc] init];
     }
     
-//    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
-//    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"YYYY-MM-dd"];
-//    vc.timeString = [formatter stringFromDate:date];
+    //    NSTimeInterval time = (model.lastupdateTime + 28800)/1000;
+    //    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //    [formatter setDateFormat:@"YYYY-MM-dd"];
+    //    vc.timeString = [formatter stringFromDate:date];
     vc.timeString = model.pictureDate;
     vc.problemPictureId = @"";
     vc.telephone = model.phone;
@@ -752,13 +752,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

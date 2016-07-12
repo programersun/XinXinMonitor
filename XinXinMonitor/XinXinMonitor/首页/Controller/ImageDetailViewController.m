@@ -430,12 +430,8 @@
         ImageDetailRows *model = self.imageListArray[indexPath.row];
         cell.timeLabel.text = model.pictureTime;
         
-        if (model.usersetResult == 2) {
+        if (model.usersetResult == 1) {
             cell.problemBtn.hidden = NO;
-            [cell.problemBtn setImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateNormal];
-            [cell.problemBtn setImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateSelected];
-            [cell.problemBtn setImage:[UIImage imageNamed:@"channelProblemImage"] forState:UIControlStateHighlighted];
-            
             cell.ProblemBtnClickBlock = ^{
                 _cancelProblemIndex = indexPath.row;
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否确认排除隐患" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
