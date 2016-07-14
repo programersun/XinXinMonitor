@@ -9,39 +9,69 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageCollectionViewCell" id="GL1-5X-Zgt" customClass="ImageCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="150" height="160"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <rect key="frame" x="0.0" y="0.0" width="150" height="160"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPx-Ca-6MW">
-                        <rect key="frame" x="10" y="120" width="140" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mKX-91-skn">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="113"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="mKX-91-skn" secondAttribute="height" multiplier="4:3" id="fjh-de-ahq"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPx-Ca-6MW">
+                        <rect key="frame" x="5" y="137" width="145" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="I2A-Wj-4gp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwC-9c-hIT">
+                        <rect key="frame" x="23" y="114" width="127" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="fYD-k3-O6E"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.47843137254901957" green="0.47843137254901957" blue="0.47843137254901957" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeImage" translatesAutoresizingMaskIntoConstraints="NO" id="toy-Ja-e6z">
+                        <rect key="frame" x="5" y="117" width="13" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="JWC-Ud-hL5"/>
+                            <constraint firstAttribute="width" constant="13" id="Mem-6p-mCM"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="NPx-Ca-6MW" secondAttribute="bottom" constant="10" id="3Vc-M9-6br"/>
+                <constraint firstItem="NPx-Ca-6MW" firstAttribute="leading" secondItem="GL1-5X-Zgt" secondAttribute="leading" constant="5" id="LX3-7w-e3o"/>
+                <constraint firstItem="XwC-9c-hIT" firstAttribute="centerY" secondItem="toy-Ja-e6z" secondAttribute="centerY" id="NQv-W9-DFW"/>
+                <constraint firstAttribute="trailing" secondItem="XwC-9c-hIT" secondAttribute="trailing" id="PEK-Hy-4gF"/>
+                <constraint firstItem="NPx-Ca-6MW" firstAttribute="top" secondItem="XwC-9c-hIT" secondAttribute="bottom" constant="5" id="U3E-HV-AcH"/>
                 <constraint firstItem="mKX-91-skn" firstAttribute="top" secondItem="GL1-5X-Zgt" secondAttribute="top" id="VUL-6H-slW"/>
                 <constraint firstAttribute="trailing" secondItem="NPx-Ca-6MW" secondAttribute="trailing" id="cJj-JD-vjb"/>
-                <constraint firstItem="NPx-Ca-6MW" firstAttribute="leading" secondItem="GL1-5X-Zgt" secondAttribute="leading" constant="10" id="lSA-is-7RB"/>
+                <constraint firstItem="toy-Ja-e6z" firstAttribute="leading" secondItem="GL1-5X-Zgt" secondAttribute="leading" constant="5" id="deJ-xF-49b"/>
+                <constraint firstItem="XwC-9c-hIT" firstAttribute="leading" secondItem="toy-Ja-e6z" secondAttribute="trailing" constant="5" id="esh-a0-BJx"/>
+                <constraint firstAttribute="bottom" secondItem="NPx-Ca-6MW" secondAttribute="bottom" constant="3" id="hIc-Bn-a4l"/>
                 <constraint firstItem="mKX-91-skn" firstAttribute="leading" secondItem="GL1-5X-Zgt" secondAttribute="leading" id="sNf-rY-8Gq"/>
                 <constraint firstAttribute="trailing" secondItem="mKX-91-skn" secondAttribute="trailing" id="tLs-fU-tIk"/>
             </constraints>
+            <size key="customSize" width="150" height="179"/>
             <connections>
                 <outlet property="cellImageView" destination="mKX-91-skn" id="ssD-nt-zFy"/>
                 <outlet property="cellTitle" destination="NPx-Ca-6MW" id="OIc-9w-DzD"/>
+                <outlet property="timeLabel" destination="XwC-9c-hIT" id="iVI-SF-yFn"/>
             </connections>
+            <point key="canvasLocation" x="454" y="325"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="timeImage" width="42" height="42"/>
+    </resources>
 </document>

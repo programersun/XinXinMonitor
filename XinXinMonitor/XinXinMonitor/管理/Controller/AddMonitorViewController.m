@@ -390,7 +390,7 @@
     self.startTime = self.startTimeBtn.titleLabel.text;
     self.endTime = self.endTimeBtn.titleLabel.text;
     
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.monitorAccountLabel.text monitorType:self.monitorType time:self.cameraTime strikeTime:self.strikeTime startTime:self.startTime endTime:self.endTime] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.account customerName:self.accountString monitorType:self.monitorType time:self.cameraTime strikeTime:self.strikeTime startTime:self.startTime endTime:self.endTime] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;

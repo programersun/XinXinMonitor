@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "ImageDetailViewController.h"
 #import "ProblemImageViewController.h"
+#import "MessageViewController.h"
 
 #define JPushKey @"88ab9b2429bf675c76b3769e"
 #define BaiDuKey @"rZzjh5uvuHku5GcmoQrriEjOeYRr4Qu7"
@@ -80,7 +81,7 @@ BMKMapManager *_mapManager;
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDisk];
     //赶紧停止正在进行的图片下载操作
-//    [[SDWebImageManager sharedManager] cancelAll];
+    //    [[SDWebImageManager sharedManager] cancelAll];
 }
 
 
@@ -92,8 +93,8 @@ BMKMapManager *_mapManager;
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-//    [JPUSHService setBadge:0];
-//    [application setApplicationIconBadgeNumber:0];
+    //    [JPUSHService setBadge:0];
+    //    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -164,11 +165,11 @@ BMKMapManager *_mapManager;
     
     // IOS 7 Support Required
     [JPUSHService handleRemoteNotification:userInfo];
-//    if ([[userInfo objectForKey:@"type"] isEqualToString:@"3"]) {
-//        [self logOutBtnClick];
-//    } else {
-        [self parsePushDictionary:userInfo application:application];
-//    }
+    //    if ([[userInfo objectForKey:@"type"] isEqualToString:@"3"]) {
+    //        [self logOutBtnClick];
+    //    } else {
+    [self parsePushDictionary:userInfo application:application];
+    //    }
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -194,7 +195,7 @@ BMKMapManager *_mapManager;
 
 
 - (void)setAlias {
-
+    
     if ([[UserInfoManager sharedManager].userID isEqualToString:@""]) {
         [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
     }else {
@@ -207,7 +208,7 @@ BMKMapManager *_mapManager;
 /** 处理推送信息 */
 - (void)parsePushDictionary:(NSDictionary*)userInfo
                 application:(UIApplication*)application {
-
+    
     self.jpushInfo = userInfo;
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     
@@ -231,7 +232,10 @@ BMKMapManager *_mapManager;
  *  收到消息推送后跳转详情页面
  */
 - (void)pushImageDetailViewController {
-    [self readMessageWithPkid:[self.jpushInfo objectForKey:@"pkid"]];
+    
+    if (self.reloadMessageListBlock) {
+        self.reloadMessageListBlock();
+    }
     
     MainTabBarViewController *tabVC = (MainTabBarViewController *)self.window.rootViewController;
     for (UINavigationController *nav in tabVC.childViewControllers) {
@@ -239,6 +243,10 @@ BMKMapManager *_mapManager;
     }
     [tabVC setSelectedIndex:2];
     UINavigationController *navVC = tabVC.childViewControllers[2];
+    if ([self.jpushInfo objectForKey:@"pkid"]) {
+        [self readMessageWithPkid:[self.jpushInfo objectForKey:@"pkid"]];
+    }
+    
     if ([[self.jpushInfo objectForKey:@"type"] isEqualToString:@"2"]) {
         //拍照完成
         

@@ -274,9 +274,9 @@
                 [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
             }
             [self showSuccessWithString:[dict objectForKey:@"message"] showTime:1.0];
-            weakcell.cellRightBtn.enabled = NO;
+            weakcell.cellRightBtn.enabled = YES;
         } failure:^(NSError *error) {
-            weakcell.cellRightBtn.enabled = NO;
+            weakcell.cellRightBtn.enabled = YES;
             [self showMessageWithString:@"服务器开小差了" showTime:1.0];
         }];
     };

@@ -14,5 +14,7 @@
 - (void)loadCellWithModel:(MonitorListRows *) model;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
 @property (weak, nonatomic) IBOutlet UILabel *cellTitle;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
 
 @end

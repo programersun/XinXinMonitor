@@ -13,6 +13,7 @@
 #import "MessageBaseClass.h"
 #import "MessageRows.h"
 #import "ProblemImageViewController.h"
+#import "AppDelegate.h"
 
 @interface MessageViewController () <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
@@ -44,14 +45,22 @@
         _pageNum = 1;
         [weakself loadMessageInfo];
     }];
+    
+    [self showSVProgressHUD];
+    [self loadMessageInfo];
+    AppDelegate *app = (AppDelegate *)[[UIApplication  sharedApplication] delegate];
+    app.reloadMessageListBlock = ^{
+        [weakself showSVProgressHUD];
+        [weakself loadMessageInfo];
+    };
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    [self showSVProgressHUD];
-    [self loadMessageInfo];
+    //    [self showSVProgressHUD];
+    //    [self loadMessageInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -101,7 +110,7 @@
     } failure:^(NSError *error) {
         [self endRefresh];
         [self showMessageWithString:@"服务器开小差了" showTime:1.0];
-
+        
     }];
 }
 
@@ -175,7 +184,7 @@
     MessageRows *model = self.messageArray[indexPath.row];
     [self readMessageWithPkid:model.pkid index:indexPath.row];
     if (model.type == 0) {
-//        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
+        //        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
         [self toImageDetailView:model];
     } else if (model.type == 1) {
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
@@ -188,7 +197,7 @@
         [vc setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:vc animated:YES];
     } else if (model.type == 2) {
-//        [self toImageDetailView:model];
+        //        [self toImageDetailView:model];
         ProblemImageViewController *vc = [[ProblemImageViewController alloc] init];
         vc.pkid = model.picturePkid;
         vc.telephone = model.phone;
@@ -218,27 +227,27 @@
 }
 
 - (void)toImageDetailView:(MessageRows *)model {
-
+    
     ImageDetailViewController *vc = [[UIStoryboard storyboardWithName:@"ShouYeStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"ImageDetailViewController"];
     if (vc == nil) {
         vc = [[ImageDetailViewController alloc] init];
     }
-//    if (model.type == 0) {
-//        NSTimeInterval time = (model.sendtime + 28800)/1000;
-//        NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"YYYY-MM-dd"];
-//        vc.timeString = [formatter stringFromDate:date];
-//        vc.problemPictureId = @"";
-//    }else {
-//        vc.problemPictureId = @"";
-//        vc.timeString = @"";
-//    }
-//    NSTimeInterval time = (model.sendtime + 28800)/1000;
-//    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"YYYY-MM-dd"];
-//    vc.timeString = [formatter stringFromDate:date];
+    //    if (model.type == 0) {
+    //        NSTimeInterval time = (model.sendtime + 28800)/1000;
+    //        NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    //        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //        [formatter setDateFormat:@"YYYY-MM-dd"];
+    //        vc.timeString = [formatter stringFromDate:date];
+    //        vc.problemPictureId = @"";
+    //    }else {
+    //        vc.problemPictureId = @"";
+    //        vc.timeString = @"";
+    //    }
+    //    NSTimeInterval time = (model.sendtime + 28800)/1000;
+    //    NSDate *date=[NSDate dateWithTimeIntervalSince1970:time];
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //    [formatter setDateFormat:@"YYYY-MM-dd"];
+    //    vc.timeString = [formatter stringFromDate:date];
     vc.timeString = [NSString stringWithFormat:@"%f",model.sendtime];
     vc.problemPictureId = @"";
     vc.monitorCode = model.cameraCode;
@@ -262,13 +271,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

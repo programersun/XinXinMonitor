@@ -362,6 +362,7 @@
         [[LocationManager sharedManager] saveDistrictWithString:@"全城"];
         [weakself animationToMyChooseLocation];
         _pageNum = 1;
+        [weakself showSVProgressHUD];
         [weakself loadMonitorInfo];
     };
     [self presentViewController:vc animated:YES completion:^{
@@ -710,11 +711,11 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((kkViewWidth - 30)/2, 150 * KASAdapterSizeWidth);
+    return CGSizeMake((kkViewWidth - 15)/2, 160 * KASAdapterSizeWidth);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(10, 10, 10, 10);// top left bottom right  Cell边界范围
+    return UIEdgeInsetsMake(5, 5, 5, 5);// top left bottom right  Cell边界范围
 }
 
 #pragma mark - UICollectionViewDelegate
