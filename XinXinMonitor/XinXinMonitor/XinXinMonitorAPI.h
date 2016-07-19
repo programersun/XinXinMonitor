@@ -90,7 +90,7 @@
  *  @param createUserKey  提交人账号
  *  @param createUserName 提交人姓名
  *  @param customerKey    所属客户账号key
- *  @param customerName    所属客户账号名称
+ *  @param customerName   所属客户账号名称
  *  @param customerKey    所属类型
  *  @param customerKey    拍摄间隔
  *  @param strikeTime     离线判断时间
@@ -100,7 +100,7 @@
  *  @return 设备添加字典
  */
 
-+ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cityName:(NSString *)cityName districtName:(NSString *)districtName cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey customerName:(NSString *)customerName monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
++ (NSMutableDictionary *)addMonitorAddress:(NSString *)address longitude:(NSString *)longitude latitude:(NSString *)latitude cityName:(NSString *)cityName districtName:(NSString *)districtName deviceId:(NSString *)deviceId  cameraCode:(NSString *)cameraCode phone:(NSString *)phone customerKey:(NSString *)customerKey customerName:(NSString *)customerName monitorType:(NSString *)monitorType time:(NSString *)time strikeTime:(NSString *)strikeTime startTime:(NSString *)startTime endTime:(NSString *)endTime;
 
 /**
  *  根据部门编号获取设备类型

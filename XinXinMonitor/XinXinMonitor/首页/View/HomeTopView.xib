@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMy-H7-bpN">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMy-H7-bpN">
                     <rect key="frame" x="5" y="0.0" width="30" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="h1s-ag-gUS"/>
@@ -24,7 +24,7 @@
                         <action selector="addressBtnClick:" destination="hV9-8s-qO0" eventType="touchUpInside" id="WY4-5Z-TNe"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows_down" translatesAutoresizingMaskIntoConstraints="NO" id="aMc-ZM-MPY">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows_down" translatesAutoresizingMaskIntoConstraints="NO" id="aMc-ZM-MPY">
                     <rect key="frame" x="35" y="19" width="15" height="7"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="8zZ-oP-eeA"/>
@@ -32,7 +32,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHA-kp-qmx">
-                    <rect key="frame" x="280" y="2" width="40" height="40"/>
+                    <rect key="frame" x="275" y="2" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="aPv-e5-mxb"/>
                     </constraints>
@@ -42,15 +42,15 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmR-TV-k3b">
-                    <rect key="frame" x="62" y="7" width="213" height="30"/>
+                    <rect key="frame" x="10" y="7" width="260" height="30"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入设备编号" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KkD-gk-Naa">
-                            <rect key="frame" x="15" y="0.0" width="168" height="30"/>
+                            <rect key="frame" x="15" y="0.0" width="215" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tkt-KE-tiE">
-                            <rect key="frame" x="188" y="8" width="15" height="15"/>
+                            <rect key="frame" x="235" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="ZAx-9h-udC"/>
                                 <constraint firstAttribute="height" constant="15" id="rRa-6p-gzC"/>
@@ -75,8 +75,7 @@
             </subviews>
             <color key="backgroundColor" red="0.1176470588" green="0.63529411759999999" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="UHA-kp-qmx" secondAttribute="trailing" id="0SH-IK-ZgZ"/>
-                <constraint firstItem="vmR-TV-k3b" firstAttribute="leading" secondItem="aMc-ZM-MPY" secondAttribute="trailing" constant="12" id="GPY-Vc-nzj"/>
+                <constraint firstAttribute="trailing" secondItem="UHA-kp-qmx" secondAttribute="trailing" constant="5" id="0SH-IK-ZgZ"/>
                 <constraint firstItem="hMy-H7-bpN" firstAttribute="top" secondItem="hV9-8s-qO0" secondAttribute="top" id="GdL-zz-C3O"/>
                 <constraint firstItem="aMc-ZM-MPY" firstAttribute="leading" secondItem="hMy-H7-bpN" secondAttribute="trailing" id="QAn-f1-tsT"/>
                 <constraint firstAttribute="bottom" secondItem="UHA-kp-qmx" secondAttribute="bottom" constant="2" id="TAZ-2c-6j3"/>
@@ -85,6 +84,7 @@
                 <constraint firstItem="UHA-kp-qmx" firstAttribute="leading" secondItem="vmR-TV-k3b" secondAttribute="trailing" constant="5" id="tGo-M9-djl"/>
                 <constraint firstItem="vmR-TV-k3b" firstAttribute="centerY" secondItem="UHA-kp-qmx" secondAttribute="centerY" id="u98-VC-Ok6"/>
                 <constraint firstItem="hMy-H7-bpN" firstAttribute="leading" secondItem="hV9-8s-qO0" secondAttribute="leading" constant="5" id="vO5-Y6-qZF"/>
+                <constraint firstItem="vmR-TV-k3b" firstAttribute="leading" secondItem="hV9-8s-qO0" secondAttribute="leading" constant="10" id="wfq-ta-my0"/>
                 <constraint firstItem="aMc-ZM-MPY" firstAttribute="centerY" secondItem="hV9-8s-qO0" secondAttribute="centerY" id="ziu-Y5-ZiK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

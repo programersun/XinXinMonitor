@@ -152,10 +152,10 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:[NSString stringWithFormat:@"%ld",(long)_pageNum] forKey:@"page"];
     
-    [dic setValue:[[LocationManager sharedManager] getCity] forKey:@"cityName"];
-    if (![[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
-        [dic setValue:[[LocationManager sharedManager] getDistrict] forKey:@"areaName"];
-    }
+    //    [dic setValue:[[LocationManager sharedManager] getCity] forKey:@"cityName"];
+    //    if (![[[LocationManager sharedManager] getDistrict] isEqualToString:@"全城"]) {
+    //        [dic setValue:[[LocationManager sharedManager] getDistrict] forKey:@"areaName"];
+    //    }
     if (self.topView.searchText.text.length > 0) {
         [dic setValue:self.topView.searchText.text forKey:@"camera_code"];
     }

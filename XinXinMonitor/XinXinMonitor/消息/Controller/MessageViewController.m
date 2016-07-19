@@ -182,7 +182,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MessageRows *model = self.messageArray[indexPath.row];
-    [self readMessageWithPkid:model.pkid index:indexPath.row];
+    if (model.readStatus == 0) {
+        [self readMessageWithPkid:model.pkid index:indexPath.row];
+    }
     if (model.type == 0) {
         //        [self showMessageWithString:[NSString stringWithFormat:@"编号为%@的设备处于离线状态，请及时查看，并拍照解除离线状态",model.cameraCode] showTime:1.0];
         [self toImageDetailView:model];

@@ -22,7 +22,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *myAddressTextField;
 /** 重新定位*/
 @property (weak, nonatomic) IBOutlet UIButton *afreshAddressBtn;
-/** 设备编号*/
+/** 设备ID*/
+@property (weak, nonatomic) IBOutlet UITextField *monitorIdTextField;
+/** 设备名称*/
 @property (weak, nonatomic) IBOutlet UITextField *monitorNameTextField;
 /** 设备所属账户*/
 @property (weak, nonatomic) IBOutlet UILabel *monitorAccountLabel;
@@ -42,6 +44,7 @@
 @property (nonatomic, strong) ChooseMonitorTypeView *chooseMonitorAccountView;
 @property (nonatomic, strong) NSMutableArray *monitorTypeArray;
 @property (nonatomic, strong) NSMutableArray *monitorAccountArray;
+@property (nonatomic, strong) NSString *monitorId;
 @property (nonatomic, strong) NSString *monitorType;
 @property (nonatomic, strong) NSString *monitorTypeString;
 @property (nonatomic, strong) NSString *account;
@@ -83,6 +86,15 @@
     self.afreshAddressBtn.layer.borderColor = [ColorRequest BackGroundColor].CGColor;
     self.afreshAddressBtn.layer.borderWidth = 1.0f;
     self.afreshAddressBtn.hidden = YES;
+    
+    self.monitorTypeLabel.layer.cornerRadius = 4;
+    self.monitorTypeLabel.layer.borderWidth = 1.0f;
+    self.monitorTypeLabel.layer.borderColor = [ColorRequest BackGroundColor].CGColor;
+    
+    self.monitorAccountLabel.layer.cornerRadius = 4;
+    self.monitorAccountLabel.layer.borderWidth = 1.0f;
+    self.monitorAccountLabel.layer.borderColor = [ColorRequest BackGroundColor].CGColor;
+    
     self.latitude = [LocationManager sharedManager].latitude;
     self.longitude = [LocationManager sharedManager].longitude;
     self.cityName = [[LocationManager sharedManager] getMyCity];
@@ -90,7 +102,6 @@
     
     self.geocodesearch = [[BMKGeoCodeSearch alloc]init];
     [self reverseGeocode];
-    //    [self loadMonitorType];
     self.monitorType = @"";
     self.startTimeBtn.layer.borderColor = [UIColor grayColor].CGColor;
     self.startTimeBtn.layer.borderWidth = 1.0f;
@@ -120,6 +131,8 @@
     self.geocodesearch.delegate = nil; // 不用时，置nil
     [self hideSVProgressHUD];
     [LocationManager sharedManager].reverseGeocodeLocationSuccessBlock = nil;
+    [self.chooseMonitorTypeView removeFromSuperview];
+    [self.chooseMonitorAccountView removeFromSuperview];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -146,7 +159,7 @@
     [self.monitorTypeBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
     [self.monitorAccountBtn setImage:[UIImage imageNamed:@"arrows_black_down"] forState:UIControlStateNormal];
 }
-
+//
 - (void)loadLastInfo {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"] &&
         ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorType"] isEqualToString:@""] && [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorTypeString"] &&
@@ -168,6 +181,16 @@
         self.accountString = @"请选择客户";
         self.monitorAccountLabel.text = self.accountString;
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorId"] &&
+        ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorId"] isEqualToString:@""]) {
+        self.monitorId = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorId"];
+        self.monitorIdTextField.text = self.monitorId;
+    } else {
+        self.monitorId = @"";
+        self.monitorIdTextField.text = self.monitorId;
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"] &&
         ![[[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"] isEqualToString:@""]) {
         self.cameraTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"MonitorCameraTime"];
@@ -217,8 +240,10 @@
         [self showMessageWithString:@"请选择设备类型" showTime:1.0];
     } else if ([self.monitorAccountLabel.text isEqualToString:@"请选择客户"]) {
         [self showMessageWithString:@"请输入设备所属用户账号" showTime:1.0];
+    } else if ([self.monitorIdTextField.text isEqualToString:@""]) {
+        [self showMessageWithString:@"请输入设备ID" showTime:1.0];
     } else if ([self.monitorNameTextField.text isEqualToString:@""]) {
-        [self showMessageWithString:@"请输入设备编号" showTime:1.0];
+        [self showMessageWithString:@"请输入设备名称" showTime:1.0];
     } else if ([self.monitorTelephoneTextField.text isEqualToString:@""]) {
         [self showMessageWithString:@"请输入设备电话号码" showTime:1.0];
     } else if ([self.strikeTimeTextField.text isEqualToString:@""]){
@@ -381,6 +406,12 @@
 
 - (void)addMonitor {
     
+    self.monitorId = self.monitorIdTextField.text;
+    
+    if (![self.timeTextField.text isEqualToString:@""]) {
+        self.cameraTime = self.timeTextField.text;
+    }
+    
     if (![self.timeTextField.text isEqualToString:@""]) {
         self.cameraTime = self.timeTextField.text;
     }
@@ -390,7 +421,7 @@
     self.startTime = self.startTimeBtn.titleLabel.text;
     self.endTime = self.endTimeBtn.titleLabel.text;
     
-    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.account customerName:self.accountString monitorType:self.monitorType time:self.cameraTime strikeTime:self.strikeTime startTime:self.startTime endTime:self.endTime] success:^(id responseObj) {
+    [AFNetworkingTools GetRequsetWithUrl:[NSString stringWithFormat:@"%@%@",XinXinMonitorURL,AddMonitorAPI] params:[XinXinMonitorAPI addMonitorAddress:self.myAddressTextField.text longitude:self.longitude latitude:self.latitude cityName:self.cityName districtName:self.districtName deviceId:self.monitorId cameraCode:self.monitorNameTextField.text phone:self.monitorTelephoneTextField.text customerKey:self.account customerName:self.accountString monitorType:self.monitorType time:self.cameraTime strikeTime:self.strikeTime startTime:self.startTime endTime:self.endTime] success:^(id responseObj) {
         
         self.navigationItem.rightBarButtonItem.enabled = YES;
         NSDictionary *dic = responseObj;
@@ -400,6 +431,7 @@
             [monitorDefault setObject:self.monitorType forKey:@"MonitorType"];
             [monitorDefault setObject:self.monitorTypeString forKey:@"MonitorTypeString"];
             [monitorDefault setObject:self.account forKey:@"MonitorAccount"];
+            [monitorDefault setObject:self.monitorId forKey:@"MonitorId"];
             [monitorDefault setObject:self.accountString forKey:@"MonitorAccountString"];
             [monitorDefault setObject:self.cameraTime forKey:@"MonitorCameraTime"];
             [monitorDefault setObject:self.strikeTime forKey:@"MonitorStrikeTime"];
