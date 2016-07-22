@@ -173,11 +173,18 @@
 
 #pragma mark 设置leftBarButtonItem后保留左侧手势返回
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.childViewControllers.count == 1) {
+    NSLog(@"%u",self.navigationController.viewControllers.count);
+    if (self.navigationController.viewControllers.count == 1 || self.navigationController.viewControllers.count == 0) {
         return NO;
     } else {
         return YES;
     }
+    
+    //    if (self.childViewControllers.count == 1) {
+    //        return NO;
+    //    } else {
+    //        return YES;
+    //    }
 }
 
 @end
