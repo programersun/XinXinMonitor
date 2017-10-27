@@ -15,7 +15,7 @@
 #import "ProblemImageViewController.h"
 #import "MessageViewController.h"
 
-#define JPushKey @"88ab9b2429bf675c76b3769e"
+#define JPushKey @"78fe5ac8a2b3bf67146b68be"
 #define BaiDuKey @"rZzjh5uvuHku5GcmoQrriEjOeYRr4Qu7"
 
 @interface AppDelegate () <UIAlertViewDelegate>
@@ -145,8 +145,10 @@ BMKMapManager *_mapManager;
     [JPUSHService setupWithOption:launchOptions
                            appKey:JPushKey
                           channel:@"Publish channel"
-                 apsForProduction:YES
+                 apsForProduction:NO
             advertisingIdentifier:nil];
+    
+    [JPUSHService setAlias:@"sunrui123456" callbackSelector:nil object:nil];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
